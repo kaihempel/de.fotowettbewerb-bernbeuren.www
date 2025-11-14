@@ -79,8 +79,19 @@ This application uses Laravel 12's streamlined file structure:
 **Inertia Pages** (`resources/js/Pages/`)
 - `welcome.tsx` - Landing page
 - `dashboard.tsx` - Authenticated dashboard
-- `auth/` - Authentication pages (login, register, verify email, two-factor)
-- `settings/` - User settings pages (profile, password, two-factor)
+- `auth/` - Authentication pages:
+  - `login.tsx` - User login
+  - `register.tsx` - User registration
+  - `verify-email.tsx` - Email verification
+  - `forgot-password.tsx` - Password reset request
+  - `reset-password.tsx` - Password reset form
+  - `confirm-password.tsx` - Password confirmation
+  - `two-factor-challenge.tsx` - 2FA authentication
+- `settings/` - User settings pages:
+  - `profile.tsx` - Profile information and account deletion
+  - `password.tsx` - Password update
+  - `appearance.tsx` - Theme/appearance settings
+  - `two-factor.tsx` - Two-factor authentication management
 
 **Controllers** (`app/Http/Controllers/`)
 - Follow Laravel conventions with explicit return types
@@ -104,9 +115,26 @@ This application uses Laravel 12's streamlined file structure:
 ### Frontend Architecture
 
 **React Components** (`resources/js/components/`)
-- `ui/` - Radix UI-based components (Card, Button, Dialog, etc.)
-- Application-specific components at root level
+- `ui/` - 25+ Radix UI-based components (Button, Card, Dialog, Sheet, Sidebar, Avatar, Checkbox, Toggle, Tooltip, etc.)
+- Application-specific components at root level (app-header, app-sidebar, breadcrumbs, etc.)
+- Authentication components: alert-error, delete-user, two-factor-setup-modal, two-factor-recovery-codes
+- Appearance components: appearance-tabs, appearance-dropdown with light/dark/system theme support
 - TypeScript with strict typing enabled
+
+**Layouts** (`resources/js/layouts/`)
+- `app-layout.tsx` - Main authenticated app layout with sidebar navigation
+- `auth-layout.tsx` - Authentication pages layout
+- `app/` - App-specific layout components
+- `auth/` - Auth-specific layout components
+- `settings/` - Settings section layout
+
+**Custom Hooks** (`resources/js/hooks/`)
+- `use-appearance.tsx` - Theme management (light/dark/system mode) with cookie persistence
+- `use-clipboard.ts` - Clipboard operations
+- `use-initials.tsx` - Generate user initials from name
+- `use-mobile-navigation.ts` - Mobile navigation state management
+- `use-mobile.tsx` - Responsive breakpoint detection
+- `use-two-factor-auth.ts` - Two-factor authentication state and QR code management
 
 **Wayfinder Integration**
 - Auto-generated route helpers in `resources/js/wayfinder/`
@@ -119,6 +147,8 @@ This application uses Laravel 12's streamlined file structure:
 - Main styles in `resources/css/app.css`
 - Uses `@import "tailwindcss"` (not `@tailwind` directives)
 - Dark mode support with `dark:` variants
+- Theme management via `use-appearance` hook with cookie-based persistence
+- System, light, and dark themes supported
 
 ### Authentication Flow
 - Powered by Laravel Fortify (configured in `config/fortify.php`)
@@ -168,3 +198,24 @@ This application uses Laravel 12's streamlined file structure:
 - Use `php artisan make:` commands for all Laravel files (models, controllers, migrations, etc.)
 - Pass `--no-interaction` to Artisan commands
 - Check sibling files for naming and structure conventions before creating new files
+
+## Additional Resources
+
+### Documentation
+- `docs/` directory contains reference documentation:
+  - `eloquent.md` - Eloquent ORM documentation
+  - `events.md` - Event system documentation
+  - `Inertia.md` - Inertia.js integration guide
+  - `migration.md` - Database migration guide
+- `AGENTS.md` - Laravel Boost guidelines and conventions (auto-generated)
+
+### UI Component Library
+The application uses a comprehensive set of pre-built UI components from Radix UI:
+- Form controls: Button, Checkbox, Input-OTP, Label, Toggle, Toggle-Group
+- Layout: Card, Separator, Sheet, Sidebar
+- Navigation: Breadcrumb, Navigation-Menu
+- Overlays: Alert, Dialog, Tooltip
+- Data display: Avatar, Badge, Placeholder-Pattern, Spinner
+- Interactive: Collapsible, Icon
+
+Always check existing components before creating new ones.
