@@ -1,0 +1,13 @@
+{
+    "agents": [
+        "codex",
+        "cursor",
+        "phpstorm"
+    ],
+    "editors": [
+        "cursor",
+        "phpstorm",
+        "vscode"
+    ],
+    "guidelines": []
+}
