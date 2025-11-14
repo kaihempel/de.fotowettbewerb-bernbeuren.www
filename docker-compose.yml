@@ -1,0 +1,49 @@
+services:
+
+  # The Application
+  app:
+    build:
+      context: ./
+      dockerfile: Dockerfile.app
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www:delegated
+    environment:
+      PHP_IDE_CONFIG: "serverName=www"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # The Web Server
+  www:
+    build:
+      context: ./
+      dockerfile: Dockerfile.web
+    working_dir: /var/www
+    volumes_from:
+      - app
+    ports:
+      - "18080:80"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+  # A combined CORE Database (one database to serve them all)
+  # see: https://stackoverflow.com/a/57266460/3471553
+  db:
+    platform: linux/amd64
+    image: mariadb:10.6.7-focal
+    command: --innodb_use_native_aio=0 --max_allowed_packet=2147483648
+    restart: always
+    environment:
+      - "MYSQL_DATABASE=fotowettbewerb"
+      - "MYSQL_USER=user"
+      - "MYSQL_PASSWORD=secret"
+      - "MYSQL_ROOT_PASSWORD=secret"
+    ports:
+      - "38080:3306"
+    volumes:
+      - db:/var/lib/mysql
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  db:
