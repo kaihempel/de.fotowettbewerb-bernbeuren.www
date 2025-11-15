@@ -219,3 +219,10 @@ The application uses a comprehensive set of pre-built UI components from Radix U
 - Interactive: Collapsible, Icon
 
 Always check existing components before creating new ones.
+
+## Active Technologies
+- PHP 8.4, TypeScript (React 19) + Laravel 12, Inertia.js v2, Laravel Fortify, Laravel Wayfinder, Radix UI components, Tailwind CSS v4 (001-photo-upload)
+- Laravel filesystem (local disk for development, extensible to S3/cloud for production) (001-photo-upload)
+
+## Recent Changes
+- 001-photo-upload: Added PHP 8.4, TypeScript (React 19) + Laravel 12, Inertia.js v2, Laravel Fortify, Laravel Wayfinder, Radix UI components, Tailwind CSS v4
