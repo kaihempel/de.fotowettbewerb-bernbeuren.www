@@ -1,0 +1,524 @@
+openapi: 3.0.3
+info:
+  title: Photo Submission API
+  description: |
+    API specification for the Fotowettbewerb Bernbeuren photo upload system.
+    This API allows authenticated users to upload photos for the contest,
+    view their submission history, and check submission status.
+  version: 1.0.0
+  contact:
+    name: Fotowettbewerb Bernbeuren Development Team
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://fotowettbewerb-bernbeuren.de
+    description: Production server
+
+tags:
+  - name: Photo Upload
+    description: Upload and manage photo submissions
+  - name: Submission Status
+    description: View submission history and status
+
+paths:
+  /photos/upload:
+    get:
+      tags:
+        - Photo Upload
+      summary: Display photo upload page
+      description: Returns the Inertia.js photo upload page component
+      operationId: showUploadPage
+      security:
+        - sanctum: []
+      responses:
+        '200':
+          description: Upload page rendered successfully
+          content:
+            text/html:
+              schema:
+                type: string
+                description: Inertia.js rendered HTML page
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Photo Upload
+      summary: Upload a photo submission
+      description: |
+        Uploads a photo file for the contest. Validates file type, size,
+        and user submission limit (max 3 active submissions). Returns
+        validation errors or success message.
+      operationId: uploadPhoto
+      security:
+        - sanctum: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+                - photo
+              properties:
+                photo:
+                  type: string
+                  format: binary
+                  description: Image file (JPG, PNG, or HEIC, max 15MB)
+            encoding:
+              photo:
+                contentType: image/jpeg, image/png, image/heic
+      responses:
+        '302':
+          description: Redirect to submissions list with success message
+          headers:
+            Location:
+              schema:
+                type: string
+                example: /photos/submissions
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  flash:
+                    type: object
+                    properties:
+                      success:
+                        type: string
+                        example: Photo uploaded successfully!
+        '422':
+          $ref: '#/components/responses/ValidationError'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '413':
+          description: Payload too large (file exceeds 15MB)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: The uploaded file is too large.
+
+  /photos/submissions:
+    get:
+      tags:
+        - Submission Status
+      summary: List user's photo submissions
+      description: |
+        Returns a paginated list of the authenticated user's photo submissions
+        with status, submission date, and review information.
+      operationId: listSubmissions
+      security:
+        - sanctum: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: status
+          in: query
+          description: Filter submissions by status
+          required: false
+          schema:
+            type: string
+            enum: [new, approved, declined]
+      responses:
+        '200':
+          description: Submissions retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  submissions:
+                    type: object
+                    properties:
+                      data:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/PhotoSubmission'
+                      current_page:
+                        type: integer
+                        example: 1
+                      per_page:
+                        type: integer
+                        example: 20
+                      total:
+                        type: integer
+                        example: 3
+                  remaining_slots:
+                    type: integer
+                    description: Number of submission slots remaining (out of 3)
+                    example: 1
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /photos/{id}:
+    get:
+      tags:
+        - Submission Status
+      summary: View a specific photo submission
+      description: |
+        Returns details of a specific photo submission. User can only view
+        their own submissions unless the photo is approved (public).
+      operationId: viewSubmission
+      security:
+        - sanctum: []
+      parameters:
+        - name: id
+          in: path
+          description: Photo submission ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Submission details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoSubmission'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /photos/{id}/download:
+    get:
+      tags:
+        - Submission Status
+      summary: Download original photo file
+      description: |
+        Downloads the original uploaded photo file. User must own the submission
+        or photo must be approved (public).
+      operationId: downloadPhoto
+      security:
+        - sanctum: []
+      parameters:
+        - name: id
+          in: path
+          description: Photo submission ID
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: Photo file download
+          content:
+            image/jpeg:
+              schema:
+                type: string
+                format: binary
+            image/png:
+              schema:
+                type: string
+                format: binary
+            image/heic:
+              schema:
+                type: string
+                format: binary
+          headers:
+            Content-Disposition:
+              schema:
+                type: string
+                example: attachment; filename="FWB-2025-00001.jpg"
+            Content-Type:
+              schema:
+                type: string
+                example: image/jpeg
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+components:
+  securitySchemes:
+    sanctum:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Laravel Sanctum authentication (session-based for web)
+
+  schemas:
+    PhotoSubmission:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique submission ID
+          example: 42
+        fwb_id:
+          type: string
+          description: Contest submission ID
+          example: FWB-2025-00042
+        user_id:
+          type: integer
+          format: int64
+          description: ID of user who submitted photo
+          example: 7
+        user:
+          $ref: '#/components/schemas/User'
+        original_filename:
+          type: string
+          description: Original filename as uploaded
+          example: IMG_1234.jpg
+        file_size:
+          type: integer
+          description: File size in bytes
+          example: 8457256
+        mime_type:
+          type: string
+          enum: [image/jpeg, image/png, image/heic]
+          description: File MIME type
+          example: image/jpeg
+        status:
+          type: string
+          enum: [new, approved, declined]
+          description: Review status
+          example: new
+        rate:
+          type: number
+          format: float
+          nullable: true
+          minimum: 0
+          maximum: 10
+          description: Rating/score (0.00-10.00) for approved submissions
+          example: 8.75
+        submitted_at:
+          type: string
+          format: date-time
+          description: Submission timestamp
+          example: 2025-11-15T14:23:45Z
+        reviewed_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Review timestamp (null if not yet reviewed)
+          example: 2025-11-16T09:12:00Z
+        reviewer:
+          allOf:
+            - $ref: '#/components/schemas/User'
+            - nullable: true
+          description: Admin who reviewed the submission
+        file_url:
+          type: string
+          format: uri
+          description: URL to access the photo (authorized users only)
+          example: http://localhost:8000/photos/42/download
+        created_at:
+          type: string
+          format: date-time
+          example: 2025-11-15T14:23:45Z
+        updated_at:
+          type: string
+          format: date-time
+          example: 2025-11-16T09:12:00Z
+      required:
+        - id
+        - fwb_id
+        - user_id
+        - original_filename
+        - file_size
+        - mime_type
+        - status
+        - submitted_at
+
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 7
+        name:
+          type: string
+          example: John Doe
+        email:
+          type: string
+          format: email
+          example: john.doe@example.com
+      required:
+        - id
+        - name
+        - email
+
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          description: Human-readable error message
+          example: The given data was invalid.
+        errors:
+          type: object
+          description: Field-specific validation errors
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            photo:
+              - The photo must be a file of type jpg, jpeg, png, heic.
+      required:
+        - message
+
+    ValidationError:
+      allOf:
+        - $ref: '#/components/schemas/Error'
+        - type: object
+          properties:
+            errors:
+              type: object
+              properties:
+                photo:
+                  type: array
+                  items:
+                    type: string
+                  examples:
+                    - The photo field is required.
+                    - The photo must be a file of type jpg, jpeg, png, heic.
+                    - The photo must not be greater than 15360 kilobytes.
+                    - You have reached the maximum of 3 submissions.
+
+  responses:
+    Unauthorized:
+      description: User is not authenticated
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            message: Unauthenticated.
+
+    Forbidden:
+      description: User does not have permission to access this resource
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            message: This action is unauthorized.
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            message: Photo submission not found.
+
+    ValidationError:
+      description: Validation error (422 Unprocessable Entity)
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ValidationError'
+          examples:
+            invalid_file_type:
+              summary: Invalid file type
+              value:
+                message: The given data was invalid.
+                errors:
+                  photo:
+                    - The photo must be a file of type jpg, jpeg, png, heic.
+            file_too_large:
+              summary: File too large
+              value:
+                message: The given data was invalid.
+                errors:
+                  photo:
+                    - The photo must not be greater than 15360 kilobytes.
+            submission_limit_reached:
+              summary: Submission limit reached
+              value:
+                message: The given data was invalid.
+                errors:
+                  photo:
+                    - You have reached the maximum of 3 submissions.
+
+  examples:
+    NewSubmission:
+      summary: Newly uploaded photo (awaiting review)
+      value:
+        id: 42
+        fwb_id: FWB-2025-00042
+        user_id: 7
+        user:
+          id: 7
+          name: John Doe
+          email: john.doe@example.com
+        original_filename: sunset.jpg
+        file_size: 8457256
+        mime_type: image/jpeg
+        status: new
+        rate: null
+        submitted_at: 2025-11-15T14:23:45Z
+        reviewed_at: null
+        reviewer: null
+        file_url: http://localhost:8000/photos/42/download
+        created_at: 2025-11-15T14:23:45Z
+        updated_at: 2025-11-15T14:23:45Z
+
+    ApprovedSubmission:
+      summary: Approved photo with rating
+      value:
+        id: 38
+        fwb_id: FWB-2025-00038
+        user_id: 5
+        user:
+          id: 5
+          name: Jane Smith
+          email: jane.smith@example.com
+        original_filename: mountain_landscape.jpg
+        file_size: 12234567
+        mime_type: image/jpeg
+        status: approved
+        rate: 9.25
+        submitted_at: 2025-11-14T10:15:30Z
+        reviewed_at: 2025-11-15T08:45:12Z
+        reviewer:
+          id: 1
+          name: Admin User
+          email: admin@fotowettbewerb-bernbeuren.de
+        file_url: http://localhost:8000/photos/38/download
+        created_at: 2025-11-14T10:15:30Z
+        updated_at: 2025-11-15T08:45:12Z
+
+    DeclinedSubmission:
+      summary: Declined photo
+      value:
+        id: 25
+        fwb_id: FWB-2025-00025
+        user_id: 3
+        user:
+          id: 3
+          name: Bob Wilson
+          email: bob.wilson@example.com
+        original_filename: blurry_photo.jpg
+        file_size: 3456789
+        mime_type: image/jpeg
+        status: declined
+        rate: null
+        submitted_at: 2025-11-13T16:20:00Z
+        reviewed_at: 2025-11-14T11:30:45Z
+        reviewer:
+          id: 1
+          name: Admin User
+          email: admin@fotowettbewerb-bernbeuren.de
+        file_url: http://localhost:8000/photos/25/download
+        created_at: 2025-11-13T16:20:00Z
+        updated_at: 2025-11-14T11:30:45Z

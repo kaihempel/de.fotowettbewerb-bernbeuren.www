@@ -41,3 +41,35 @@ export interface User {
   updated_at: string;
   [key: string]: unknown; // This allows for additional properties...
 }
+
+export interface PhotoSubmission {
+  id: number;
+  fwb_id: string;
+  user_id: number;
+  original_filename: string;
+  stored_filename: string;
+  file_path: string;
+  file_size: number;
+  file_hash: string;
+  mime_type: string;
+  status: "new" | "approved" | "declined";
+  rate: number | null;
+  submitted_at: string;
+  reviewed_at: string | null;
+  reviewed_by: number | null;
+  created_at: string;
+  updated_at: string;
+  file_url: string;
+  user?: User;
+  reviewer?: User;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  current_page: number;
+  last_page: number;
+  per_page: number;
+  total: number;
+  from: number;
+  to: number;
+}
