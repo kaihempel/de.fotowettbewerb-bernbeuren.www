@@ -24,6 +24,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -66,6 +67,30 @@ class User extends Authenticatable
     public function reviewedSubmissions(): HasMany
     {
         return $this->hasMany(PhotoSubmission::class, 'reviewed_by');
+    }
+
+    /**
+     * Get the audit log entries for actions taken by this user.
+     */
+    public function auditLogs(): HasMany
+    {
+        return $this->hasMany(AuditLog::class);
+    }
+
+    /**
+     * Check if user has reviewer role.
+     */
+    public function isReviewer(): bool
+    {
+        return in_array($this->role, ['reviewer', 'admin']);
+    }
+
+    /**
+     * Check if user has admin role.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
     }
 
     /**
