@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\Storage;
 
 class PhotoSubmission extends Model
 {
@@ -43,7 +44,7 @@ class PhotoSubmission extends Model
      *
      * @var list<string>
      */
-    protected $appends = ['file_url'];
+    protected $appends = ['file_url', 'thumbnail_url', 'full_image_url'];
 
     /**
      * Get the attributes that should be cast.
@@ -188,7 +189,7 @@ class PhotoSubmission extends Model
     /**
      * Get the next unrated photo for a visitor.
      */
-    public function getNextUnratedFor(string $fwbId): ?self
+    public function getNextUnratedFor(?string $fwbId): ?self
     {
         return static::approved()
             ->where('created_at', '>', $this->created_at)
@@ -200,7 +201,7 @@ class PhotoSubmission extends Model
     /**
      * Get the previous rated photo for a visitor.
      */
-    public function getPreviousRatedFor(string $fwbId): ?self
+    public function getPreviousRatedFor(?string $fwbId): ?self
     {
         return static::approved()
             ->where('created_at', '<', $this->created_at)
@@ -223,7 +224,7 @@ class PhotoSubmission extends Model
     /**
      * Get the user's vote for this photo.
      */
-    public function getUserVote(string $fwbId): ?PhotoVote
+    public function getUserVote(?string $fwbId): ?PhotoVote
     {
         return $this->votes()
             ->where('fwb_id', $fwbId)
@@ -237,6 +238,30 @@ class PhotoSubmission extends Model
     {
         return Attribute::make(
             get: fn () => route('photos.download', $this->id)
+        );
+    }
+
+    /**
+     * Get the URL for the thumbnail image.
+     */
+    protected function thumbnailUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->thumbnail_path
+                ? Storage::url($this->thumbnail_path)
+                : null
+        );
+    }
+
+    /**
+     * Get the URL for the full-size image.
+     */
+    protected function fullImageUrl(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->file_path
+                ? Storage::url($this->file_path)
+                : null
         );
     }
 }

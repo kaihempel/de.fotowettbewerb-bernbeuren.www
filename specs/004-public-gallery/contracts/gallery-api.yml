@@ -1,0 +1,251 @@
+openapi: 3.0.3
+info:
+  title: Public Gallery API
+  description: API contract for the public photo gallery homepage with infinite scroll pagination
+  version: 1.0.0
+  contact:
+    name: Fotowettbewerb Bernbeuren
+
+servers:
+  - url: http://localhost:8000
+    description: Local development server
+  - url: https://fotowettbewerb-bernbeuren.de
+    description: Production server
+
+tags:
+  - name: Gallery
+    description: Public photo gallery operations
+
+paths:
+  /:
+    get:
+      summary: Get paginated gallery photos
+      description: Returns a paginated list of approved photos ordered by submission date (oldest first). Uses cursor-based pagination for consistent results.
+      operationId: getGalleryPhotos
+      tags:
+        - Gallery
+      parameters:
+        - name: cursor
+          in: query
+          description: Base64-encoded cursor for pagination (obtained from previous response). Omit for first page.
+          required: false
+          schema:
+            type: string
+            example: "eyJpZCI6MjAsImNyZWF0ZWRfYXQiOiIyMDI1LTAxLTE1VDExOjAwOjAwWiJ9"
+      responses:
+        '200':
+          description: Successful response with paginated photos
+          content:
+            application/json:
+              schema:
+                type: object
+                required:
+                  - photos
+                properties:
+                  photos:
+                    $ref: '#/components/schemas/GalleryPage'
+              examples:
+                firstPage:
+                  summary: First page (20 photos)
+                  value:
+                    photos:
+                      data:
+                        - id: 1
+                          thumbnail_url: "/storage/photos/thumbnails/uuid1.jpg"
+                          full_image_url: "/storage/photos/uuid1.jpg"
+                          rate: 4.5
+                          created_at: "2025-01-15T10:30:00Z"
+                        - id: 2
+                          thumbnail_url: "/storage/photos/thumbnails/uuid2.jpg"
+                          full_image_url: "/storage/photos/uuid2.jpg"
+                          rate: 3.8
+                          created_at: "2025-01-15T10:35:00Z"
+                      next_cursor: "eyJpZCI6MjAsImNyZWF0ZWRfYXQiOiIyMDI1LTAxLTE1VDExOjAwOjAwWiJ9"
+                      prev_cursor: null
+                      per_page: 20
+                      path: "http://localhost:8000"
+                emptyGallery:
+                  summary: Empty gallery (no approved photos)
+                  value:
+                    photos:
+                      data: []
+                      next_cursor: null
+                      prev_cursor: null
+                      per_page: 20
+                      path: "http://localhost:8000"
+                lastPage:
+                  summary: Last page (10 photos remaining)
+                  value:
+                    photos:
+                      data:
+                        - id: 41
+                          thumbnail_url: "/storage/photos/thumbnails/uuid41.jpg"
+                          full_image_url: "/storage/photos/uuid41.jpg"
+                          rate: 4.2
+                          created_at: "2025-01-15T12:30:00Z"
+                      next_cursor: null
+                      prev_cursor: "eyJpZCI6NDAsImNyZWF0ZWRfYXQiOiIyMDI1LTAxLTE1VDEyOjAwOjAwWiJ9"
+                      per_page: 20
+                      path: "http://localhost:8000"
+        '400':
+          description: Bad request - invalid cursor format
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: "Invalid cursor format"
+                errors:
+                  cursor: ["The cursor format is invalid"]
+        '429':
+          description: Rate limit exceeded
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: "Too many requests"
+                retry_after: 60
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+              example:
+                message: "Server error"
+
+components:
+  schemas:
+    GalleryPage:
+      type: object
+      description: Paginated response containing photo data and pagination metadata
+      required:
+        - data
+        - next_cursor
+        - prev_cursor
+        - per_page
+        - path
+      properties:
+        data:
+          type: array
+          description: Array of photo objects (maximum 20 items)
+          items:
+            $ref: '#/components/schemas/Photo'
+          maxItems: 20
+        next_cursor:
+          type: string
+          nullable: true
+          description: Base64-encoded cursor for next page (null if last page)
+          example: "eyJpZCI6MjAsImNyZWF0ZWRfYXQiOiIyMDI1LTAxLTE1VDExOjAwOjAwWiJ9"
+        prev_cursor:
+          type: string
+          nullable: true
+          description: Base64-encoded cursor for previous page (null if first page)
+          example: "eyJpZCI6MTAsImNyZWF0ZWRfYXQiOiIyMDI1LTAxLTE1VDEwOjMwOjAwWiJ9"
+        per_page:
+          type: integer
+          description: Number of items per page (always 20)
+          example: 20
+          enum: [20]
+        path:
+          type: string
+          description: Base URL path for pagination
+          example: "http://localhost:8000"
+
+    Photo:
+      type: object
+      description: Photo object with display metadata
+      required:
+        - id
+        - thumbnail_url
+        - full_image_url
+        - created_at
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique photo identifier
+          example: 1
+        thumbnail_url:
+          type: string
+          format: uri
+          description: URL to thumbnail image (< 50KB, optimized for grid display)
+          example: "/storage/photos/thumbnails/550e8400-e29b-41d4-a716-446655440000.jpg"
+        full_image_url:
+          type: string
+          format: uri
+          description: URL to full-size image
+          example: "/storage/photos/550e8400-e29b-41d4-a716-446655440000.jpg"
+        rate:
+          type: number
+          format: float
+          nullable: true
+          description: Average rating or vote count (null if no votes yet)
+          example: 4.5
+          minimum: 0
+          maximum: 5
+        created_at:
+          type: string
+          format: date-time
+          description: Photo submission timestamp (ISO 8601 format)
+          example: "2025-01-15T10:30:00Z"
+
+    Error:
+      type: object
+      description: Error response
+      required:
+        - message
+      properties:
+        message:
+          type: string
+          description: Human-readable error message
+          example: "Invalid cursor format"
+        errors:
+          type: object
+          description: Validation errors (field-level details)
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            cursor: ["The cursor format is invalid"]
+        retry_after:
+          type: integer
+          description: Seconds to wait before retrying (for rate limit errors)
+          example: 60
+
+  securitySchemes: {}
+
+security: []
+
+# Additional API Information
+x-rate-limits:
+  gallery:
+    limit: 100
+    period: minute
+    scope: ip
+
+x-performance-targets:
+  initial_load: "< 2 seconds"
+  subsequent_load: "< 500 milliseconds"
+  database_query: "< 100 milliseconds"
+
+x-business-rules:
+  - Only photos with status='approved' are returned
+  - Photos ordered by created_at ascending (oldest first)
+  - Page size fixed at 20 photos per request
+  - Cursor-based pagination prevents duplicates during concurrent updates
+  - No authentication required (public endpoint)
+
+x-frontend-integration:
+  framework: "Inertia.js v2"
+  component: "resources/js/Pages/Gallery/Index.tsx"
+  navigation: "Click photo → navigate to voting page with photo ID"
+  infinite_scroll: "Intersection Observer API with preserveState"
+
+x-accessibility:
+  wcag: "2.1 AA"
+  keyboard_navigation: true
+  alt_text: "All photos have descriptive alt text"
+  screen_reader: "Loading states announced"

@@ -2,16 +2,11 @@
 
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use Laravel\Fortify\Features;
-
-Route::get('/', function () {
-    return Inertia::render('welcome', [
-        'canRegister' => Features::enabled(Features::registration()),
-    ]);
-})->name('home');
 
 // Public gallery routes (no authentication required)
-Route::get('gallery', [App\Http\Controllers\PublicGalleryController::class, 'index'])->name('gallery.index');
+Route::get('/', [App\Http\Controllers\PublicGalleryController::class, 'gallery'])->name('home');
+Route::get('gallery', [App\Http\Controllers\PublicGalleryController::class, 'gallery'])->name('gallery');
+Route::get('gallery/list', [App\Http\Controllers\PublicGalleryController::class, 'index'])->name('gallery.index');
 Route::get('gallery/{photoSubmission}', [App\Http\Controllers\PublicGalleryController::class, 'show'])->name('gallery.show');
 Route::post('gallery/{photoSubmission}/vote', [App\Http\Controllers\PublicGalleryController::class, 'vote'])
     ->middleware('throttle:votes')
