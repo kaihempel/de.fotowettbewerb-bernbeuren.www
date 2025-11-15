@@ -219,7 +219,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:139
+* @see app/Http/Controllers/PhotoSubmissionController.php:150
 * @route '/photos/{submission}/download'
 */
 export const download = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -234,7 +234,7 @@ download.definition = {
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:139
+* @see app/Http/Controllers/PhotoSubmissionController.php:150
 * @route '/photos/{submission}/download'
 */
 download.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -267,7 +267,7 @@ download.url = (args: { submission: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:139
+* @see app/Http/Controllers/PhotoSubmissionController.php:150
 * @route '/photos/{submission}/download'
 */
 download.get = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -277,7 +277,7 @@ download.get = (args: { submission: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:139
+* @see app/Http/Controllers/PhotoSubmissionController.php:150
 * @route '/photos/{submission}/download'
 */
 download.head = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -287,7 +287,7 @@ download.head = (args: { submission: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:139
+* @see app/Http/Controllers/PhotoSubmissionController.php:150
 * @route '/photos/{submission}/download'
 */
 const downloadForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -297,7 +297,7 @@ const downloadForm = (args: { submission: string | number | { id: string | numbe
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:139
+* @see app/Http/Controllers/PhotoSubmissionController.php:150
 * @route '/photos/{submission}/download'
 */
 downloadForm.get = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -307,7 +307,7 @@ downloadForm.get = (args: { submission: string | number | { id: string | number 
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:139
+* @see app/Http/Controllers/PhotoSubmissionController.php:150
 * @route '/photos/{submission}/download'
 */
 downloadForm.head = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

@@ -249,6 +249,26 @@ class PhotoSubmissionTest extends TestCase
     }
 
     /**
+     * Test MIME type validated server-side (attempt spoofed mime type).
+     */
+    public function test_mime_type_validated_server_side(): void
+    {
+        Storage::fake('local');
+        $user = User::factory()->create();
+
+        // Create a fake text file disguised as an image
+        $fakeImage = UploadedFile::fake()->create('malicious.jpg', 100, 'text/plain');
+
+        $response = $this->actingAs($user)->post(route('photos.upload'), [
+            'photo' => $fakeImage,
+        ]);
+
+        // Should reject due to magic bytes validation
+        $response->assertSessionHasErrors(['photo']);
+        $this->assertDatabaseCount('photo_submissions', 0);
+    }
+
+    /**
      * Test user can view their submissions list.
      */
     public function test_user_can_view_their_submissions_list(): void

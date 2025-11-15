@@ -61,6 +61,17 @@ class PhotoSubmissionController extends Controller
         $user = $request->user();
         $photo = $request->file('photo');
 
+        // Verify MIME type using magic bytes (extra security)
+        $finfo = finfo_open(FILEINFO_MIME_TYPE);
+        $actualMimeType = finfo_file($finfo, $photo->getRealPath());
+        finfo_close($finfo);
+
+        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/heic'];
+        if (! in_array($actualMimeType, $allowedMimeTypes)) {
+            return redirect()->route('photos.index')
+                ->withErrors(['photo' => 'Invalid file type detected. Only JPG, PNG, and HEIC images are accepted.']);
+        }
+
         // Generate unique filename using UUID
         $filename = Str::uuid().'.'.$photo->getClientOriginalExtension();
         $storagePath = 'photo-submissions/new/'.$filename;
