@@ -1,4 +1,4 @@
-FROM php:8.4-bookworm
+FROM php:8.4.15RC1-fpm-bookworm
 
 RUN apt-get update && apt-get install -y libmcrypt-dev default-mysql-client libc-client-dev --no-install-recommends \
     && docker-php-ext-install bcmath pdo_mysql
