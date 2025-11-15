@@ -138,11 +138,4 @@ store.form = storeForm
 
 const RecoveryCodeController = { index, store }
 
-export default RecoveryCodeControllerethod: 'post',
-})
-
-store.form = storeForm
-
-const RecoveryCodeController = { index, store }
-
 export default RecoveryCodeController

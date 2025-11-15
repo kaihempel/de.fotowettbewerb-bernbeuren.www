@@ -225,6 +225,8 @@ Always check existing components before creating new ones.
 - Laravel filesystem (local disk for development, extensible to S3/cloud for production) (001-photo-upload)
 - PHP 8.4 + Laravel 12, Inertia.js v2, Laravel Fortify, Laravel Wayfinder, Intervention Image (`intervention/image-laravel`) (002-photo-review-dashboard)
 - SQLite (development), Laravel filesystem (local disk for photos, supports S3 for production) (002-photo-review-dashboard)
+- PHP 8.4 (backend), TypeScript (frontend) + Laravel 12, Inertia.js v2, React 19, Laravel Fortify, Laravel Wayfinder, Radix UI components (003-public-voting)
+- SQLite (development), Laravel filesystem for photos, database for votes (003-public-voting)
 
 ## Recent Changes
 - 001-photo-upload: Added PHP 8.4, TypeScript (React 19) + Laravel 12, Inertia.js v2, Laravel Fortify, Laravel Wayfinder, Radix UI components, Tailwind CSS v4

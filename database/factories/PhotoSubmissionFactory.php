@@ -29,7 +29,7 @@ class PhotoSubmissionFactory extends Factory
             'file_hash' => hash('sha256', fake()->uuid()),
             'mime_type' => 'image/jpeg',
             'status' => 'new',
-            'rate' => null,
+            'rate' => 0,
             'submitted_at' => now(),
             'reviewed_at' => null,
             'reviewed_by' => null,
@@ -46,7 +46,7 @@ class PhotoSubmissionFactory extends Factory
             'file_path' => str_replace('/new/', '/approved/', $attributes['file_path']),
             'reviewed_at' => now(),
             'reviewed_by' => \App\Models\User::factory(),
-            'rate' => fake()->randomFloat(2, 0, 10),
+            'rate' => fake()->numberBetween(0, 100),
         ]);
     }
 
@@ -60,7 +60,7 @@ class PhotoSubmissionFactory extends Factory
             'file_path' => str_replace('/new/', '/declined/', $attributes['file_path']),
             'reviewed_at' => now(),
             'reviewed_by' => \App\Models\User::factory(),
-            'rate' => null,
+            'rate' => 0,
         ]);
     }
 
