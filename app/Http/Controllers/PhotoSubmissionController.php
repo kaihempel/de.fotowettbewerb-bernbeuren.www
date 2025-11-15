@@ -53,12 +53,16 @@ class PhotoSubmissionController extends Controller
 
         $submissions = $query->paginate(15)->withQueryString();
 
-        // Calculate status counts for statistics cards
+        // Calculate status counts for statistics cards using single query
+        $counts = PhotoSubmission::selectRaw('status, COUNT(*) as count')
+            ->groupBy('status')
+            ->pluck('count', 'status');
+
         $statusCounts = [
-            'total' => PhotoSubmission::count(),
-            'new' => PhotoSubmission::where('status', 'new')->count(),
-            'approved' => PhotoSubmission::where('status', 'approved')->count(),
-            'declined' => PhotoSubmission::where('status', 'declined')->count(),
+            'total' => $counts->sum(),
+            'new' => $counts->get('new', 0),
+            'approved' => $counts->get('approved', 0),
+            'declined' => $counts->get('declined', 0),
         ];
 
         return Inertia::render('dashboard', [

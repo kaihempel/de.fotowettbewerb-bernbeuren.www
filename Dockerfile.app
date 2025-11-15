@@ -1,7 +1,9 @@
 FROM php:8.4.15RC1-fpm-bookworm
 
-RUN apt-get update && apt-get install -y libmcrypt-dev default-mysql-client libc-client-dev --no-install-recommends \
-    && docker-php-ext-install bcmath pdo_mysql
+RUN apt-get update && apt-get install -y libmcrypt-dev default-mysql-client libc-client-dev libpng-dev --no-install-recommends
+RUN docker-php-ext-install bcmath
+RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install gd
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
