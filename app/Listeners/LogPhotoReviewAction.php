@@ -26,9 +26,6 @@ class LogPhotoReviewAction
             $event instanceof PhotoDeclined => 'declined',
         };
 
-        $previousReviewer = $event->photoSubmission->reviewer?->name;
-        $previousReviewedAt = $event->photoSubmission->reviewed_at;
-
         AuditLog::create([
             'auditable_type' => get_class($event->photoSubmission),
             'auditable_id' => $event->photoSubmission->id,
@@ -37,8 +34,8 @@ class LogPhotoReviewAction
             'changes' => [
                 'from' => $event->previousStatus,
                 'to' => $event->photoSubmission->status,
-                'previous_reviewer' => $previousReviewer,
-                'previous_reviewed_at' => $previousReviewedAt?->toDateTimeString(),
+                'previous_reviewer' => $event->previousReviewer?->name,
+                'previous_reviewed_at' => $event->previousReviewedAt,
             ],
             'ip_address' => request()->ip(),
         ]);

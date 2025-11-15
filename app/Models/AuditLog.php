@@ -34,7 +34,7 @@ class AuditLog extends Model
     protected function casts(): array
     {
         return [
-            'changes' => 'json',
+            'changes' => 'array',
             'created_at' => 'datetime',
             'updated_at' => 'datetime',
         ];
@@ -77,8 +77,9 @@ class AuditLog extends Model
      */
     public function description(): string
     {
-        $from = $this->changes['from'] ?? 'unknown';
-        $to = $this->changes['to'] ?? 'unknown';
+        $changes = $this->getAttribute('changes') ?? [];
+        $from = $changes['from'] ?? 'unknown';
+        $to = $changes['to'] ?? 'unknown';
 
         return "Changed from {$from} to {$to}";
     }

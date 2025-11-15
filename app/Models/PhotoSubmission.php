@@ -128,6 +128,8 @@ class PhotoSubmission extends Model
     public function approve(User $reviewer): void
     {
         $previousStatus = $this->status;
+        $previousReviewer = $this->reviewer;
+        $previousReviewedAt = $this->reviewed_at?->toDateTimeString();
 
         $this->update([
             'status' => 'approved',
@@ -135,7 +137,7 @@ class PhotoSubmission extends Model
             'reviewed_by' => $reviewer->id,
         ]);
 
-        event(new PhotoApproved($this, $reviewer, $previousStatus));
+        event(new PhotoApproved($this, $reviewer, $previousStatus, $previousReviewer, $previousReviewedAt));
     }
 
     /**
@@ -144,6 +146,8 @@ class PhotoSubmission extends Model
     public function decline(User $reviewer): void
     {
         $previousStatus = $this->status;
+        $previousReviewer = $this->reviewer;
+        $previousReviewedAt = $this->reviewed_at?->toDateTimeString();
 
         $this->update([
             'status' => 'declined',
@@ -151,7 +155,7 @@ class PhotoSubmission extends Model
             'reviewed_by' => $reviewer->id,
         ]);
 
-        event(new PhotoDeclined($this, $reviewer, $previousStatus));
+        event(new PhotoDeclined($this, $reviewer, $previousStatus, $previousReviewer, $previousReviewedAt));
     }
 
     /**

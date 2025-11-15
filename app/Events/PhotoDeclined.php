@@ -17,7 +17,9 @@ class PhotoDeclined
     public function __construct(
         public PhotoSubmission $photoSubmission,
         public User $reviewer,
-        public string $previousStatus
+        public string $previousStatus,
+        public ?User $previousReviewer = null,
+        public ?string $previousReviewedAt = null
     ) {
         //
     }
