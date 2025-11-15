@@ -1,0 +1,572 @@
+openapi: 3.0.0
+info:
+  title: Photo Review Dashboard API
+  description: API for managing photo submissions and review workflow in the Fotowettbewerb Bernbeuren contest platform
+  version: 1.0.0
+  contact:
+    name: Photo Contest Team
+  license:
+    name: MIT
+
+servers:
+  - url: https://de.fotowettbewerb-bernbeuren.www
+    description: Production server
+  - url: http://localhost:8000
+    description: Local development server
+
+tags:
+  - name: Photos
+    description: Photo submission management and review operations
+  - name: Dashboard
+    description: Dashboard and review workflows
+
+paths:
+  /dashboard/photos:
+    get:
+      summary: Get paginated list of photo submissions
+      description: Retrieve a paginated list of photo submissions with optional filtering by status. Supports Inertia.js pagination structure.
+      operationId: listPhotoSubmissions
+      tags:
+        - Dashboard
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          description: Filter by submission status
+          required: false
+          schema:
+            type: string
+            enum:
+              - all
+              - new
+              - approved
+              - declined
+            default: all
+        - name: page
+          in: query
+          description: Page number for pagination (1-indexed)
+          required: false
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: per_page
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            minimum: 10
+            maximum: 100
+            default: 15
+      responses:
+        '200':
+          description: Successfully retrieved photo submissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoSubmissionListResponse'
+              example:
+                data:
+                  - id: 1
+                    user:
+                      id: 5
+                      name: Max Mustermann
+                      email: max@example.com
+                      role: user
+                    original_filename: Landscape_01.jpg
+                    file_path: photos/submissions/landscape_01.jpg
+                    thumbnail_path: photos/submissions/thumbs/landscape_01_thumb.jpg
+                    status: new
+                    reviewed_at: null
+                    approved_at: null
+                    declined_at: null
+                    reviewer:
+                      id: 2
+                      name: Admin User
+                      email: admin@example.com
+                      role: admin
+                    created_at: '2025-11-15T10:30:00Z'
+                    updated_at: '2025-11-15T10:30:00Z'
+                  - id: 2
+                    user:
+                      id: 6
+                      name: Anna Schmidt
+                      email: anna@example.com
+                      role: user
+                    original_filename: Portrait_02.jpg
+                    file_path: photos/submissions/portrait_02.jpg
+                    thumbnail_path: photos/submissions/thumbs/portrait_02_thumb.jpg
+                    status: approved
+                    reviewed_at: '2025-11-14T15:45:00Z'
+                    approved_at: '2025-11-14T15:45:00Z'
+                    declined_at: null
+                    reviewer:
+                      id: 2
+                      name: Admin User
+                      email: admin@example.com
+                      role: admin
+                    created_at: '2025-11-14T08:20:00Z'
+                    updated_at: '2025-11-14T15:45:00Z'
+                meta:
+                  current_page: 1
+                  from: 1
+                  last_page: 5
+                  per_page: 15
+                  to: 15
+                  total: 75
+                links:
+                  first: /dashboard/photos?page=1
+                  last: /dashboard/photos?page=5
+                  prev: null
+                  next: /dashboard/photos?page=2
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - User lacks reviewer or admin role
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+
+  /photos/{id}/approve:
+    patch:
+      summary: Approve a photo submission
+      description: Mark a photo submission as approved by the reviewer. Updates reviewed_at and approved_at timestamps. Only reviewers and admins can approve submissions.
+      operationId: approvePhotoSubmission
+      tags:
+        - Photos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the photo submission to approve
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Optional reviewer notes
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                notes:
+                  type: string
+                  description: Optional reviewer notes about the approval
+                  maxLength: 500
+              example:
+                notes: Excellent composition and lighting
+      responses:
+        '200':
+          description: Photo submission successfully approved
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoSubmissionResponse'
+              example:
+                data:
+                  id: 1
+                  user:
+                    id: 5
+                    name: Max Mustermann
+                    email: max@example.com
+                    role: user
+                  original_filename: Landscape_01.jpg
+                  file_path: photos/submissions/landscape_01.jpg
+                  thumbnail_path: photos/submissions/thumbs/landscape_01_thumb.jpg
+                  status: approved
+                  reviewed_at: '2025-11-15T14:22:30Z'
+                  approved_at: '2025-11-15T14:22:30Z'
+                  declined_at: null
+                  reviewer:
+                    id: 2
+                    name: Admin User
+                    email: admin@example.com
+                    role: admin
+                  notes: Excellent composition and lighting
+                  created_at: '2025-11-15T10:30:00Z'
+                  updated_at: '2025-11-15T14:22:30Z'
+                message: Photo submission approved successfully
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - User lacks permission to approve submissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found - Photo submission does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict - Photo has already been reviewed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: This photo submission has already been reviewed
+                errors:
+                  status: Photo is already in approved or declined status
+
+  /photos/{id}/decline:
+    patch:
+      summary: Decline a photo submission
+      description: Mark a photo submission as declined by the reviewer. Updates reviewed_at and declined_at timestamps. Requires reason. Only reviewers and admins can decline submissions.
+      operationId: declinePhotoSubmission
+      tags:
+        - Photos
+      security:
+        - BearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          description: The ID of the photo submission to decline
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Decline reason (required)
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                reason:
+                  type: string
+                  description: Reason for declining the photo submission
+                  minLength: 10
+                  maxLength: 500
+              required:
+                - reason
+              example:
+                reason: Image quality is below submission standards. Please resubmit with higher resolution.
+      responses:
+        '200':
+          description: Photo submission successfully declined
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PhotoSubmissionResponse'
+              example:
+                data:
+                  id: 3
+                  user:
+                    id: 7
+                    name: Johann Bauer
+                    email: johann@example.com
+                    role: user
+                  original_filename: Blurry_Photo.jpg
+                  file_path: photos/submissions/blurry_photo.jpg
+                  thumbnail_path: photos/submissions/thumbs/blurry_photo_thumb.jpg
+                  status: declined
+                  reviewed_at: '2025-11-15T16:10:45Z'
+                  approved_at: null
+                  declined_at: '2025-11-15T16:10:45Z'
+                  reviewer:
+                    id: 2
+                    name: Admin User
+                    email: admin@example.com
+                    role: admin
+                  decline_reason: Image quality is below submission standards. Please resubmit with higher resolution.
+                  created_at: '2025-11-15T09:15:00Z'
+                  updated_at: '2025-11-15T16:10:45Z'
+                message: Photo submission declined successfully
+        '400':
+          description: Bad request - Missing or invalid decline reason
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: The decline reason field is required
+                errors:
+                  reason:
+                    - The reason must be between 10 and 500 characters
+        '401':
+          description: Unauthorized - User not authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '403':
+          description: Forbidden - User lacks permission to decline submissions
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '404':
+          description: Not found - Photo submission does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '409':
+          description: Conflict - Photo has already been reviewed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                message: This photo submission has already been reviewed
+                errors:
+                  status: Photo is already in approved or declined status
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: Laravel Sanctum token authentication
+
+  schemas:
+    PhotoSubmission:
+      type: object
+      description: A photo submission in the contest
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique identifier for the photo submission
+          example: 1
+        user:
+          $ref: '#/components/schemas/User'
+        original_filename:
+          type: string
+          description: Original filename uploaded by user
+          example: Landscape_01.jpg
+        file_path:
+          type: string
+          description: Storage path to the full-resolution photo
+          example: photos/submissions/landscape_01.jpg
+        thumbnail_path:
+          type: string
+          description: Storage path to the thumbnail image
+          example: photos/submissions/thumbs/landscape_01_thumb.jpg
+        status:
+          type: string
+          enum:
+            - new
+            - approved
+            - declined
+          description: Current review status of the submission
+          example: new
+        reviewed_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when submission was reviewed
+          example: '2025-11-15T14:22:30Z'
+        approved_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when submission was approved (null if not approved)
+          example: '2025-11-15T14:22:30Z'
+        declined_at:
+          type: string
+          format: date-time
+          nullable: true
+          description: Timestamp when submission was declined (null if not declined)
+          example: null
+        decline_reason:
+          type: string
+          nullable: true
+          description: Reason provided when submission was declined
+          example: Image quality is below submission standards
+        notes:
+          type: string
+          nullable: true
+          description: Optional reviewer notes
+          example: Excellent composition and lighting
+        reviewer:
+          $ref: '#/components/schemas/User'
+          description: User who reviewed/approved/declined this submission
+        created_at:
+          type: string
+          format: date-time
+          description: Timestamp when submission was created
+          example: '2025-11-15T10:30:00Z'
+        updated_at:
+          type: string
+          format: date-time
+          description: Timestamp when submission was last updated
+          example: '2025-11-15T14:22:30Z'
+      required:
+        - id
+        - user
+        - original_filename
+        - file_path
+        - thumbnail_path
+        - status
+        - created_at
+        - updated_at
+
+    User:
+      type: object
+      description: User information
+      properties:
+        id:
+          type: integer
+          format: int64
+          description: Unique user identifier
+          example: 5
+        name:
+          type: string
+          description: User's full name
+          example: Max Mustermann
+        email:
+          type: string
+          format: email
+          description: User's email address
+          example: max@example.com
+        role:
+          type: string
+          enum:
+            - user
+            - reviewer
+            - admin
+          description: User's role in the system
+          example: user
+      required:
+        - id
+        - name
+        - email
+        - role
+
+    PaginatedMeta:
+      type: object
+      description: Pagination metadata following Inertia.js conventions
+      properties:
+        current_page:
+          type: integer
+          description: Current page number
+          example: 1
+        from:
+          type: integer
+          description: Index of first item on current page
+          example: 1
+        last_page:
+          type: integer
+          description: Total number of pages
+          example: 5
+        per_page:
+          type: integer
+          description: Number of items per page
+          example: 15
+        to:
+          type: integer
+          description: Index of last item on current page
+          example: 15
+        total:
+          type: integer
+          description: Total number of items
+          example: 75
+      required:
+        - current_page
+        - from
+        - last_page
+        - per_page
+        - to
+        - total
+
+    PaginatedLinks:
+      type: object
+      description: Navigation links for pagination
+      properties:
+        first:
+          type: string
+          nullable: true
+          description: URL to first page
+          example: /dashboard/photos?page=1
+        last:
+          type: string
+          nullable: true
+          description: URL to last page
+          example: /dashboard/photos?page=5
+        prev:
+          type: string
+          nullable: true
+          description: URL to previous page (null on first page)
+          example: null
+        next:
+          type: string
+          nullable: true
+          description: URL to next page (null on last page)
+          example: /dashboard/photos?page=2
+      required:
+        - first
+        - last
+        - prev
+        - next
+
+    PhotoSubmissionListResponse:
+      type: object
+      description: Paginated response containing list of photo submissions
+      properties:
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/PhotoSubmission'
+          description: Array of photo submissions
+        meta:
+          $ref: '#/components/schemas/PaginatedMeta'
+        links:
+          $ref: '#/components/schemas/PaginatedLinks'
+      required:
+        - data
+        - meta
+        - links
+
+    PhotoSubmissionResponse:
+      type: object
+      description: Single photo submission response with message
+      properties:
+        data:
+          $ref: '#/components/schemas/PhotoSubmission'
+        message:
+          type: string
+          description: Success message
+          example: Photo submission approved successfully
+      required:
+        - data
+        - message
+
+    ErrorResponse:
+      type: object
+      description: Error response with validation details
+      properties:
+        message:
+          type: string
+          description: Human-readable error message
+          example: The given data was invalid
+        errors:
+          type: object
+          description: Field-level validation errors
+          additionalProperties:
+            type: array
+            items:
+              type: string
+          example:
+            reason:
+              - The reason must be between 10 and 500 characters
+      required:
+        - message

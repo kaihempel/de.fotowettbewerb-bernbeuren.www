@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @see app/Http/Controllers/PhotoSubmissionController.php:100
 * @route '/photos/submissions'
 */
 export const submissions = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ submissions.definition = {
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @see app/Http/Controllers/PhotoSubmissionController.php:100
 * @route '/photos/submissions'
 */
 submissions.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ submissions.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @see app/Http/Controllers/PhotoSubmissionController.php:100
 * @route '/photos/submissions'
 */
 submissions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -116,7 +116,7 @@ submissions.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @see app/Http/Controllers/PhotoSubmissionController.php:100
 * @route '/photos/submissions'
 */
 submissions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -126,7 +126,7 @@ submissions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @see app/Http/Controllers/PhotoSubmissionController.php:100
 * @route '/photos/submissions'
 */
 const submissionsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -136,7 +136,7 @@ const submissionsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @see app/Http/Controllers/PhotoSubmissionController.php:100
 * @route '/photos/submissions'
 */
 submissionsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -146,7 +146,7 @@ submissionsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @see app/Http/Controllers/PhotoSubmissionController.php:100
 * @route '/photos/submissions'
 */
 submissionsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -163,7 +163,7 @@ submissions.form = submissionsForm
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::store
-* @see app/Http/Controllers/PhotoSubmissionController.php:59
+* @see app/Http/Controllers/PhotoSubmissionController.php:119
 * @route '/photos/upload'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -178,7 +178,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::store
-* @see app/Http/Controllers/PhotoSubmissionController.php:59
+* @see app/Http/Controllers/PhotoSubmissionController.php:119
 * @route '/photos/upload'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -187,7 +187,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::store
-* @see app/Http/Controllers/PhotoSubmissionController.php:59
+* @see app/Http/Controllers/PhotoSubmissionController.php:119
 * @route '/photos/upload'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -197,7 +197,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::store
-* @see app/Http/Controllers/PhotoSubmissionController.php:59
+* @see app/Http/Controllers/PhotoSubmissionController.php:119
 * @route '/photos/upload'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -207,7 +207,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::store
-* @see app/Http/Controllers/PhotoSubmissionController.php:59
+* @see app/Http/Controllers/PhotoSubmissionController.php:119
 * @route '/photos/upload'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -219,7 +219,7 @@ store.form = storeForm
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:150
+* @see app/Http/Controllers/PhotoSubmissionController.php:210
 * @route '/photos/{submission}/download'
 */
 export const download = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -234,7 +234,7 @@ download.definition = {
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:150
+* @see app/Http/Controllers/PhotoSubmissionController.php:210
 * @route '/photos/{submission}/download'
 */
 download.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -267,7 +267,7 @@ download.url = (args: { submission: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:150
+* @see app/Http/Controllers/PhotoSubmissionController.php:210
 * @route '/photos/{submission}/download'
 */
 download.get = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -277,7 +277,7 @@ download.get = (args: { submission: string | number | { id: string | number } } 
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:150
+* @see app/Http/Controllers/PhotoSubmissionController.php:210
 * @route '/photos/{submission}/download'
 */
 download.head = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -287,7 +287,7 @@ download.head = (args: { submission: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:150
+* @see app/Http/Controllers/PhotoSubmissionController.php:210
 * @route '/photos/{submission}/download'
 */
 const downloadForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -297,7 +297,7 @@ const downloadForm = (args: { submission: string | number | { id: string | numbe
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:150
+* @see app/Http/Controllers/PhotoSubmissionController.php:210
 * @route '/photos/{submission}/download'
 */
 downloadForm.get = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -307,7 +307,7 @@ downloadForm.get = (args: { submission: string | number | { id: string | number 
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:150
+* @see app/Http/Controllers/PhotoSubmissionController.php:210
 * @route '/photos/{submission}/download'
 */
 downloadForm.head = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -322,6 +322,267 @@ downloadForm.head = (args: { submission: string | number | { id: string | number
 
 download.form = downloadForm
 
-const PhotoSubmissionController = { index, submissions, store, download }
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
+* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @route '/dashboard/photos'
+*/
+export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dashboard.url(options),
+    method: 'get',
+})
+
+dashboard.definition = {
+    methods: ["get","head"],
+    url: '/dashboard/photos',
+} satisfies RouteDefinition<["get","head"]>
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
+* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @route '/dashboard/photos'
+*/
+dashboard.url = (options?: RouteQueryOptions) => {
+    return dashboard.definition.url + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
+* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @route '/dashboard/photos'
+*/
+dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: dashboard.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
+* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @route '/dashboard/photos'
+*/
+dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: dashboard.url(options),
+    method: 'head',
+})
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
+* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @route '/dashboard/photos'
+*/
+const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dashboard.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
+* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @route '/dashboard/photos'
+*/
+dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dashboard.url(options),
+    method: 'get',
+})
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
+* @see app/Http/Controllers/PhotoSubmissionController.php:40
+* @route '/dashboard/photos'
+*/
+dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: dashboard.url({
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'HEAD',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'get',
+})
+
+dashboard.form = dashboardForm
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::approve
+* @see app/Http/Controllers/PhotoSubmissionController.php:74
+* @route '/photos/{submission}/approve'
+*/
+export const approve = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: approve.url(args, options),
+    method: 'patch',
+})
+
+approve.definition = {
+    methods: ["patch"],
+    url: '/photos/{submission}/approve',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::approve
+* @see app/Http/Controllers/PhotoSubmissionController.php:74
+* @route '/photos/{submission}/approve'
+*/
+approve.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { submission: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { submission: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            submission: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        submission: typeof args.submission === 'object'
+        ? args.submission.id
+        : args.submission,
+    }
+
+    return approve.definition.url
+            .replace('{submission}', parsedArgs.submission.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::approve
+* @see app/Http/Controllers/PhotoSubmissionController.php:74
+* @route '/photos/{submission}/approve'
+*/
+approve.patch = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: approve.url(args, options),
+    method: 'patch',
+})
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::approve
+* @see app/Http/Controllers/PhotoSubmissionController.php:74
+* @route '/photos/{submission}/approve'
+*/
+const approveForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: approve.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::approve
+* @see app/Http/Controllers/PhotoSubmissionController.php:74
+* @route '/photos/{submission}/approve'
+*/
+approveForm.patch = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: approve.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+approve.form = approveForm
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::decline
+* @see app/Http/Controllers/PhotoSubmissionController.php:87
+* @route '/photos/{submission}/decline'
+*/
+export const decline = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: decline.url(args, options),
+    method: 'patch',
+})
+
+decline.definition = {
+    methods: ["patch"],
+    url: '/photos/{submission}/decline',
+} satisfies RouteDefinition<["patch"]>
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::decline
+* @see app/Http/Controllers/PhotoSubmissionController.php:87
+* @route '/photos/{submission}/decline'
+*/
+decline.url = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
+    if (typeof args === 'string' || typeof args === 'number') {
+        args = { submission: args }
+    }
+
+    if (typeof args === 'object' && !Array.isArray(args) && 'id' in args) {
+        args = { submission: args.id }
+    }
+
+    if (Array.isArray(args)) {
+        args = {
+            submission: args[0],
+        }
+    }
+
+    args = applyUrlDefaults(args)
+
+    const parsedArgs = {
+        submission: typeof args.submission === 'object'
+        ? args.submission.id
+        : args.submission,
+    }
+
+    return decline.definition.url
+            .replace('{submission}', parsedArgs.submission.toString())
+            .replace(/\/+$/, '') + queryParams(options)
+}
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::decline
+* @see app/Http/Controllers/PhotoSubmissionController.php:87
+* @route '/photos/{submission}/decline'
+*/
+decline.patch = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'patch'> => ({
+    url: decline.url(args, options),
+    method: 'patch',
+})
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::decline
+* @see app/Http/Controllers/PhotoSubmissionController.php:87
+* @route '/photos/{submission}/decline'
+*/
+const declineForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: decline.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+/**
+* @see \App\Http\Controllers\PhotoSubmissionController::decline
+* @see app/Http/Controllers/PhotoSubmissionController.php:87
+* @route '/photos/{submission}/decline'
+*/
+declineForm.patch = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
+    action: decline.url(args, {
+        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
+            _method: 'PATCH',
+            ...(options?.query ?? options?.mergeQuery ?? {}),
+        }
+    }),
+    method: 'post',
+})
+
+decline.form = declineForm
+
+const PhotoSubmissionController = { index, submissions, store, download, dashboard, approve, decline }
 
 export default PhotoSubmissionController

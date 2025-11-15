@@ -24,6 +24,7 @@ class PhotoSubmissionFactory extends Factory
             'original_filename' => fake()->word().'.jpg',
             'stored_filename' => $filename,
             'file_path' => 'photo-submissions/new/'.$filename,
+            'thumbnail_path' => null,
             'file_size' => fake()->numberBetween(1000000, 15728640),
             'file_hash' => hash('sha256', fake()->uuid()),
             'mime_type' => 'image/jpeg',
@@ -60,6 +61,28 @@ class PhotoSubmissionFactory extends Factory
             'reviewed_at' => now(),
             'reviewed_by' => \App\Models\User::factory(),
             'rate' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the submission is pending review.
+     */
+    public function pending(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'status' => 'new',
+            'reviewed_at' => null,
+            'reviewed_by' => null,
+        ]);
+    }
+
+    /**
+     * Indicate that the submission has a thumbnail.
+     */
+    public function withThumbnail(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'thumbnail_path' => 'thumbnails/'.$attributes['stored_filename'],
         ]);
     }
 }

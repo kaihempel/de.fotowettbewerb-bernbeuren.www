@@ -35,6 +35,66 @@ class PhotoSubmissionController extends Controller
     }
 
     /**
+     * Display the photo review dashboard (for reviewers/admins).
+     */
+    public function dashboard(): InertiaResponse
+    {
+        $this->authorize('viewAny', PhotoSubmission::class);
+
+        $status = request('status');
+
+        $query = PhotoSubmission::query()
+            ->with(['user:id,name,email', 'reviewer:id,name,email', 'auditLogs.user'])
+            ->recent();
+
+        if ($status && in_array($status, ['new', 'approved', 'declined'])) {
+            $query->byStatus($status);
+        }
+
+        $submissions = $query->paginate(15)->withQueryString();
+
+        // Calculate status counts for statistics cards
+        $statusCounts = [
+            'total' => PhotoSubmission::count(),
+            'new' => PhotoSubmission::where('status', 'new')->count(),
+            'approved' => PhotoSubmission::where('status', 'approved')->count(),
+            'declined' => PhotoSubmission::where('status', 'declined')->count(),
+        ];
+
+        return Inertia::render('dashboard', [
+            'submissions' => $submissions,
+            'statusCounts' => $statusCounts,
+            'currentStatus' => $status,
+        ]);
+    }
+
+    /**
+     * Approve a photo submission.
+     */
+    public function approve(PhotoSubmission $submission): RedirectResponse
+    {
+        $this->authorize('approve', $submission);
+
+        $reviewer = auth()->user();
+        $submission->approve($reviewer);
+
+        return redirect()->back()->with('success', 'Photo approved successfully.');
+    }
+
+    /**
+     * Decline a photo submission.
+     */
+    public function decline(PhotoSubmission $submission): RedirectResponse
+    {
+        $this->authorize('decline', $submission);
+
+        $reviewer = auth()->user();
+        $submission->decline($reviewer);
+
+        return redirect()->back()->with('success', 'Photo declined successfully.');
+    }
+
+    /**
      * Display user's submissions page.
      */
     public function submissions(): InertiaResponse
