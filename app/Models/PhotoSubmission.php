@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class PhotoSubmission extends Model
@@ -54,7 +55,7 @@ class PhotoSubmission extends Model
         return [
             'submitted_at' => 'datetime',
             'reviewed_at' => 'datetime',
-            'rate' => 'decimal:2',
+            'rate' => 'integer',
         ];
     }
 
@@ -115,11 +116,27 @@ class PhotoSubmission extends Model
     }
 
     /**
+     * Scope query to approved submissions.
+     */
+    public function scopeApproved(Builder $query): Builder
+    {
+        return $query->where('status', 'approved');
+    }
+
+    /**
      * Get the audit log entries for this submission.
      */
     public function auditLogs(): MorphMany
     {
         return $this->morphMany(AuditLog::class, 'auditable')->latest();
+    }
+
+    /**
+     * Get all votes for this photo submission.
+     */
+    public function votes(): HasMany
+    {
+        return $this->hasMany(PhotoVote::class);
     }
 
     /**
@@ -166,6 +183,51 @@ class PhotoSubmission extends Model
         return $this->auditLogs()
             ->whereIn('action_type', ['approved', 'declined'])
             ->count();
+    }
+
+    /**
+     * Get the next unrated photo for a visitor.
+     */
+    public function getNextUnratedFor(string $fwbId): ?self
+    {
+        return static::approved()
+            ->where('created_at', '>', $this->created_at)
+            ->whereDoesntHave('votes', fn ($q) => $q->where('fwb_id', $fwbId))
+            ->orderBy('created_at', 'asc')
+            ->first();
+    }
+
+    /**
+     * Get the previous rated photo for a visitor.
+     */
+    public function getPreviousRatedFor(string $fwbId): ?self
+    {
+        return static::approved()
+            ->where('created_at', '<', $this->created_at)
+            ->whereHas('votes', fn ($q) => $q->where('fwb_id', $fwbId))
+            ->orderBy('created_at', 'desc')
+            ->first();
+    }
+
+    /**
+     * Update the photo's rating by adjusting with the given value.
+     * Ensures the rate never goes below 0.
+     */
+    public function updateRate(int $adjustment): void
+    {
+        $this->update([
+            'rate' => max(0, $this->rate + $adjustment),
+        ]);
+    }
+
+    /**
+     * Get the user's vote for this photo.
+     */
+    public function getUserVote(string $fwbId): ?PhotoVote
+    {
+        return $this->votes()
+            ->where('fwb_id', $fwbId)
+            ->first();
     }
 
     /**

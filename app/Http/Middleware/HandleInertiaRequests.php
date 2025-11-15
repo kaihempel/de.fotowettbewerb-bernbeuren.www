@@ -50,6 +50,7 @@ class HandleInertiaRequests extends Middleware
                 ] : null,
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
+            'fwb_id' => $request->cookie('fwb_id'),
         ];
     }
 }

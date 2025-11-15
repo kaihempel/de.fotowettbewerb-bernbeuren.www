@@ -10,6 +10,13 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
+// Public gallery routes (no authentication required)
+Route::get('gallery', [App\Http\Controllers\PublicGalleryController::class, 'index'])->name('gallery.index');
+Route::get('gallery/{photoSubmission}', [App\Http\Controllers\PublicGalleryController::class, 'show'])->name('gallery.show');
+Route::post('gallery/{photoSubmission}/vote', [App\Http\Controllers\PublicGalleryController::class, 'vote'])
+    ->middleware('throttle:votes')
+    ->name('gallery.vote');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('dashboard', function () {
         return Inertia::render('dashboard');
