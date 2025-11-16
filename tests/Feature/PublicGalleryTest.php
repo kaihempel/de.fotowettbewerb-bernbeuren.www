@@ -83,32 +83,28 @@ class PublicGalleryTest extends TestCase
 
     // US2: Navigation tests
 
-    public function test_gallery_index_shows_first_unrated_photo(): void
+    public function test_gallery_landing_page_displays_all_photos(): void
     {
         $user = User::factory()->create();
-        $photo1 = PhotoSubmission::factory()->create([
+        $photo1 = PhotoSubmission::factory()->approved()->create([
             'user_id' => $user->id,
-            'status' => 'approved',
             'created_at' => now()->subDays(3),
         ]);
-        $photo2 = PhotoSubmission::factory()->create([
+        $photo2 = PhotoSubmission::factory()->approved()->create([
             'user_id' => $user->id,
-            'status' => 'approved',
             'created_at' => now()->subDays(2),
         ]);
 
         $response = $this->get(route('gallery'));
-        $fwbId = $response->getCookie('fwb_id')->getValue();
 
-        // Vote on photo1
-        PhotoVote::factory()->forVisitor($fwbId)->create([
-            'photo_submission_id' => $photo1->id,
-            'vote_type' => true,
-        ]);
-
-        $response = $this->withCookie('fwb_id', $fwbId)->get(route('gallery'));
-
-        $response->assertRedirect(route('gallery.show', $photo2));
+        // Should render landing page with all approved photos
+        $response->assertStatus(200);
+        $response->assertInertia(fn ($page) => $page
+            ->component('landing')
+            ->has('photos', 2)
+            ->where('photos.0.id', $photo1->id)
+            ->where('photos.1.id', $photo2->id)
+        );
     }
 
     public function test_next_button_navigates_to_next_unrated_photo(): void

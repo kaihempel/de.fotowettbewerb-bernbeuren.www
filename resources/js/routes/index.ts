@@ -219,7 +219,7 @@ register.form = registerForm
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/'
 */
 export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -234,7 +234,7 @@ home.definition = {
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/'
 */
 home.url = (options?: RouteQueryOptions) => {
@@ -243,7 +243,7 @@ home.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/'
 */
 home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -253,7 +253,7 @@ home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/'
 */
 home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -263,7 +263,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/'
 */
 const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -273,7 +273,7 @@ const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/'
 */
 homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -283,7 +283,7 @@ homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/'
 */
 homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -300,7 +300,7 @@ home.form = homeForm
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/gallery'
 */
 export const gallery = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -315,7 +315,7 @@ gallery.definition = {
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/gallery'
 */
 gallery.url = (options?: RouteQueryOptions) => {
@@ -324,7 +324,7 @@ gallery.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/gallery'
 */
 gallery.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -334,7 +334,7 @@ gallery.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/gallery'
 */
 gallery.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -344,7 +344,7 @@ gallery.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/gallery'
 */
 const galleryForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -354,7 +354,7 @@ const galleryForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/gallery'
 */
 galleryForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -364,7 +364,7 @@ galleryForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see app/Http/Controllers/PublicGalleryController.php:50
 * @route '/gallery'
 */
 galleryForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

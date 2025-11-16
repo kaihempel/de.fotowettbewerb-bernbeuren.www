@@ -28,41 +28,45 @@ class PublicGalleryController extends Controller
             ->orderBy('id', 'asc')
             ->cursorPaginate(20);
 
+        // Transform photos to include only necessary fields
+        $photos = collect($paginator->items())->map(fn (PhotoSubmission $photo) => [
+            'id' => $photo->id,
+            'thumbnail_url' => $photo->thumbnail_url,
+            'full_image_url' => $photo->full_image_url,
+            'rate' => $photo->rate,
+            'created_at' => $photo->created_at,
+        ]);
+
         return response()->json([
-            'photos' => $paginator->items(),
+            'photos' => $photos,
             'next_cursor' => $paginator->nextCursor()?->encode(),
             'has_more' => $paginator->hasMorePages(),
         ]);
     }
 
     /**
-     * Display the gallery entry point, redirecting to the first unrated photo.
+     * Display the gallery landing page with approved photos.
      */
-    public function gallery(Request $request): RedirectResponse|Response
+    public function gallery(): Response
     {
-        $fwbId = $request->cookie('fwb_id');
-
-        // Get the first unrated photo
-        $firstUnratedPhoto = PhotoSubmission::approved()
-            ->whereDoesntHave('votes', fn ($q) => $q->where('fwb_id', $fwbId))
+        // Fetch approved photos with thumbnail and file paths
+        $photos = PhotoSubmission::query()
+            ->approved()
+            ->whereNotNull('file_path')
+            ->whereNotNull('thumbnail_path')
             ->orderBy('created_at', 'asc')
-            ->first();
+            ->get()
+            ->map(fn (PhotoSubmission $photo) => [
+                'id' => $photo->id,
+                'thumbnail_url' => $photo->thumbnail_url,
+                'full_image_url' => $photo->full_image_url,
+                'rate' => $photo->rate,
+                'created_at' => $photo->created_at,
+            ]);
 
-        if ($firstUnratedPhoto) {
-            return redirect()->route('gallery.show', $firstUnratedPhoto);
-        }
-
-        // If all photos are rated, show the first photo chronologically
-        $firstPhoto = PhotoSubmission::approved()
-            ->orderBy('created_at', 'asc')
-            ->first();
-
-        if ($firstPhoto) {
-            return redirect()->route('gallery.show', $firstPhoto);
-        }
-
-        // No approved photos available - render welcome page
-        return Inertia::render('welcome');
+        return Inertia::render('landing', [
+            'photos' => $photos,
+        ]);
     }
 
     /**
