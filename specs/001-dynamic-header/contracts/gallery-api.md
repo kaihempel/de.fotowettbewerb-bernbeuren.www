@@ -7,7 +7,7 @@
 
 ## Overview
 
-This contract defines the data structure and interaction pattern between the Laravel backend (`PublicGalleryController`) and the React frontend (`Gallery.tsx` page component) via Inertia.js v2.
+This contract defines the data structure and interaction pattern between the Laravel backend (`PublicGalleryController`) and the React frontend (`gallery.tsx` page component) via Inertia.js v2.
 
 **Note**: This is not a REST API. Inertia.js uses server-side rendering with JSON props, so no separate API endpoints are needed.
 
@@ -293,7 +293,7 @@ Cache::remember('approved_photos', 300, function () {
 
 ### Frontend Tests (Vitest/Jest)
 
-- [ ] Test `Gallery.tsx` renders with photo data
+- [ ] Test `gallery.tsx` renders with photo data
 - [ ] Test empty state message when `photos.length === 0`
 - [ ] Test photo click navigates to rating page
 - [ ] Test responsive grid layout (1/3/4 columns)
@@ -340,7 +340,7 @@ class PublicGalleryController extends Controller
 ### Frontend (React)
 
 ```tsx
-// resources/js/Pages/Gallery.tsx
+// resources/js/Pages/gallery.tsx
 import { Head, Link } from '@inertiajs/react';
 import PublicHeader from '@/components/public-header';
 import PhotoGrid from '@/components/photo-grid';
@@ -382,7 +382,7 @@ export default function Gallery({ photos }: Props) {
 ## Summary
 
 This API contract defines:
-- **1 Inertia page component**: `Gallery.tsx`
+- **1 Inertia page component**: `gallery.tsx`
 - **1 backend controller method**: `PublicGalleryController@gallery`
 - **1 data schema**: `Photo` object with 6 fields
 - **Performance targets**: 5s/3G, 2s/broadband (SC-009)

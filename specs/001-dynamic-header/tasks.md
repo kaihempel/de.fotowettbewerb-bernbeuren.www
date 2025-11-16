@@ -67,8 +67,8 @@
 - [ ] T011 [P] [US1] Implement aspect ratio preservation (object-contain, aspect-auto) in resources/js/components/photo-grid.tsx
 - [ ] T012 [P] [US1] Add photo click navigation to rating page using Wayfinder in resources/js/components/photo-grid.tsx
 - [ ] T013 [P] [US1] Add lazy loading (loading="lazy") for below-fold images in resources/js/components/photo-grid.tsx
-- [ ] T014 [US1] Create Gallery page component replacing welcome.tsx in resources/js/Pages/Gallery.tsx
-- [ ] T015 [US1] Implement empty state handling ("No photos available yet") in resources/js/Pages/Gallery.tsx
+- [ ] T014 [US1] Create Gallery page component replacing welcome.tsx in resources/js/Pages/gallery.tsx
+- [ ] T015 [US1] Implement empty state handling ("No photos available yet") in resources/js/Pages/gallery.tsx
 
 **Test Validation**: Run `php artisan test --filter=LandingPageTest` (should pass - green phase)
 
@@ -95,7 +95,7 @@
 - [ ] T019 [P] [US2] Implement menu close on item selection, outside click, and Escape key in resources/js/components/public-header.tsx
 - [ ] T020 [US2] Add ARIA labels (aria-label="Open navigation menu") and keyboard navigation support in resources/js/components/public-header.tsx
 
-**Integration**: Update Gallery.tsx to include PublicHeader component
+**Integration**: Update gallery.tsx to include PublicHeader component
 
 **Test Validation**: Manual test - open menu, navigate through items with Tab key, verify routes
 
@@ -137,7 +137,7 @@
 
 - [ ] T025 [US4] Add responsive breakpoints to PhotoGrid (grid-cols-1 md:grid-cols-3 lg:grid-cols-4) in resources/js/components/photo-grid.tsx
 - [ ] T026 [P] [US4] Add responsive header sizing for mobile/tablet/desktop in resources/js/components/public-header.tsx
-- [ ] T027 [US4] Add spacer div (h-[20vh]) to prevent content hiding under fixed header in resources/js/Pages/Gallery.tsx
+- [ ] T027 [US4] Add spacer div (h-[20vh]) to prevent content hiding under fixed header in resources/js/Pages/gallery.tsx
 
 **Test Validation**: Manual test with DevTools responsive mode (320px, 768px, 1024px widths)
 
@@ -329,8 +329,8 @@ Each iteration delivers independently testable value!
 2. `resources/js/hooks/use-scroll-position.ts` - Scroll detection hook
 3. `resources/js/components/public-header.tsx` - Dynamic header component
 4. `resources/js/components/photo-grid.tsx` - Responsive photo grid
-5. `resources/js/Pages/Gallery.tsx` - Main landing page (replaces welcome.tsx)
-6. `resources/js/Pages/welcome.tsx` - DELETE or rename to Gallery.tsx
+5. `resources/js/Pages/gallery.tsx` - Main landing page (replaces welcome.tsx)
+6. `resources/js/Pages/welcome.tsx` - DELETE or rename to gallery.tsx
 
 ### Files Modified (0)
 

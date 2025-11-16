@@ -121,7 +121,7 @@ Implement a public-facing photo voting system that allows anonymous users to rat
 ### ✅ II. Type Safety & Modern Standards
 - **Re-validated**: PASS
 - All model methods have explicit return types (see data-model.md)
-- React components use TypeScript with strict typing (Gallery.tsx props interface)
+- React components use TypeScript with strict typing (gallery.tsx props interface)
 - Wayfinder routes for type-safe navigation
 - `casts()` method used in PhotoVote model
 - Boolean type for vote_type field
@@ -225,7 +225,7 @@ database/
 resources/
 ├── js/
 │   ├── Pages/
-│   │   └── Gallery.tsx                     # Main voting page (new)
+│   │   └── gallery.tsx                     # Main voting page (new)
 │   ├── components/
 │   │   ├── PhotoViewer.tsx                 # Full-screen photo display (new)
 │   │   ├── VotingButtons.tsx               # Thumbs up/down buttons (new)

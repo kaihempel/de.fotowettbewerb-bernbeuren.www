@@ -195,7 +195,7 @@ sequenceDiagram
 ### Frontend Props
 
 ```typescript
-// resources/js/Pages/Gallery.tsx
+// resources/js/Pages/gallery.tsx
 interface GalleryPageProps {
   photos: Photo[];
 }

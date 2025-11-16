@@ -293,13 +293,13 @@ User Journey
     │         └── Photo Gallery Grid
     │              └── Clicks photo
     │                   └── Navigate to /gallery/{id}
-    │                        └── Gallery.tsx (voting page)
+    │                        └── gallery.tsx (voting page)
     │                             └── Vote on photo
     │                                  └── Navigate to next photo
     │
     ├── Clicks "Upload" (menu)
     │    └── Navigate to /photos
-    │         └── PhotoUpload.tsx
+    │         └── photo-upload.tsx
     │
     ├── Clicks "Login" (menu)
     │    └── Navigate to /login

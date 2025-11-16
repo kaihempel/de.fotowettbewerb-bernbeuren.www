@@ -298,7 +298,7 @@ CREATE TABLE photo_votes (
 
 **Component Structure**:
 ```
-Gallery.tsx (page)
+gallery.tsx (page)
 ├── PhotoViewer.tsx (photo display)
 ├── VotingButtons.tsx (thumbs up/down)
 ├── PhotoNavigation.tsx (prev/next arrows)

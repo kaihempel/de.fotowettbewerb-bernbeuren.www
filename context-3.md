@@ -113,7 +113,7 @@ Implement a public-facing anonymous photo voting system that allows users to rat
 - Loading states
 
 **Phase 6: Gallery Page** (Day 7)
-- Gallery.tsx page creation
+- gallery.tsx page creation
 - Component integration
 - Wayfinder route integration
 - Optimistic UI updates
@@ -224,7 +224,7 @@ Rate = max(0, rate + adjustment)
 - `/app/Http/Requests/VoteRequest.php`
 - `/database/migrations/*_create_photo_votes_table.php`
 - `/database/migrations/*_add_rate_to_photo_submissions.php`
-- `/resources/js/Pages/Gallery.tsx`
+- `/resources/js/Pages/gallery.tsx`
 - `/resources/js/components/PhotoViewer.tsx`
 - `/resources/js/components/VotingButtons.tsx`
 - `/resources/js/components/PhotoNavigation.tsx`

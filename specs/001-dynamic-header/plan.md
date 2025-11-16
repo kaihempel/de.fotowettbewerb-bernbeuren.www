@@ -185,7 +185,7 @@ specs/001-dynamic-header/
 ```text
 resources/js/
 ├── Pages/
-│   ├── welcome.tsx              # REPLACE with Gallery.tsx or GalleryLanding.tsx
+│   ├── welcome.tsx              # REPLACE with gallery.tsx or GalleryLanding.tsx
 │   └── [other pages]
 ├── components/
 │   ├── ui/                      # Radix UI components (reuse)

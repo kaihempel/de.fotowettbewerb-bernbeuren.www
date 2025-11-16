@@ -570,7 +570,7 @@ php artisan test tests/Feature/PublicGalleryTest.php
 
 #### Step 5.1: Create Gallery Page
 
-**Create** `resources/js/Pages/Gallery.tsx`:
+**Create** `resources/js/Pages/gallery.tsx`:
 
 ```typescript
 import { Head, router } from '@inertiajs/react';

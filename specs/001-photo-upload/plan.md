@@ -100,7 +100,7 @@ Implement a high-quality photo upload system that allows authenticated users to 
 **Compliance**:
 - ✅ Controller returns `Inertia::render()` for upload page
 - ✅ Form submission uses Inertia `<Form>` component (not `useForm` hook)
-- ✅ Page placed in `resources/js/Pages/PhotoUpload.tsx`
+- ✅ Page placed in `resources/js/Pages/photo-upload.tsx`
 - ✅ Progress indicator handled via Inertia progress events
 - ✅ Deferred props for submissions list (if applicable)
 
@@ -211,7 +211,7 @@ config/
 resources/
 ├── js/
 │   ├── Pages/
-│   │   └── PhotoUpload.tsx                    # NEW - Upload page
+│   │   └── photo-upload.tsx                    # NEW - Upload page
 │   ├── components/
 │   │   └── photo-upload.tsx                   # NEW - Upload component
 │   └── wayfinder/                              # AUTO-GENERATED - Route helpers

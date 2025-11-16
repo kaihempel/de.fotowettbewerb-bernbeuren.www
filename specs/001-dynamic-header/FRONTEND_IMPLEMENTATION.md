@@ -278,7 +278,7 @@ To complete the feature, the backend needs to be updated:
 
 ### Existing Files (Not Modified)
 - `/resources/js/components/photo-grid.tsx` (existing voting gallery component)
-- `/resources/js/pages/Gallery.tsx` (existing individual photo voting page)
+- `/resources/js/pages/gallery.tsx` (existing individual photo voting page)
 - `/resources/js/pages/welcome.tsx` (can be archived/deleted after backend integration)
 
 ## Next Steps

@@ -97,10 +97,10 @@ Laravel 12 web application structure:
 - [ ] T031 [US1] Add logging for vote operations (success/fail) in app/Http/Controllers/PublicGalleryController.php
 - [ ] T032 Add gallery routes to routes/web.php (GET /gallery, GET /gallery/{photoSubmission}, POST /gallery/{photoSubmission}/vote)
 - [ ] T033 Apply throttle:votes middleware to vote route in routes/web.php
-- [ ] T034 [P] [US1] Create Gallery.tsx page in resources/js/Pages/Gallery.tsx with photo display and vote submission logic
+- [ ] T034 [P] [US1] Create gallery.tsx page in resources/js/Pages/gallery.tsx with photo display and vote submission logic
 - [ ] T035 [P] [US1] Create PhotoViewer.tsx component in resources/js/components/PhotoViewer.tsx for full-screen photo display
 - [ ] T036 [P] [US1] Create VotingButtons.tsx component in resources/js/components/VotingButtons.tsx with thumbs up/down buttons
-- [ ] T037 [US1] Implement optimistic UI updates with retry/rollback logic in resources/js/Pages/Gallery.tsx
+- [ ] T037 [US1] Implement optimistic UI updates with retry/rollback logic in resources/js/Pages/gallery.tsx
 - [ ] T038 [US1] Run tests for User Story 1 (php artisan test tests/Feature/PublicGalleryTest.php tests/Feature/PhotoVotingTest.php)
 - [ ] T039 [US1] Fix any failing tests until all User Story 1 tests pass
 
@@ -155,7 +155,7 @@ Laravel 12 web application structure:
 - [ ] T055 [US2] Update PublicGalleryController::index() to find and display first unrated photo in app/Http/Controllers/PublicGalleryController.php
 - [ ] T056 [US2] Update PublicGalleryController::show() to include nextPhoto and previousPhoto in Inertia props in app/Http/Controllers/PublicGalleryController.php
 - [ ] T057 [P] [US2] Create PhotoNavigation.tsx component in resources/js/components/PhotoNavigation.tsx with prev/next arrows
-- [ ] T058 [US2] Integrate PhotoNavigation into Gallery.tsx in resources/js/Pages/Gallery.tsx
+- [ ] T058 [US2] Integrate PhotoNavigation into gallery.tsx in resources/js/Pages/gallery.tsx
 - [ ] T059 [US2] Implement disabled states for navigation buttons in resources/js/components/PhotoNavigation.tsx
 - [ ] T060 [US2] Add navigation logic using router.visit() in resources/js/components/PhotoNavigation.tsx
 - [ ] T061 [US2] Run tests for User Story 2 (php artisan test --filter="test_gallery|test_next|test_previous|test_get_next|test_get_previous")
@@ -182,9 +182,9 @@ Laravel 12 web application structure:
 
 - [ ] T067 [US3] Add progress data to PublicGalleryController::renderPhoto() method in app/Http/Controllers/PublicGalleryController.php
 - [ ] T068 [US3] Calculate rated and total photo counts in app/Http/Controllers/PublicGalleryController.php
-- [ ] T069 [US3] Update Gallery.tsx to display progress indicator in resources/js/Pages/Gallery.tsx
-- [ ] T070 [US3] Add completion message when progress.rated === progress.total in resources/js/Pages/Gallery.tsx
-- [ ] T071 [US3] Ensure navigation and voting remain functional in completion state in resources/js/Pages/Gallery.tsx
+- [ ] T069 [US3] Update gallery.tsx to display progress indicator in resources/js/Pages/gallery.tsx
+- [ ] T070 [US3] Add completion message when progress.rated === progress.total in resources/js/Pages/gallery.tsx
+- [ ] T071 [US3] Ensure navigation and voting remain functional in completion state in resources/js/Pages/gallery.tsx
 - [ ] T072 [US3] Run tests for User Story 3 (php artisan test --filter="test_progress|test_completion")
 - [ ] T073 [US3] Fix any failing tests until all User Story 3 tests pass
 
@@ -205,10 +205,10 @@ Laravel 12 web application structure:
 
 ### Implementation for User Story 5
 
-- [ ] T076 [P] [US5] Add keyboard event listeners for arrow keys in resources/js/Pages/Gallery.tsx
-- [ ] T077 [P] [US5] Implement useEffect hook for arrow key navigation in resources/js/Pages/Gallery.tsx
-- [ ] T078 [P] [US5] Add touch event listeners for swipe gestures in resources/js/Pages/Gallery.tsx (optional, can defer)
-- [ ] T079 [US5] Ensure keyboard navigation respects disabled states in resources/js/Pages/Gallery.tsx
+- [ ] T076 [P] [US5] Add keyboard event listeners for arrow keys in resources/js/Pages/gallery.tsx
+- [ ] T077 [P] [US5] Implement useEffect hook for arrow key navigation in resources/js/Pages/gallery.tsx
+- [ ] T078 [P] [US5] Add touch event listeners for swipe gestures in resources/js/Pages/gallery.tsx (optional, can defer)
+- [ ] T079 [US5] Ensure keyboard navigation respects disabled states in resources/js/Pages/gallery.tsx
 - [ ] T080 [US5] Manual testing of keyboard navigation (left/right arrows)
 - [ ] T081 [US5] Manual testing of touch gestures on mobile device (if implemented)
 
@@ -339,7 +339,7 @@ Task: "Add test_can_vote_thumbs_down_on_photo() to tests/Feature/PhotoVotingTest
 # ... all US1 tests can run simultaneously
 
 # Launch all frontend components for User Story 1 together:
-Task: "Create Gallery.tsx page in resources/js/Pages/Gallery.tsx"
+Task: "Create gallery.tsx page in resources/js/Pages/gallery.tsx"
 Task: "Create PhotoViewer.tsx component in resources/js/components/PhotoViewer.tsx"
 Task: "Create VotingButtons.tsx component in resources/js/components/VotingButtons.tsx"
 ```

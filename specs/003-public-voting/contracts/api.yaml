@@ -67,7 +67,7 @@ paths:
             text/html:
               schema:
                 type: string
-                description: Inertia.js rendered React page (Gallery.tsx)
+                description: Inertia.js rendered React page (gallery.tsx)
               example: |
                 <!-- Inertia page with props:
                   {
@@ -129,7 +129,7 @@ paths:
             text/html:
               schema:
                 type: string
-                description: Inertia.js rendered React page (Gallery.tsx)
+                description: Inertia.js rendered React page (gallery.tsx)
         '404':
           description: Photo not found or not approved
           content:

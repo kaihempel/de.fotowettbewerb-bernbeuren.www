@@ -277,7 +277,7 @@ export default function PhotoGrid({ photos }: PhotoGridProps) {
 
 ### Step 5: Create Gallery Page Component
 
-**File**: `resources/js/Pages/Gallery.tsx` (replace `welcome.tsx`)
+**File**: `resources/js/Pages/gallery.tsx` (replace `welcome.tsx`)
 
 ```tsx
 import { Head } from '@inertiajs/react';
@@ -578,7 +578,7 @@ After completing this feature:
 - `resources/js/hooks/use-scroll-position.ts` (NEW)
 - `resources/js/components/public-header.tsx` (NEW)
 - `resources/js/components/photo-grid.tsx` (NEW)
-- `resources/js/Pages/Gallery.tsx` (NEW, replaces welcome.tsx)
+- `resources/js/Pages/gallery.tsx` (NEW, replaces welcome.tsx)
 - `app/Http/Controllers/PublicGalleryController.php` (VERIFY/UPDATE)
 
 **Tests Written**: 2 feature tests

@@ -178,7 +178,7 @@ public function gallery()
 ```
 
 ```tsx
-// Gallery.tsx
+// gallery.tsx
 export default function Gallery({ meta, photos }: Props) {
   return (
     <>

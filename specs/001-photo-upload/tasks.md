@@ -104,7 +104,7 @@ This document provides dependency-ordered implementation tasks for the photo upl
 - [ ] T043 [P] [US1] Add file preview generation using FileReader API in PhotoUpload
 - [ ] T044 [P] [US1] Add client-side error display for file type and size validation in PhotoUpload
 - [ ] T045 [P] [US1] Add upload spinner/loading state in PhotoUpload
-- [ ] T046 [US1] Create PhotoUpload page in resources/js/Pages/PhotoUpload.tsx
+- [ ] T046 [US1] Create PhotoUpload page in resources/js/Pages/photo-upload.tsx
 - [ ] T047 [US1] Import Wayfinder store action from @/actions/App/Http/Controllers/PhotoSubmissionController
 - [ ] T048 [US1] Add state management in PhotoUpload page: selectedFile, isUploading
 - [ ] T049 [US1] Implement handleUpload function using FormData and store.post()
@@ -435,7 +435,7 @@ All tasks align with project constitution:
 
 **Frontend**:
 - Component: `resources/js/components/photo-upload.tsx`
-- Page: `resources/js/Pages/PhotoUpload.tsx`
+- Page: `resources/js/Pages/photo-upload.tsx`
 - Wayfinder Actions: `resources/js/wayfinder/` (auto-generated)
 
 **Storage**:
