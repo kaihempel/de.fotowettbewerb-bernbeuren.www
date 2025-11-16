@@ -3,13 +3,7 @@ import { useState } from "react";
 import { Link } from "@inertiajs/react";
 import { Menu } from "lucide-react";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-} from "@/components/ui/sheet";
-import { Button } from "@/components/ui/button";
+import { OxDrawer, OxButton } from "@noxickon/onyx";
 import { cn } from "@/lib/utils";
 import { login } from "@/routes";
 
@@ -30,7 +24,7 @@ interface MenuItem {
  * - Smooth 350ms transition animation
  * - Logo scales proportionally
  * - Backdrop blur effect
- * - Responsive burger menu with Radix UI Sheet
+ * - Responsive burger menu with Onyx Drawer
  * - Keyboard accessible navigation
  */
 export const PublicHeader: FC<PublicHeaderProps> = ({
@@ -99,9 +93,9 @@ export const PublicHeader: FC<PublicHeaderProps> = ({
         </Link>
 
         {/* Burger Menu Button */}
-        <Button
+        <OxButton
           variant="ghost"
-          size="icon"
+          size="md"
           onClick={() => setMenuOpen(true)}
           aria-label="Open navigation menu"
           aria-expanded={menuOpen}
@@ -109,7 +103,7 @@ export const PublicHeader: FC<PublicHeaderProps> = ({
           className="text-gray-900 dark:text-gray-100"
         >
           <Menu className="size-6" />
-        </Button>
+        </OxButton>
       </header>
 
       {/* Spacer to prevent content hiding under fixed header */}
@@ -122,42 +116,39 @@ export const PublicHeader: FC<PublicHeaderProps> = ({
       />
 
       {/* Mobile Navigation Menu */}
-      <Sheet open={menuOpen} onOpenChange={setMenuOpen}>
-        <SheetContent
+      <OxDrawer open={menuOpen} onOpenChange={setMenuOpen}>
+        <OxDrawer.Content
           side="right"
           className="w-full sm:max-w-md"
-          onKeyDown={handleKeyDown}
+          closeOnOutsideClick={true}
         >
-          <SheetHeader>
-            <SheetTitle className="text-xl font-semibold">
-              Navigation
-            </SheetTitle>
-          </SheetHeader>
-          <nav
-            id="navigation-menu"
-            className="mt-8 flex flex-col gap-2"
-            aria-label="Main navigation"
-          >
-            {menuItems.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={handleMenuItemClick}
-                className="group flex flex-col rounded-lg border border-gray-200 bg-white p-4 transition-all duration-200 hover:border-gray-300 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 dark:border-gray-700 dark:bg-gray-800 dark:hover:border-gray-600 dark:hover:bg-gray-750 dark:focus:ring-gray-100"
+          <div onKeyDown={handleKeyDown}>
+            <OxDrawer.Header>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-gray-100">
+                Navigation
+              </h2>
+            </OxDrawer.Header>
+            <OxDrawer.Body>
+              <nav
+                id="navigation-menu"
+                className="flex flex-col gap-3"
+                aria-label="Main navigation"
               >
-                <span className="text-base font-medium text-gray-900 dark:text-gray-100">
-                  {item.label}
-                </span>
-                {item.description && (
-                  <span className="mt-1 text-sm text-gray-600 dark:text-gray-400">
-                    {item.description}
-                  </span>
-                )}
-              </Link>
-            ))}
-          </nav>
-        </SheetContent>
-      </Sheet>
+                {menuItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    onClick={handleMenuItemClick}
+                    className="text-base font-medium text-gray-900 transition-colors hover:text-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-900 focus:ring-offset-2 dark:text-gray-100 dark:hover:text-gray-300 dark:focus:ring-gray-100"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </nav>
+            </OxDrawer.Body>
+          </div>
+        </OxDrawer.Content>
+      </OxDrawer>
     </>
   );
 };
