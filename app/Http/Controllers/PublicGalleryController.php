@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\VoteRequest;
 use App\Models\PhotoSubmission;
 use App\Models\PhotoVote;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,9 +16,29 @@ use Inertia\Response;
 class PublicGalleryController extends Controller
 {
     /**
-     * Display the gallery index, redirecting to the first unrated photo.
+     * Display the gallery list with cursor pagination.
      */
-    public function index(Request $request): RedirectResponse
+    public function index(Request $request): JsonResponse
+    {
+        $paginator = PhotoSubmission::query()
+            ->approved()
+            ->whereNotNull('file_path')
+            ->whereNotNull('thumbnail_path')
+            ->orderBy('created_at', 'asc')
+            ->orderBy('id', 'asc')
+            ->cursorPaginate(20);
+
+        return response()->json([
+            'photos' => $paginator->items(),
+            'next_cursor' => $paginator->nextCursor()?->encode(),
+            'has_more' => $paginator->hasMorePages(),
+        ]);
+    }
+
+    /**
+     * Display the gallery entry point, redirecting to the first unrated photo.
+     */
+    public function gallery(Request $request): RedirectResponse
     {
         $fwbId = $request->cookie('fwb_id');
 

@@ -19,7 +19,7 @@ class PhotoSubmissionFactory extends Factory
         $filename = fake()->uuid().'.jpg';
 
         return [
-            'fwb_id' => 'FWB-'.now()->year.'-'.str_pad((string) fake()->numberBetween(1, 99999), 5, '0', STR_PAD_LEFT),
+            'fwb_id' => 'FWB-'.now()->year.'-'.str_pad((string) fake()->unique()->numberBetween(1, 99999), 5, '0', STR_PAD_LEFT),
             'user_id' => \App\Models\User::factory(),
             'original_filename' => fake()->word().'.jpg',
             'stored_filename' => $filename,
@@ -44,6 +44,7 @@ class PhotoSubmissionFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'status' => 'approved',
             'file_path' => str_replace('/new/', '/approved/', $attributes['file_path']),
+            'thumbnail_path' => 'thumbnails/'.$attributes['stored_filename'],
             'reviewed_at' => now(),
             'reviewed_by' => \App\Models\User::factory(),
             'rate' => fake()->numberBetween(0, 100),

@@ -97,7 +97,7 @@ class PublicGalleryTest extends TestCase
             'created_at' => now()->subDays(2),
         ]);
 
-        $response = $this->get(route('gallery.index'));
+        $response = $this->get(route('gallery'));
         $fwbId = $response->getCookie('fwb_id')->getValue();
 
         // Vote on photo1
@@ -106,7 +106,7 @@ class PublicGalleryTest extends TestCase
             'vote_type' => true,
         ]);
 
-        $response = $this->withCookie('fwb_id', $fwbId)->get(route('gallery.index'));
+        $response = $this->withCookie('fwb_id', $fwbId)->get(route('gallery'));
 
         $response->assertRedirect(route('gallery.show', $photo2));
     }

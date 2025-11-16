@@ -73,3 +73,17 @@ export interface PaginatedResponse<T> {
   from: number;
   to: number;
 }
+
+export interface GalleryPhoto {
+  id: number;
+  thumbnail_url: string;
+  full_image_url: string;
+  rate: number | null;
+  created_at: string;
+}
+
+export interface GalleryPageProps {
+  photos: GalleryPhoto[];
+  next_cursor: string | null;
+  has_more: boolean;
+}
