@@ -218,8 +218,7 @@ registerForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 register.form = registerForm
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see routes/web.php:7
 * @route '/'
 */
 export const home = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -233,8 +232,7 @@ home.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see routes/web.php:7
 * @route '/'
 */
 home.url = (options?: RouteQueryOptions) => {
@@ -242,8 +240,7 @@ home.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see routes/web.php:7
 * @route '/'
 */
 home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -252,8 +249,7 @@ home.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see routes/web.php:7
 * @route '/'
 */
 home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -262,8 +258,7 @@ home.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see routes/web.php:7
 * @route '/'
 */
 const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -272,8 +267,7 @@ const homeForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see routes/web.php:7
 * @route '/'
 */
 homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -282,8 +276,7 @@ homeForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::home
-* @see app/Http/Controllers/PublicGalleryController.php:41
+* @see routes/web.php:7
 * @route '/'
 */
 homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -299,88 +292,7 @@ homeForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 home.form = homeForm
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
-* @route '/gallery'
-*/
-export const gallery = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: gallery.url(options),
-    method: 'get',
-})
-
-gallery.definition = {
-    methods: ["get","head"],
-    url: '/gallery',
-} satisfies RouteDefinition<["get","head"]>
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
-* @route '/gallery'
-*/
-gallery.url = (options?: RouteQueryOptions) => {
-    return gallery.definition.url + queryParams(options)
-}
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
-* @route '/gallery'
-*/
-gallery.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: gallery.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
-* @route '/gallery'
-*/
-gallery.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: gallery.url(options),
-    method: 'head',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
-* @route '/gallery'
-*/
-const galleryForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: gallery.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
-* @route '/gallery'
-*/
-galleryForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: gallery.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::gallery
-* @see app/Http/Controllers/PublicGalleryController.php:41
-* @route '/gallery'
-*/
-galleryForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: gallery.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-gallery.form = galleryForm
-
-/**
-* @see routes/web.php:16
+* @see routes/web.php:21
 * @route '/dashboard'
 */
 export const dashboard = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -394,7 +306,7 @@ dashboard.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:16
+* @see routes/web.php:21
 * @route '/dashboard'
 */
 dashboard.url = (options?: RouteQueryOptions) => {
@@ -402,7 +314,7 @@ dashboard.url = (options?: RouteQueryOptions) => {
 }
 
 /**
-* @see routes/web.php:16
+* @see routes/web.php:21
 * @route '/dashboard'
 */
 dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -411,7 +323,7 @@ dashboard.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 })
 
 /**
-* @see routes/web.php:16
+* @see routes/web.php:21
 * @route '/dashboard'
 */
 dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -420,7 +332,7 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see routes/web.php:16
+* @see routes/web.php:21
 * @route '/dashboard'
 */
 const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -429,7 +341,7 @@ const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> 
 })
 
 /**
-* @see routes/web.php:16
+* @see routes/web.php:21
 * @route '/dashboard'
 */
 dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -438,7 +350,7 @@ dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> =>
 })
 
 /**
-* @see routes/web.php:16
+* @see routes/web.php:21
 * @route '/dashboard'
 */
 dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
