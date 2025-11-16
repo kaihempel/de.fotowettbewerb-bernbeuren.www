@@ -38,7 +38,7 @@ class PublicGalleryController extends Controller
     /**
      * Display the gallery entry point, redirecting to the first unrated photo.
      */
-    public function gallery(Request $request): RedirectResponse
+    public function gallery(Request $request): RedirectResponse|Response
     {
         $fwbId = $request->cookie('fwb_id');
 
@@ -61,8 +61,8 @@ class PublicGalleryController extends Controller
             return redirect()->route('gallery.show', $firstPhoto);
         }
 
-        // No approved photos available
-        return redirect()->back()->with('error', 'No photos available in the gallery.');
+        // No approved photos available - render welcome page
+        return Inertia::render('welcome');
     }
 
     /**
