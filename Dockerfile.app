@@ -1,9 +1,13 @@
 FROM php:8.4.15RC1-fpm-bookworm
 
-RUN apt-get update && apt-get install -y libmcrypt-dev default-mysql-client libc-client-dev libpng-dev --no-install-recommends
+RUN apt-get update && apt-get install -y libmcrypt-dev default-mysql-client libc-client-dev libgd-dev libpng-dev libjpeg62-turbo libjpeg-dev --no-install-recommends
+RUN docker-php-ext-configure gd --with-jpeg
+
+RUN NUMPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
+&& docker-php-ext-install -j${NUMPROC} gd
+
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install pdo_mysql
-RUN docker-php-ext-install gd
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
