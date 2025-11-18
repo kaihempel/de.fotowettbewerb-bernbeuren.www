@@ -19,7 +19,7 @@ export default function Index({
 
       <div className="min-h-screen bg-background">
         {/* Header */}
-        <header className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+        <header className="border-b bg-background">
           <div className="container mx-auto px-4 py-6 sm:px-6 lg:px-8">
             <h1 className="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
               Photo Gallery
@@ -32,6 +32,7 @@ export default function Index({
 
         {/* Main Content */}
         <main className="container mx-auto px-4 py-8 sm:px-6 lg:px-8">
+            TEST
           <PhotoGrid
             initialPhotos={photos}
             initialCursor={next_cursor}

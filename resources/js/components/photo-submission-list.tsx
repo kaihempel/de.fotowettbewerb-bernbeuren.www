@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { router } from "@inertiajs/react";
 import { ChevronLeft, ChevronRight, FileQuestion } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { OxButton } from "@noxickon/onyx";
 import { PhotoSubmissionCard } from "@/components/photo-submission-card";
 import type { PhotoSubmission, PaginatedResponse } from "@/types";
 import { cn } from "@/lib/utils";
@@ -120,16 +120,16 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
           {/* Pagination buttons */}
           <div className="flex items-center gap-2">
             {/* Previous button */}
-            <Button
+            <OxButton
               onClick={handlePrevious}
               disabled={submissions.current_page === 1}
-              variant="outline"
+              variant="secondary"
               size="sm"
               className="gap-1"
             >
               <ChevronLeft className="size-4" />
               Previous
-            </Button>
+            </OxButton>
 
             {/* Page numbers */}
             <div className="hidden items-center gap-1 sm:flex">
@@ -149,15 +149,15 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
                 const isActive = pageNum === submissions.current_page;
 
                 return (
-                  <Button
+                  <OxButton
                     key={pageNum}
                     onClick={() => handlePageChange(pageNum)}
-                    variant={isActive ? "default" : "outline"}
+                    variant={isActive ? "primary" : "secondary"}
                     size="sm"
                     className={cn("min-w-[2.5rem]", isActive && "pointer-events-none")}
                   >
                     {pageNum}
-                  </Button>
+                  </OxButton>
                 );
               })}
             </div>
@@ -170,16 +170,16 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
             </div>
 
             {/* Next button */}
-            <Button
+            <OxButton
               onClick={handleNext}
               disabled={submissions.current_page === submissions.last_page}
-              variant="outline"
+              variant="secondary"
               size="sm"
               className="gap-1"
             >
               Next
               <ChevronRight className="size-4" />
-            </Button>
+            </OxButton>
           </div>
         </div>
       )}

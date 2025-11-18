@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import PhotoNavigation from '@/components/photo-navigation';
 import PhotoViewer from '@/components/photo-viewer';
 import VotingButtons from '@/components/voting-buttons';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
-import { CheckCircle2 } from 'lucide-react';
+import { OxAlert } from "@noxickon/onyx";
+import {mdiCheck, mdiRocket} from '@mdi/js';
 
 interface Photo {
   id: number;
@@ -129,6 +129,7 @@ function GalleryContent({
 
   return (
     <>
+        TEST
       <Head title="Photo Voting Gallery" />
 
       <div className="flex min-h-screen flex-col bg-background">
@@ -142,18 +143,14 @@ function GalleryContent({
         {/* Error Message */}
         {errorMessage && (
           <div className="fixed left-1/2 top-4 z-10 w-full max-w-md -translate-x-1/2">
-            <Alert variant="destructive">
-              <AlertTitle>Vote Failed</AlertTitle>
-              <AlertDescription className="flex flex-col gap-2">
-                <span>{errorMessage}</span>
-                <button
-                  onClick={handleRetry}
-                  className="text-sm underline hover:no-underline"
-                >
-                  Retry
-                </button>
-              </AlertDescription>
-            </Alert>
+              <OxAlert type="default">
+                  <OxAlert.Icon
+                      path={mdiRocket}
+                      iconClass="text-orange-400"
+                      iconDivClass="bg-orange-500/20"
+                  />
+                  <span>{errorMessage}</span>
+              </OxAlert>
           </div>
         )}
 
@@ -169,16 +166,16 @@ function GalleryContent({
         {/* Completion Message */}
         {isCompleted && !errorMessage && (
           <div className="fixed left-1/2 top-4 z-10 w-full max-w-md -translate-x-1/2">
-            <Alert className="border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
-              <CheckCircle2 className="size-4 text-green-600 dark:text-green-400" />
-              <AlertTitle className="text-green-900 dark:text-green-100">
-                Congratulations!
-              </AlertTitle>
-              <AlertDescription className="text-green-800 dark:text-green-200">
-                You have rated all {progress.total} photos. You can still
-                navigate and change your votes.
-              </AlertDescription>
-            </Alert>
+              <OxAlert type="default">
+                  <OxAlert.Icon
+                      path={mdiCheck}
+                      iconClass="text-orange-400"
+                      iconDivClass="bg-orange-500/20"
+                  />
+                  <span>
+                      You have rated all {progress.total} photos. You can still navigate and change your votes.
+                  </span>
+              </OxAlert>
           </div>
         )}
 

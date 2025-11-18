@@ -1,18 +1,10 @@
 import { PhotoUpload } from "@/components/photo-upload";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { OxAlert, OxButton, OxCard } from "@noxickon/onyx";
 import AppLayout from "@/layouts/app-layout";
 import { cn } from "@/lib/utils";
 import { type BreadcrumbItem, type PhotoSubmission } from "@/types";
 import { Head, router } from "@inertiajs/react";
-import { CheckCircle2, AlertCircle } from "lucide-react";
+import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
 import NProgress from "nprogress";
 import { useCallback, useEffect, useState } from "react";
 
@@ -136,37 +128,42 @@ export default function PhotoUploadPage({
       <div className="mx-auto max-w-4xl space-y-6 p-4">
         {/* Success Flash Message */}
         {flash?.success && (
-          <Alert className="border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
-            <CheckCircle2 className="size-4 text-green-600 dark:text-green-400" />
-            <AlertTitle className="text-green-900 dark:text-green-100">
-              Success!
-            </AlertTitle>
-            <AlertDescription className="text-green-800 dark:text-green-200">
+          <OxAlert type="success">
+            <OxAlert.Icon
+              path={mdiCheckCircle}
+              iconClass="text-green-400"
+              iconDivClass="bg-green-500/20"
+            />
+            <span className="text-green-800 dark:text-green-200">
+              <strong className="text-green-900 dark:text-green-100">Success!</strong>
+              <br />
               {flash.success}
-            </AlertDescription>
-          </Alert>
+            </span>
+          </OxAlert>
         )}
 
         {/* Error Flash Message */}
         {flash?.error && (
-          <Alert variant="destructive">
-            <AlertCircle className="size-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{flash.error}</AlertDescription>
-          </Alert>
+          <OxAlert type="error">
+            <OxAlert.Icon
+              path={mdiAlertCircle}
+              iconClass="text-red-400"
+              iconDivClass="bg-red-500/20"
+            />
+            <span>
+              <strong>Error</strong>
+              <br />
+              {flash.error}
+            </span>
+          </OxAlert>
         )}
 
         {/* Header Card with Submission Counter */}
-        <Card>
-          <CardHeader>
-            <div className="flex items-start justify-between">
-              <div>
-                <CardTitle>Submit Your Photo</CardTitle>
-                <CardDescription>
-                  Upload your high-quality photograph for the contest. Maximum
-                  file size: 15MB.
-                </CardDescription>
-              </div>
+        <OxCard>
+          <OxCard.Header
+            title="Submit Your Photo"
+            subtitle="Upload your high-quality photograph for the contest. Maximum file size: 15MB."
+            action={
               <div className="shrink-0">
                 <div
                   className={cn(
@@ -191,20 +188,25 @@ export default function PhotoUploadPage({
                   </p>
                 </div>
               </div>
-            </div>
-          </CardHeader>
+            }
+          />
 
-          <CardContent>
+          <OxCard.Body>
             {hasReachedLimit ? (
-              <Alert variant="destructive">
-                <AlertCircle className="size-4" />
-                <AlertTitle>Maximum Submissions Reached</AlertTitle>
-                <AlertDescription>
+              <OxAlert type="error">
+                <OxAlert.Icon
+                  path={mdiAlertCircle}
+                  iconClass="text-red-400"
+                  iconDivClass="bg-red-500/20"
+                />
+                <span>
+                  <strong>Maximum Submissions Reached</strong>
+                  <br />
                   You have reached the maximum of 3 photo submissions for this
                   contest. Only photos with status "new" or "approved" count
                   toward this limit.
-                </AlertDescription>
-              </Alert>
+                </span>
+              </OxAlert>
             ) : (
               <form onSubmit={handleUpload} className="space-y-6">
                 <PhotoUpload
@@ -227,35 +229,34 @@ export default function PhotoUploadPage({
                       Declined submissions free up a slot for resubmission.
                     </p>
                   </div>
-                  <Button
+                  <OxButton
                     type="submit"
                     disabled={!selectedFile || isUploading}
-                    size="lg"
                   >
                     {isUploading ? "Uploading..." : "Upload Photo"}
-                  </Button>
+                  </OxButton>
                 </div>
               </form>
             )}
-          </CardContent>
-        </Card>
+          </OxCard.Body>
+        </OxCard>
 
         {/* Recent Submissions Preview */}
         {submissions.data.length > 0 && (
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle>Your Submissions</CardTitle>
-                <Button
-                  variant="outline"
+          <OxCard>
+            <OxCard.Header
+              title="Your Submissions"
+              action={
+                <OxButton
+                  variant="secondary"
                   size="sm"
                   onClick={() => router.visit("/photos/submissions")}
                 >
                   View All
-                </Button>
-              </div>
-            </CardHeader>
-            <CardContent>
+                </OxButton>
+              }
+            />
+            <OxCard.Body>
               <div className="space-y-3">
                 {submissions.data.slice(0, 3).map((submission) => (
                   <div
@@ -287,8 +288,8 @@ export default function PhotoUploadPage({
                   </div>
                 ))}
               </div>
-            </CardContent>
-          </Card>
+            </OxCard.Body>
+          </OxCard>
         )}
       </div>
     </AppLayout>

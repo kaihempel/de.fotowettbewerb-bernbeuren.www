@@ -3,6 +3,8 @@ import { Head } from "@inertiajs/react";
 import type { GalleryPhoto } from "@/types/index.d";
 import { PublicHeader } from "@/components/public-header";
 import { LandingPhotoGrid } from "@/components/landing-photo-grid";
+import { OxMainContent } from "@noxickon/onyx/layouts";
+import { OxHeading } from "@noxickon/onyx";
 
 interface LandingProps {
   photos: GalleryPhoto[];
@@ -29,14 +31,15 @@ const Landing: FC<LandingProps> = ({ photos }) => {
       <PublicHeader />
 
       {/* Main Content */}
-      <main className="min-h-screen bg-gray-50 px-4 py-8 dark:bg-gray-950 sm:px-6 lg:px-8">
+      <OxMainContent.Body>
         <div className="mx-auto max-w-7xl">
+
           {/* Page Title */}
           <div className="mb-8 text-center">
-            <h1 className="mb-2 text-4xl font-bold text-gray-900 dark:text-gray-100">
+            <OxHeading as="h1" level={1}>
               Photo Contest Gallery
-            </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400">
+            </OxHeading>
+            <p className="text-sm text-gray-1100 mb-4">
               Browse and vote on amazing photo submissions
             </p>
           </div>
@@ -44,17 +47,7 @@ const Landing: FC<LandingProps> = ({ photos }) => {
           {/* Photo Grid */}
           <LandingPhotoGrid photos={photos} />
         </div>
-      </main>
-
-      {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white py-8 dark:border-gray-800 dark:bg-gray-900">
-        <div className="mx-auto max-w-7xl px-4 text-center sm:px-6 lg:px-8">
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            &copy; {new Date().getFullYear()} Photo Contest. All rights
-            reserved.
-          </p>
-        </div>
-      </footer>
+      </OxMainContent.Body>
     </>
   );
 };

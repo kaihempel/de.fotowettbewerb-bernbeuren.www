@@ -1,10 +1,7 @@
 import type { FC } from "react";
 import { router } from "@inertiajs/react";
 import { CheckCircle, XCircle, Clock, User } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Spinner } from "@/components/ui/spinner";
+import { OxBadge, OxButton, OxCard, OxSpinner } from "@noxickon/onyx";
 import { AuditTrailIndicator } from "@/components/audit-trail-indicator";
 import type { PhotoSubmission } from "@/types";
 import { cn } from "@/lib/utils";
@@ -73,15 +70,15 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
     );
   };
 
-  const getStatusBadgeVariant = () => {
+  const getStatusBadgeColor = () => {
     switch (submission.status) {
       case "approved":
-        return "default";
+        return "green";
       case "declined":
-        return "destructive";
+        return "red";
       case "new":
       default:
-        return "secondary";
+        return "yellow";
     }
   };
 
@@ -108,8 +105,8 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
   };
 
   return (
-    <Card className="overflow-hidden transition-shadow hover:shadow-md">
-      <CardContent className="p-0">
+    <OxCard className="overflow-hidden transition-shadow hover:shadow-md" padding="none">
+      <OxCard.Body className="p-0">
         {/* Photo Thumbnail */}
         <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
           <img
@@ -121,8 +118,8 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
 
           {/* Status Badge Overlay */}
           <div className="absolute right-2 top-2">
-            <Badge
-              variant={getStatusBadgeVariant()}
+            <OxBadge
+              color={getStatusBadgeColor()}
               className={cn(
                 "shadow-sm",
                 submission.status === "new" &&
@@ -135,7 +132,7 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
             >
               {getStatusIcon()}
               {submission.status}
-            </Badge>
+            </OxBadge>
           </div>
         </div>
 
@@ -188,16 +185,16 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
           {/* Action Buttons - Only show for "new" status */}
           {isNew && (
             <div className="flex gap-2 pt-2">
-              <Button
+              <OxButton
                 onClick={handleApprove}
                 disabled={isProcessing}
-                variant="default"
+                variant="primary"
                 size="sm"
                 className="flex-1 bg-green-600 hover:bg-green-700 dark:bg-green-700 dark:hover:bg-green-800"
               >
                 {isApproving ? (
                   <>
-                    <Spinner className="size-4" />
+                    <OxSpinner className="size-4" />
                     Approving...
                   </>
                 ) : (
@@ -206,18 +203,18 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
                     Accept
                   </>
                 )}
-              </Button>
+              </OxButton>
 
-              <Button
+              <OxButton
                 onClick={handleDecline}
                 disabled={isProcessing}
-                variant="destructive"
+                variant="danger"
                 size="sm"
                 className="flex-1"
               >
                 {isDeclining ? (
                   <>
-                    <Spinner className="size-4" />
+                    <OxSpinner className="size-4" />
                     Declining...
                   </>
                 ) : (
@@ -226,11 +223,11 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
                     Decline
                   </>
                 )}
-              </Button>
+              </OxButton>
             </div>
           )}
         </div>
-      </CardContent>
-    </Card>
+      </OxCard.Body>
+    </OxCard>
   );
 };

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { router } from "@inertiajs/react";
 import { Filter, Circle, CheckCircle, XCircle, Clock } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { OxButton } from "@noxickon/onyx";
 import { cn } from "@/lib/utils";
 
 type StatusFilter = "all" | "new" | "approved" | "declined";
@@ -89,10 +89,10 @@ export const PhotoStatusFilter: FC<PhotoStatusFilterProps> = ({
           const count = counts?.[option.value];
 
           return (
-            <Button
+            <OxButton
               key={option.value}
               onClick={() => handleFilterChange(option.value)}
-              variant={isActive ? "default" : "outline"}
+              variant={isActive ? "primary" : "secondary"}
               size="sm"
               className={cn(
                 "gap-2 transition-all",
@@ -135,7 +135,7 @@ export const PhotoStatusFilter: FC<PhotoStatusFilterProps> = ({
                   {count}
                 </span>
               )}
-            </Button>
+            </OxButton>
           );
         })}
       </div>
