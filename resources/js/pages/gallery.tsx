@@ -4,7 +4,8 @@ import PhotoNavigation from '@/components/photo-navigation';
 import PhotoViewer from '@/components/photo-viewer';
 import VotingButtons from '@/components/voting-buttons';
 import { OxAlert } from "@noxickon/onyx";
-import {mdiCheck, mdiRocket} from '@mdi/js';
+import { mdiCheck, mdiRocket } from '@mdi/js';
+import GlobalLayout from '@/layouts/global-layout';
 
 interface Photo {
   id: number;
@@ -119,17 +120,10 @@ function GalleryContent({
     submitVote();
   };
 
-  const handleRetry = () => {
-    if (currentVote) {
-      handleVote(currentVote);
-    }
-  };
-
   const isCompleted = progress.rated === progress.total;
 
   return (
-    <>
-        TEST
+    <GlobalLayout className="p-0">
       <Head title="Photo Voting Gallery" />
 
       <div className="flex min-h-screen flex-col bg-background">
@@ -205,7 +199,7 @@ function GalleryContent({
           nextPhoto={nextPhoto}
         />
       </div>
-    </>
+    </GlobalLayout>
   );
 }
 

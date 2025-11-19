@@ -1,9 +1,8 @@
 import { OxAlert, OxCard, OxSeparator } from "@noxickon/onyx";
 import { PhotoSubmissionList } from "@/components/photo-submission-list";
 import { PhotoStatusFilter } from "@/components/photo-status-filter";
-import AppLayout from "@/layouts/app-layout";
-import { dashboard } from "@/routes";
-import { type BreadcrumbItem, type PhotoSubmission, type PaginatedResponse } from "@/types";
+import GlobalLayout from "@/layouts/global-layout";
+import { type PhotoSubmission, type PaginatedResponse } from "@/types";
 import { Head } from "@inertiajs/react";
 import { Images } from "lucide-react";
 import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
@@ -23,12 +22,6 @@ interface DashboardProps {
   };
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: "Dashboard",
-    href: dashboard().url,
-  },
-];
 
 export default function Dashboard({
   submissions,
@@ -37,10 +30,10 @@ export default function Dashboard({
   flash,
 }: DashboardProps) {
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <GlobalLayout>
       <Head title="Dashboard - Photo Review" />
 
-      <div className="flex h-full flex-1 flex-col gap-6 p-4 md:p-6">
+      <div className="mx-auto max-w-7xl flex h-full flex-1 flex-col gap-6 p-4 md:p-6">
         {/* Flash Messages */}
         {flash?.success && (
           <OxAlert type="success">
@@ -154,6 +147,6 @@ export default function Dashboard({
           currentFilter={statusFilter}
         />
       </div>
-    </AppLayout>
+    </GlobalLayout>
   );
 }

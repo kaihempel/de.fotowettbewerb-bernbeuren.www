@@ -1,8 +1,8 @@
 import { PhotoUpload } from "@/components/photo-upload";
 import { OxAlert, OxButton, OxCard } from "@noxickon/onyx";
-import AppLayout from "@/layouts/app-layout";
+import GlobalLayout from "@/layouts/global-layout";
 import { cn } from "@/lib/utils";
-import { type BreadcrumbItem, type PhotoSubmission } from "@/types";
+import { type PhotoSubmission } from "@/types";
 import { Head, router } from "@inertiajs/react";
 import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
 import NProgress from "nprogress";
@@ -20,12 +20,6 @@ interface PhotoUploadPageProps {
   };
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: "Upload Photo",
-    href: "/photos",
-  },
-];
 
 export default function PhotoUploadPage({
   remainingSlots,
@@ -122,7 +116,7 @@ export default function PhotoUploadPage({
   }, [isUploading]);
 
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <GlobalLayout>
       <Head title="Upload Photo" />
 
       <div className="mx-auto max-w-4xl space-y-6 p-4">
@@ -292,6 +286,6 @@ export default function PhotoUploadPage({
           </OxCard>
         )}
       </div>
-    </AppLayout>
+    </GlobalLayout>
   );
 }
