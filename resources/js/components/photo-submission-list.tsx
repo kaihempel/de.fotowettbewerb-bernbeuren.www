@@ -15,6 +15,19 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
   submissions,
   currentFilter = "all",
 }) => {
+  // Early return if submissions is undefined
+  if (!submissions) {
+    return (
+      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
+        <FileQuestion className="mb-4 size-12 text-muted-foreground/50" />
+        <h3 className="mb-2 text-lg font-semibold">Loading submissions...</h3>
+        <p className="max-w-sm text-sm text-muted-foreground">
+          Please wait while we load the submissions.
+        </p>
+      </div>
+    );
+  }
+
   const handlePageChange = (page: number) => {
     const params = new URLSearchParams(window.location.search);
     params.set("page", page.toString());

@@ -1,10 +1,7 @@
 import InputError from "@/components/input-error";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Spinner } from "@/components/ui/spinner";
 import AuthLayout from "@/layouts/auth-layout";
 import { store } from "@/routes/password/confirm";
+import { OxButton, OxLabel, OxSpinner, OxTextInput } from "@noxickon/onyx";
 import { Form, Head } from "@inertiajs/react";
 
 export default function ConfirmPassword() {
@@ -19,28 +16,31 @@ export default function ConfirmPassword() {
         {({ processing, errors }) => (
           <div className="space-y-6">
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                name="password"
-                placeholder="Password"
-                autoComplete="current-password"
-                autoFocus
-              />
+              <OxLabel htmlFor="password">Password</OxLabel>
+              <OxTextInput.Container type="password" error={!!errors.password}>
+                <OxTextInput
+                  id="password"
+                  name="password"
+                  placeholder="Password"
+                  autoComplete="current-password"
+                />
+                <OxTextInput.VisibilityButton />
+              </OxTextInput.Container>
 
               <InputError message={errors.password} />
             </div>
 
             <div className="flex items-center">
-              <Button
+              <OxButton
+                type="submit"
+                variant="primary"
                 className="w-full"
                 disabled={processing}
                 data-test="confirm-password-button"
               >
-                {processing && <Spinner />}
+                {processing && <OxSpinner />}
                 Confirm password
-              </Button>
+              </OxButton>
             </div>
           </div>
         )}

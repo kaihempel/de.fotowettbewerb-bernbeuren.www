@@ -2,11 +2,8 @@ import { update } from "@/routes/password";
 import { Form, Head } from "@inertiajs/react";
 
 import InputError from "@/components/input-error";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Spinner } from "@/components/ui/spinner";
 import AuthLayout from "@/layouts/auth-layout";
+import { OxButton, OxLabel, OxSpinner, OxTextInput } from "@noxickon/onyx";
 
 interface ResetPasswordProps {
   token: string;
@@ -29,58 +26,60 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
         {({ processing, errors }) => (
           <div className="grid gap-6">
             <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                type="email"
-                name="email"
-                autoComplete="email"
-                value={email}
-                className="mt-1 block w-full"
-                readOnly
-              />
+              <OxLabel htmlFor="email">Email</OxLabel>
+              <OxTextInput.Container type="email" disabled>
+                <OxTextInput
+                  id="email"
+                  name="email"
+                  autoComplete="email"
+                  readOnly
+                  className="mt-1 block w-full"
+                />
+              </OxTextInput.Container>
               <InputError message={errors.email} className="mt-2" />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="password">Password</Label>
-              <Input
-                id="password"
-                type="password"
-                name="password"
-                autoComplete="new-password"
-                className="mt-1 block w-full"
-                autoFocus
-                placeholder="Password"
-              />
+              <OxLabel htmlFor="password">Password</OxLabel>
+              <OxTextInput.Container type="password" error={!!errors.password}>
+                <OxTextInput
+                  id="password"
+                  name="password"
+                  autoComplete="new-password"
+                  placeholder="Password"
+                />
+                <OxTextInput.VisibilityButton />
+              </OxTextInput.Container>
               <InputError message={errors.password} />
             </div>
 
             <div className="grid gap-2">
-              <Label htmlFor="password_confirmation">Confirm password</Label>
-              <Input
-                id="password_confirmation"
-                type="password"
-                name="password_confirmation"
-                autoComplete="new-password"
-                className="mt-1 block w-full"
-                placeholder="Confirm password"
-              />
+              <OxLabel htmlFor="password_confirmation">Confirm password</OxLabel>
+              <OxTextInput.Container type="password" error={!!errors.password_confirmation}>
+                <OxTextInput
+                  id="password_confirmation"
+                  name="password_confirmation"
+                  autoComplete="new-password"
+                  placeholder="Confirm password"
+                />
+                <OxTextInput.VisibilityButton />
+              </OxTextInput.Container>
               <InputError
                 message={errors.password_confirmation}
                 className="mt-2"
               />
             </div>
 
-            <Button
+            <OxButton
               type="submit"
+              variant="primary"
               className="mt-4 w-full"
               disabled={processing}
               data-test="reset-password-button"
             >
-              {processing && <Spinner />}
+              {processing && <OxSpinner />}
               Reset password
-            </Button>
+            </OxButton>
           </div>
         )}
       </Form>

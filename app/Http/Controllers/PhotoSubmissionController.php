@@ -28,7 +28,7 @@ class PhotoSubmissionController extends Controller
             ->with('reviewer')
             ->paginate(20);
 
-        return Inertia::render('PhotoUpload', [
+        return Inertia::render('photo-upload', [
             'submissions' => $submissions,
             'remainingSlots' => $user->remaining_submission_slots,
         ]);

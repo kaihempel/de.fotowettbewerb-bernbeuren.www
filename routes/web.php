@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+
 // Public gallery routes (no authentication required)
 Route::get('/', [App\Http\Controllers\PublicGalleryController::class, 'gallery'])->name('home');
 Route::get('gallery', [App\Http\Controllers\PublicGalleryController::class, 'gallery'])->name('gallery');
@@ -28,5 +29,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::patch('photos/{submission}/approve', [App\Http\Controllers\PhotoSubmissionController::class, 'approve'])->name('photos.approve');
     Route::patch('photos/{submission}/decline', [App\Http\Controllers\PhotoSubmissionController::class, 'decline'])->name('photos.decline');
 });
+
 
 require __DIR__.'/settings.php';

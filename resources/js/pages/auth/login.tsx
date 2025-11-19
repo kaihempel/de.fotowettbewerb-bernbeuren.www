@@ -1,14 +1,10 @@
 import InputError from "@/components/input-error";
 import TextLink from "@/components/text-link";
-import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Spinner } from "@/components/ui/spinner";
 import AuthLayout from "@/layouts/auth-layout";
 import { register } from "@/routes";
 import { store } from "@/routes/login";
 import { request } from "@/routes/password";
+import { OxButton, OxCheckbox, OxLabel, OxSpinner, OxTextInput } from "@noxickon/onyx";
 import { Form, Head } from "@inertiajs/react";
 
 interface LoginProps {
@@ -38,23 +34,24 @@ export default function Login({
                     <>
                         <div className="grid gap-6">
                             <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
-                                <Input
-                                    id="email"
+                                <OxLabel htmlFor="email">Email address</OxLabel>
+                                <OxTextInput.Container
                                     type="email"
-                                    name="email"
-                                    required
-                                    autoFocus
-                                    tabIndex={1}
-                                    autoComplete="email"
-                                    placeholder="email@example.com"
-                                />
+                                    error={!!errors.email}
+                                >
+                                    <OxTextInput
+                                        id="email"
+                                        name="email"
+                                        autoComplete="email"
+                                        placeholder="email@example.com"
+                                    />
+                                </OxTextInput.Container>
                                 <InputError message={errors.email} />
                             </div>
 
                             <div className="grid gap-2">
                                 <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
+                                    <OxLabel htmlFor="password">Password</OxLabel>
                                     {canResetPassword && (
                                         <TextLink
                                             href={request()}
@@ -65,33 +62,36 @@ export default function Login({
                                         </TextLink>
                                     )}
                                 </div>
-                                <Input
-                                    id="password"
+                                <OxTextInput.Container
                                     type="password"
-                                    name="password"
-                                    required
-                                    tabIndex={2}
-                                    autoComplete="current-password"
-                                    placeholder="Password"
-                                />
+                                    error={!!errors.password}
+                                >
+                                    <OxTextInput
+                                        id="password"
+                                        name="password"
+                                        autoComplete="current-password"
+                                        placeholder="Password"
+                                    />
+                                    <OxTextInput.VisibilityButton />
+                                </OxTextInput.Container>
                                 <InputError message={errors.password} />
                             </div>
 
                             <div className="flex items-center space-x-3">
-                                <Checkbox id="remember" name="remember" tabIndex={3} />
-                                <Label htmlFor="remember">Remember me</Label>
+                                <OxCheckbox id="remember" name="remember" />
+                                <OxLabel htmlFor="remember">Remember me</OxLabel>
                             </div>
 
-                            <Button
+                            <OxButton
                                 type="submit"
+                                variant="primary"
                                 className="mt-4 w-full"
-                                tabIndex={4}
                                 disabled={processing}
                                 data-test="login-button"
                             >
-                                {processing && <Spinner />}
+                                {processing && <OxSpinner />}
                                 Log in
-                            </Button>
+                            </OxButton>
                         </div>
 
                         {canRegister && (

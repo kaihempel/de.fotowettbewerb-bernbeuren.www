@@ -42,9 +42,10 @@ class PhotoSubmissionRequest extends FormRequest
     {
         return [
             'photo.required' => 'Please select a photo to upload.',
-            'photo.file' => 'The uploaded file is invalid.',
-            'photo.mimes' => 'Only JPG, PNG, and HEIC images are accepted.',
-            'photo.max' => 'Photo must not exceed 15MB.',
+            'photo.file' => 'The uploaded file is invalid. Please try again with a different file.',
+            'photo.mimes' => 'Only JPG, PNG, and HEIC images are accepted. Please upload an image in one of these formats.',
+            'photo.max' => 'The photo must be smaller than 15MB. Please reduce the file size and try again.',
+            'photo.uploaded' => 'The upload failed. This usually happens when the file is too large. Please try with a smaller file (maximum 15MB) or a different format (JPG, PNG, or HEIC).',
         ];
     }
 
