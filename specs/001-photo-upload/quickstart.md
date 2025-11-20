@@ -513,7 +513,7 @@ export function PhotoUpload({ onFileSelect, isUploading }: PhotoUploadProps) {
 
 #### Step 2.3: Create Photo Upload Page
 
-**Create** `resources/js/Pages/PhotoUpload.tsx`:
+**Create** `resources/js/Pages/photo-upload.tsx`:
 
 ```tsx
 import { useState } from 'react';

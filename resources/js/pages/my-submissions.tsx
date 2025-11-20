@@ -7,10 +7,9 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import AppLayout from "@/layouts/app-layout";
+import GlobalLayout from "@/layouts/global-layout";
 import { cn } from "@/lib/utils";
 import {
-  type BreadcrumbItem,
   type PhotoSubmission,
   type PaginatedResponse,
 } from "@/types";
@@ -23,12 +22,6 @@ interface MySubmissionsPageProps {
   remainingSlots: number;
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: "My Submissions",
-    href: "/photos/submissions",
-  },
-];
 
 const getStatusColor = (status: PhotoSubmission["status"]): string => {
   switch (status) {
@@ -88,7 +81,7 @@ export default function MySubmissionsPage({
   };
 
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <GlobalLayout>
       <Head title="My Submissions" />
 
       <div className="mx-auto max-w-6xl space-y-6 p-4">
@@ -271,6 +264,6 @@ export default function MySubmissionsPage({
           </Card>
         )}
       </div>
-    </AppLayout>
+    </GlobalLayout>
   );
 }

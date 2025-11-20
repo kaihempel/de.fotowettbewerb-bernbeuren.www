@@ -141,5 +141,6 @@ fabric.properties
 
 vendor/
 node_modules/
+prompts/
 
 # End of https://mrkandreev.name/snippets/gitignore-generator/#react,macOS,Laravel,PhpStorm,php

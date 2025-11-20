@@ -10,9 +10,9 @@ This document summarizes the frontend React/TypeScript implementation for the pu
 
 ## Components Implemented
 
-### 1. Pages/Gallery.tsx
+### 1. Pages/gallery.tsx
 
-**Location**: `/Users/kaihempel/Documents/Programmierung/Web/de.fotowettbewerb-bernbeuren.www/resources/js/Pages/Gallery.tsx`
+**Location**: `/Users/kaihempel/Documents/Programmierung/Web/de.fotowettbewerb-bernbeuren.www/resources/js/Pages/gallery.tsx`
 
 **Purpose**: Main voting page component
 
@@ -255,7 +255,7 @@ The components expect these routes to exist:
 
 ## Files Created
 
-1. `/Users/kaihempel/Documents/Programmierung/Web/de.fotowettbewerb-bernbeuren.www/resources/js/Pages/Gallery.tsx` (218 lines)
+1. `/Users/kaihempel/Documents/Programmierung/Web/de.fotowettbewerb-bernbeuren.www/resources/js/Pages/gallery.tsx` (218 lines)
 2. `/Users/kaihempel/Documents/Programmierung/Web/de.fotowettbewerb-bernbeuren.www/resources/js/components/photo-viewer.tsx` (47 lines)
 3. `/Users/kaihempel/Documents/Programmierung/Web/de.fotowettbewerb-bernbeuren.www/resources/js/components/voting-buttons.tsx` (77 lines)
 4. `/Users/kaihempel/Documents/Programmierung/Web/de.fotowettbewerb-bernbeuren.www/resources/js/components/photo-navigation.tsx` (40 lines)

@@ -1,11 +1,9 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Spinner } from "@/components/ui/spinner";
+import { OxAlert, OxButton, OxCard, OxSpinner } from "@noxickon/onyx";
 import { cn } from "@/lib/utils";
-import { AlertCircle, Upload, X } from "lucide-react";
+import { Upload, X } from "lucide-react";
 import { type FC, useCallback, useState } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
+import { mdiAlertCircle } from "@mdi/js";
 
 interface PhotoUploadProps {
   onFileSelect: (file: File) => void;
@@ -81,26 +79,40 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
     <div className="space-y-4">
       {/* Error Alert */}
       {displayError && (
-        <Alert variant="destructive">
-          <AlertCircle className="size-4" />
-          <AlertTitle>Upload Error</AlertTitle>
-          <AlertDescription>{displayError}</AlertDescription>
-        </Alert>
+        <OxAlert type="error">
+          <OxAlert.Icon
+            path={mdiAlertCircle}
+            iconClass="text-red-400"
+            iconDivClass="bg-red-500/20"
+          />
+          <span>
+            <strong>Upload Error</strong>
+            <br />
+            {displayError}
+          </span>
+        </OxAlert>
       )}
 
       {/* Warning Alert (for duplicates) */}
       {warning && !displayError && (
-        <Alert>
-          <AlertCircle className="size-4" />
-          <AlertTitle>Warning</AlertTitle>
-          <AlertDescription>{warning}</AlertDescription>
-        </Alert>
+        <OxAlert type="warning">
+          <OxAlert.Icon
+            path={mdiAlertCircle}
+            iconClass="text-yellow-400"
+            iconDivClass="bg-yellow-500/20"
+          />
+          <span>
+            <strong>Warning</strong>
+            <br />
+            {warning}
+          </span>
+        </OxAlert>
       )}
 
       {/* Preview or Drop Zone */}
       {preview && selectedFile ? (
-        <Card>
-          <CardContent className="relative p-6">
+        <OxCard>
+          <OxCard.Body className="relative p-6">
             <div className="space-y-4">
               <div className="flex items-start justify-between">
                 <div className="flex-1 space-y-1">
@@ -110,15 +122,14 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
                   </p>
                 </div>
                 {!isUploading && (
-                  <Button
+                  <OxButton
                     variant="ghost"
-                    size="icon"
                     onClick={onClearFile}
                     className="shrink-0"
                     aria-label="Remove selected image"
                   >
                     <X className="size-4" />
-                  </Button>
+                  </OxButton>
                 )}
               </div>
               <div className="relative aspect-video overflow-hidden rounded-lg border bg-muted">
@@ -129,8 +140,8 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
                 />
               </div>
             </div>
-          </CardContent>
-        </Card>
+          </OxCard.Body>
+        </OxCard>
       ) : (
         <div
           {...getRootProps()}
@@ -174,7 +185,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
       {/* Upload Progress */}
       {isUploading && (
         <div className="flex items-center justify-center gap-3 rounded-lg border bg-accent/50 p-4">
-          <Spinner />
+          <OxSpinner />
           <p className="text-sm font-medium">Uploading your photo...</p>
         </div>
       )}

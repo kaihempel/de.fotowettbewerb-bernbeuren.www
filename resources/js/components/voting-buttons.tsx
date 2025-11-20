@@ -1,5 +1,4 @@
-import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
+import { OxButton, OxSpinner } from '@noxickon/onyx';
 import { cn } from '@/lib/utils';
 import { ThumbsDown, ThumbsUp } from 'lucide-react';
 
@@ -17,9 +16,8 @@ export default function VotingButtons({
   return (
     <div className="flex items-center justify-center gap-4 md:gap-6">
       {/* Thumbs Down Button */}
-      <Button
-        variant={currentVote === 'down' ? 'destructive' : 'outline'}
-        size="lg"
+      <OxButton
+        variant={currentVote === 'down' ? 'danger' : 'secondary'}
         onClick={() => onVote('down')}
         disabled={isSubmitting}
         className={cn(
@@ -33,7 +31,7 @@ export default function VotingButtons({
         aria-pressed={currentVote === 'down'}
       >
         {isSubmitting && currentVote === 'down' ? (
-          <Spinner className="size-5 md:size-6" />
+          <OxSpinner className="size-5 md:size-6" />
         ) : (
           <ThumbsDown
             className={cn(
@@ -43,12 +41,11 @@ export default function VotingButtons({
           />
         )}
         <span className="font-semibold">Thumbs Down</span>
-      </Button>
+      </OxButton>
 
       {/* Thumbs Up Button */}
-      <Button
-        variant={currentVote === 'up' ? 'default' : 'outline'}
-        size="lg"
+      <OxButton
+        variant={currentVote === 'up' ? 'primary' : 'secondary'}
         onClick={() => onVote('up')}
         disabled={isSubmitting}
         className={cn(
@@ -62,7 +59,7 @@ export default function VotingButtons({
         aria-pressed={currentVote === 'up'}
       >
         {isSubmitting && currentVote === 'up' ? (
-          <Spinner className="size-5 md:size-6" />
+          <OxSpinner className="size-5 md:size-6" />
         ) : (
           <ThumbsUp
             className={cn(
@@ -72,7 +69,7 @@ export default function VotingButtons({
           />
         )}
         <span className="font-semibold">Thumbs Up</span>
-      </Button>
+      </OxButton>
     </div>
   );
 }

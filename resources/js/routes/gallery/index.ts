@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:71
+* @see app/Http/Controllers/PublicGalleryController.php:75
 * @route '/gallery/{photoSubmission}'
 */
 export const show = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -97,7 +97,7 @@ show.definition = {
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:71
+* @see app/Http/Controllers/PublicGalleryController.php:75
 * @route '/gallery/{photoSubmission}'
 */
 show.url = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -130,7 +130,7 @@ show.url = (args: { photoSubmission: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:71
+* @see app/Http/Controllers/PublicGalleryController.php:75
 * @route '/gallery/{photoSubmission}'
 */
 show.get = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -140,7 +140,7 @@ show.get = (args: { photoSubmission: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:71
+* @see app/Http/Controllers/PublicGalleryController.php:75
 * @route '/gallery/{photoSubmission}'
 */
 show.head = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -150,7 +150,7 @@ show.head = (args: { photoSubmission: string | number | { id: string | number } 
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:71
+* @see app/Http/Controllers/PublicGalleryController.php:75
 * @route '/gallery/{photoSubmission}'
 */
 const showForm = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -160,7 +160,7 @@ const showForm = (args: { photoSubmission: string | number | { id: string | numb
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:71
+* @see app/Http/Controllers/PublicGalleryController.php:75
 * @route '/gallery/{photoSubmission}'
 */
 showForm.get = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -170,7 +170,7 @@ showForm.get = (args: { photoSubmission: string | number | { id: string | number
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:71
+* @see app/Http/Controllers/PublicGalleryController.php:75
 * @route '/gallery/{photoSubmission}'
 */
 showForm.head = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -187,7 +187,7 @@ show.form = showForm
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::vote
-* @see app/Http/Controllers/PublicGalleryController.php:108
+* @see app/Http/Controllers/PublicGalleryController.php:112
 * @route '/gallery/{photoSubmission}/vote'
 */
 export const vote = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -202,7 +202,7 @@ vote.definition = {
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::vote
-* @see app/Http/Controllers/PublicGalleryController.php:108
+* @see app/Http/Controllers/PublicGalleryController.php:112
 * @route '/gallery/{photoSubmission}/vote'
 */
 vote.url = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions) => {
@@ -235,7 +235,7 @@ vote.url = (args: { photoSubmission: string | number | { id: string | number } }
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::vote
-* @see app/Http/Controllers/PublicGalleryController.php:108
+* @see app/Http/Controllers/PublicGalleryController.php:112
 * @route '/gallery/{photoSubmission}/vote'
 */
 vote.post = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -245,7 +245,7 @@ vote.post = (args: { photoSubmission: string | number | { id: string | number } 
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::vote
-* @see app/Http/Controllers/PublicGalleryController.php:108
+* @see app/Http/Controllers/PublicGalleryController.php:112
 * @route '/gallery/{photoSubmission}/vote'
 */
 const voteForm = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -255,7 +255,7 @@ const voteForm = (args: { photoSubmission: string | number | { id: string | numb
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::vote
-* @see app/Http/Controllers/PublicGalleryController.php:108
+* @see app/Http/Controllers/PublicGalleryController.php:112
 * @route '/gallery/{photoSubmission}/vote'
 */
 voteForm.post = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

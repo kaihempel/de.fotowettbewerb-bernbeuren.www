@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { Skeleton } from '@/components/ui/skeleton';
+import { OxSkeleton } from '@noxickon/onyx';
 
 interface SkeletonLoaderProps {
   count?: number;
@@ -15,7 +15,7 @@ export const SkeletonLoader: FC<SkeletonLoaderProps> = ({ count = 20 }) => {
           role="status"
           aria-label="Loading photo"
         >
-          <Skeleton className="h-full w-full rounded-lg" />
+          <OxSkeleton className="h-full w-full rounded-lg" />
         </div>
       ))}
     </>

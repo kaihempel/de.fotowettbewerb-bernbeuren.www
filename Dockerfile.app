@@ -1,6 +1,6 @@
-FROM php:8.4.15RC1-fpm-bookworm
+FROM php:8.4.15RC1-fpm
 
-RUN apt-get update && apt-get install -y libmcrypt-dev default-mysql-client libc-client-dev libgd-dev libpng-dev libjpeg62-turbo libjpeg-dev --no-install-recommends
+RUN apt-get update && apt-get install -y zlib1g-dev libpng-dev libjpeg-dev
 RUN docker-php-ext-configure gd --with-jpeg
 
 RUN NUMPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \

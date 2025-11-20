@@ -1,7 +1,7 @@
-import { AppContent } from "@/components/app-content";
 import { AppHeader } from "@/components/app-header";
 import { AppShell } from "@/components/app-shell";
 import { type BreadcrumbItem } from "@/types";
+import { OxMainContent } from "@noxickon/onyx/layouts";
 import type { PropsWithChildren } from "react";
 
 export default function AppHeaderLayout({
@@ -10,8 +10,12 @@ export default function AppHeaderLayout({
 }: PropsWithChildren<{ breadcrumbs?: BreadcrumbItem[] }>) {
   return (
     <AppShell>
-      <AppHeader breadcrumbs={breadcrumbs} />
-      <AppContent>{children}</AppContent>
+      <OxMainContent>
+        <OxMainContent.Header>
+          <AppHeader breadcrumbs={breadcrumbs} />
+        </OxMainContent.Header>
+        <OxMainContent.Body>{children}</OxMainContent.Body>
+      </OxMainContent>
     </AppShell>
   );
 }

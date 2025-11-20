@@ -1,6 +1,6 @@
 import type { FC } from "react";
 import { History } from "lucide-react";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
+import { OxTooltip } from "@noxickon/onyx";
 import type { User } from "@/types";
 
 interface AuditTrailIndicatorProps {
@@ -27,21 +27,21 @@ export const AuditTrailIndicator: FC<AuditTrailIndicatorProps> = ({
   const actionText = status === "approved" ? "Approved" : "Declined";
 
   return (
-    <Tooltip>
-      <TooltipTrigger asChild>
-        <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
-          <History className="size-3" />
-          <span className="hidden sm:inline">Review history</span>
-        </div>
-      </TooltipTrigger>
-      <TooltipContent side="top" className="max-w-xs">
+    <OxTooltip
+      position="top"
+      content={
         <div className="space-y-1">
           <div className="font-medium">
             {actionText} by {reviewer.name}
           </div>
           <div className="text-xs opacity-80">{formatDate(reviewedAt)}</div>
         </div>
-      </TooltipContent>
-    </Tooltip>
+      }
+    >
+      <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
+        <History className="size-3" />
+        <span className="hidden sm:inline">Review history</span>
+      </div>
+    </OxTooltip>
   );
 };

@@ -4,10 +4,9 @@ import TwoFactorSetupModal from "@/components/two-factor-setup-modal";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { useTwoFactorAuth } from "@/hooks/use-two-factor-auth";
-import AppLayout from "@/layouts/app-layout";
+import GlobalLayout from "@/layouts/global-layout";
 import SettingsLayout from "@/layouts/settings/layout";
-import { disable, enable, show } from "@/routes/two-factor";
-import { type BreadcrumbItem } from "@/types";
+import { disable, enable } from "@/routes/two-factor";
 import { Form, Head } from "@inertiajs/react";
 import { ShieldBan, ShieldCheck } from "lucide-react";
 import { useState } from "react";
@@ -16,13 +15,6 @@ interface TwoFactorProps {
   requiresConfirmation?: boolean;
   twoFactorEnabled?: boolean;
 }
-
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: "Two-Factor Authentication",
-    href: show.url(),
-  },
-];
 
 export default function TwoFactor({
   requiresConfirmation = false,
@@ -41,9 +33,10 @@ export default function TwoFactor({
   const [showSetupModal, setShowSetupModal] = useState<boolean>(false);
 
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <GlobalLayout>
       <Head title="Two-Factor Authentication" />
-      <SettingsLayout>
+      <div className="mx-auto max-w-4xl">
+        <SettingsLayout>
         <div className="space-y-6">
           <HeadingSmall
             title="Two-Factor Authentication"
@@ -122,7 +115,8 @@ export default function TwoFactor({
             errors={errors}
           />
         </div>
-      </SettingsLayout>
-    </AppLayout>
+        </SettingsLayout>
+      </div>
+    </GlobalLayout>
   );
 }

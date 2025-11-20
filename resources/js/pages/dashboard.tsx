@@ -1,13 +1,11 @@
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
+import { OxAlert, OxCard, OxSeparator } from "@noxickon/onyx";
 import { PhotoSubmissionList } from "@/components/photo-submission-list";
 import { PhotoStatusFilter } from "@/components/photo-status-filter";
-import AppLayout from "@/layouts/app-layout";
-import { dashboard } from "@/routes";
-import { type BreadcrumbItem, type PhotoSubmission, type PaginatedResponse } from "@/types";
+import GlobalLayout from "@/layouts/global-layout";
+import { type PhotoSubmission, type PaginatedResponse } from "@/types";
 import { Head } from "@inertiajs/react";
-import { AlertCircle, CheckCircle2, Images } from "lucide-react";
+import { Images } from "lucide-react";
+import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
 
 interface DashboardProps {
   submissions: PaginatedResponse<PhotoSubmission>;
@@ -24,12 +22,6 @@ interface DashboardProps {
   };
 }
 
-const breadcrumbs: BreadcrumbItem[] = [
-  {
-    title: "Dashboard",
-    href: dashboard().url,
-  },
-];
 
 export default function Dashboard({
   submissions,
@@ -38,29 +30,39 @@ export default function Dashboard({
   flash,
 }: DashboardProps) {
   return (
-    <AppLayout breadcrumbs={breadcrumbs}>
+    <GlobalLayout>
       <Head title="Dashboard - Photo Review" />
 
-      <div className="flex h-full flex-1 flex-col gap-6 p-4 md:p-6">
+      <div className="mx-auto max-w-7xl flex h-full flex-1 flex-col gap-6 p-4 md:p-6">
         {/* Flash Messages */}
         {flash?.success && (
-          <Alert className="border-green-200 bg-green-50 dark:border-green-900 dark:bg-green-950">
-            <CheckCircle2 className="size-4 text-green-600 dark:text-green-400" />
-            <AlertTitle className="text-green-900 dark:text-green-100">
-              Success
-            </AlertTitle>
-            <AlertDescription className="text-green-800 dark:text-green-200">
+          <OxAlert type="success">
+            <OxAlert.Icon
+              path={mdiCheckCircle}
+              iconClass="text-green-400"
+              iconDivClass="bg-green-500/20"
+            />
+            <span className="text-green-800 dark:text-green-200">
+              <strong className="text-green-900 dark:text-green-100">Success</strong>
+              <br />
               {flash.success}
-            </AlertDescription>
-          </Alert>
+            </span>
+          </OxAlert>
         )}
 
         {flash?.error && (
-          <Alert variant="destructive">
-            <AlertCircle className="size-4" />
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>{flash.error}</AlertDescription>
-          </Alert>
+          <OxAlert type="error">
+            <OxAlert.Icon
+              path={mdiAlertCircle}
+              iconClass="text-red-400"
+              iconDivClass="bg-red-500/20"
+            />
+            <span>
+              <strong>Error</strong>
+              <br />
+              {flash.error}
+            </span>
+          </OxAlert>
         )}
 
         {/* Page Header */}
@@ -79,69 +81,65 @@ export default function Dashboard({
         {/* Statistics Cards */}
         {statusCounts && (
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Total Submissions
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
+            <OxCard>
+              <OxCard.Header
+                title={<span className="text-sm font-medium text-muted-foreground">Total Submissions</span>}
+                className="pb-3"
+              />
+              <OxCard.Body>
                 <div className="text-2xl font-bold">{statusCounts.all}</div>
-              </CardContent>
-            </Card>
+              </OxCard.Body>
+            </OxCard>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Pending Review
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
+            <OxCard>
+              <OxCard.Header
+                title={<span className="text-sm font-medium text-muted-foreground">Pending Review</span>}
+                className="pb-3"
+              />
+              <OxCard.Body>
                 <div className="text-2xl font-bold text-yellow-600 dark:text-yellow-500">
                   {statusCounts.new}
                 </div>
-              </CardContent>
-            </Card>
+              </OxCard.Body>
+            </OxCard>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Approved
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
+            <OxCard>
+              <OxCard.Header
+                title={<span className="text-sm font-medium text-muted-foreground">Approved</span>}
+                className="pb-3"
+              />
+              <OxCard.Body>
                 <div className="text-2xl font-bold text-green-600 dark:text-green-500">
                   {statusCounts.approved}
                 </div>
-              </CardContent>
-            </Card>
+              </OxCard.Body>
+            </OxCard>
 
-            <Card>
-              <CardHeader className="pb-3">
-                <CardTitle className="text-sm font-medium text-muted-foreground">
-                  Declined
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
+            <OxCard>
+              <OxCard.Header
+                title={<span className="text-sm font-medium text-muted-foreground">Declined</span>}
+                className="pb-3"
+              />
+              <OxCard.Body>
                 <div className="text-2xl font-bold text-red-600 dark:text-red-500">
                   {statusCounts.declined}
                 </div>
-              </CardContent>
-            </Card>
+              </OxCard.Body>
+            </OxCard>
           </div>
         )}
 
         {/* Filter Section */}
-        <Card>
-          <CardContent className="pt-6">
+        <OxCard>
+          <OxCard.Body className="pt-6">
             <PhotoStatusFilter
               currentFilter={statusFilter}
               counts={statusCounts}
             />
-          </CardContent>
-        </Card>
+          </OxCard.Body>
+        </OxCard>
 
-        <Separator />
+        <OxSeparator />
 
         {/* Submissions List */}
         <PhotoSubmissionList
@@ -149,6 +147,6 @@ export default function Dashboard({
           currentFilter={statusFilter}
         />
       </div>
-    </AppLayout>
+    </GlobalLayout>
   );
 }

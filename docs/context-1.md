@@ -31,7 +31,7 @@ Implement a complete photo upload system that allows authenticated users to subm
 12. POST /photos/submit route
 
 **Frontend Requirements (10 criteria)**:
-1. TypeScript PhotoUpload.tsx component
+1. TypeScript photo-upload.tsx component
 2. Mobile-first responsive design with Tailwind CSS v4
 3. Drag & drop functionality
 4. File input with preview

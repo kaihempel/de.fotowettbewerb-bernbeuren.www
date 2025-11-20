@@ -1,6 +1,7 @@
 import AppLogoIcon from "@/components/app-logo-icon";
 import { home } from "@/routes";
 import { Link } from "@inertiajs/react";
+import { OxMainContent } from "@noxickon/onyx/layouts";
 import { type PropsWithChildren } from "react";
 
 interface AuthLayoutProps {
@@ -15,8 +16,8 @@ export default function AuthSimpleLayout({
   description,
 }: PropsWithChildren<AuthLayoutProps>) {
   return (
-    <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
-      <div className="w-full max-w-sm">
+    <OxMainContent className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
+      <OxMainContent.Body className="w-full max-w-sm">
         <div className="flex flex-col gap-8">
           <div className="flex flex-col items-center gap-4">
             <Link
@@ -38,7 +39,7 @@ export default function AuthSimpleLayout({
           </div>
           {children}
         </div>
-      </div>
-    </div>
+      </OxMainContent.Body>
+    </OxMainContent>
   );
 }

@@ -28,7 +28,7 @@ class PhotoSubmissionController extends Controller
             ->with('reviewer')
             ->paginate(20);
 
-        return Inertia::render('PhotoUpload', [
+        return Inertia::render('photo-upload', [
             'submissions' => $submissions,
             'remainingSlots' => $user->remaining_submission_slots,
         ]);
@@ -137,8 +137,8 @@ class PhotoSubmissionController extends Controller
         }
 
         // Generate unique filename using UUID
-        $filename = Str::uuid().'.'.$photo->getClientOriginalExtension();
-        $storagePath = 'photo-submissions/new/'.$filename;
+        $filename = Str::uuid() . '.' . $photo->getClientOriginalExtension();
+        $storagePath = storage_path('app/photo-submissions/new/' . $filename);
 
         // Calculate SHA-256 hash for duplicate detection
         $fileHash = hash_file('sha256', $photo->getRealPath());
@@ -155,11 +155,12 @@ class PhotoSubmissionController extends Controller
             $image->orient();
 
             // Save the corrected image to storage
-            $success = Storage::put($storagePath, (string) $image->encode());
+            $fileStored = Storage::put($storagePath, (string) $image->encode());
 
-            if (! $success) {
+            if (! $fileStored) {
                 throw new \RuntimeException('Failed to store uploaded image.');
             }
+
         } catch (\Throwable $e) {
             // Log the error for debugging
             logger()->error('EXIF orientation correction failed', [
@@ -168,33 +169,56 @@ class PhotoSubmissionController extends Controller
             ]);
 
             // Fallback: store without orientation correction
-            $storagePath = Storage::putFileAs(
+            $result = Storage::putFileAs(
                 'photo-submissions/new',
                 $photo,
                 $filename
             );
 
-            if (! $storagePath) {
-                throw new \RuntimeException('Failed to store uploaded image.');
+            if (! $result) {
+                return redirect()->route('photos.index')
+                    ->withErrors(['photo' => 'Failed to store uploaded image. Please try again.']);
             }
+
+            $fileStored = true;
+        }
+
+        // Verify file was actually stored before creating database record
+        if (! $fileStored || ! Storage::exists($storagePath)) {
+            return redirect()->route('photos.index')
+                ->withErrors(['photo' => 'Failed to store uploaded image. Please try again.']);
         }
 
         // Generate FWB ID
         $fwbId = $this->generateFwbId();
 
-        // Create photo submission record
-        PhotoSubmission::create([
-            'fwb_id' => $fwbId,
-            'user_id' => $user->id,
-            'original_filename' => $photo->getClientOriginalName(),
-            'stored_filename' => $filename,
-            'file_path' => $storagePath,
-            'file_size' => $photo->getSize(),
-            'file_hash' => $fileHash,
-            'mime_type' => $photo->getMimeType(),
-            'status' => 'new',
-            'submitted_at' => now(),
-        ]);
+        // Create photo submission record only after successful file storage
+        try {
+            PhotoSubmission::create([
+                'fwb_id' => $fwbId,
+                'user_id' => $user->id,
+                'original_filename' => $photo->getClientOriginalName(),
+                'stored_filename' => $filename,
+                'file_path' => $storagePath,
+                'file_size' => $photo->getSize(),
+                'file_hash' => $fileHash,
+                'mime_type' => $photo->getMimeType(),
+                'status' => 'new',
+                'submitted_at' => now(),
+            ]);
+        } catch (\Throwable $e) {
+
+            // If database creation fails, clean up the stored file
+            Storage::delete($storagePath);
+
+            logger()->error('Failed to create photo submission record', [
+                'error' => $e->getMessage(),
+                'file' => $photo->getClientOriginalName(),
+            ]);
+
+            return redirect()->route('photos.index')
+                ->withErrors(['photo' => 'Failed to save submission. Please try again.']);
+        }
 
         $message = 'Photo uploaded successfully!';
 
