@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Events\PhotoApproved;
 use App\Events\PhotoDeclined;
+use App\Services\UploadFileHandler;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PhotoSubmission extends Model
@@ -149,11 +151,38 @@ class PhotoSubmission extends Model
         $previousReviewer = $this->reviewer;
         $previousReviewedAt = $this->reviewed_at?->toDateTimeString();
 
-        $this->update([
-            'status' => 'approved',
-            'reviewed_at' => now(),
-            'reviewed_by' => $reviewer->id,
-        ]);
+        DB::transaction(function () use ($reviewer) {
+            $uploadHandler = new UploadFileHandler;
+
+            // Move file to approved folder with date-based structure
+            try {
+                $newPath = $uploadHandler->moveFile(
+                    $this->file_path,
+                    'approved',
+                    $this->submitted_at
+                );
+
+                // Update database with new path and approval status
+                $this->update([
+                    'status' => 'approved',
+                    'file_path' => $newPath,
+                    'reviewed_at' => now(),
+                    'reviewed_by' => $reviewer->id,
+                ]);
+            } catch (\RuntimeException $e) {
+                logger()->error('Failed to move file during approval', [
+                    'submission_id' => $this->id,
+                    'error' => $e->getMessage(),
+                ]);
+
+                // Fallback: update status without moving file
+                $this->update([
+                    'status' => 'approved',
+                    'reviewed_at' => now(),
+                    'reviewed_by' => $reviewer->id,
+                ]);
+            }
+        });
 
         event(new PhotoApproved($this, $reviewer, $previousStatus, $previousReviewer, $previousReviewedAt));
     }
@@ -167,11 +196,38 @@ class PhotoSubmission extends Model
         $previousReviewer = $this->reviewer;
         $previousReviewedAt = $this->reviewed_at?->toDateTimeString();
 
-        $this->update([
-            'status' => 'declined',
-            'reviewed_at' => now(),
-            'reviewed_by' => $reviewer->id,
-        ]);
+        DB::transaction(function () use ($reviewer) {
+            $uploadHandler = new UploadFileHandler;
+
+            // Move file to declined folder with date-based structure
+            try {
+                $newPath = $uploadHandler->moveFile(
+                    $this->file_path,
+                    'declined',
+                    $this->submitted_at
+                );
+
+                // Update database with new path and declined status
+                $this->update([
+                    'status' => 'declined',
+                    'file_path' => $newPath,
+                    'reviewed_at' => now(),
+                    'reviewed_by' => $reviewer->id,
+                ]);
+            } catch (\RuntimeException $e) {
+                logger()->error('Failed to move file during decline', [
+                    'submission_id' => $this->id,
+                    'error' => $e->getMessage(),
+                ]);
+
+                // Fallback: update status without moving file
+                $this->update([
+                    'status' => 'declined',
+                    'reviewed_at' => now(),
+                    'reviewed_by' => $reviewer->id,
+                ]);
+            }
+        });
 
         event(new PhotoDeclined($this, $reviewer, $previousStatus, $previousReviewer, $previousReviewedAt));
     }

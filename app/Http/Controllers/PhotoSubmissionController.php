@@ -4,13 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PhotoSubmissionRequest;
 use App\Models\PhotoSubmission;
+use App\Services\UploadFileHandler;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 use Inertia\Inertia;
 use Inertia\Response as InertiaResponse;
-use Intervention\Image\Laravel\Facades\Image;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class PhotoSubmissionController extends Controller
@@ -124,70 +123,21 @@ class PhotoSubmissionController extends Controller
     {
         $user = $request->user();
         $photo = $request->file('photo');
+        $uploadHandler = new UploadFileHandler;
 
-        // Verify MIME type using magic bytes (extra security)
-        $finfo = finfo_open(FILEINFO_MIME_TYPE);
-        $actualMimeType = finfo_file($finfo, $photo->getRealPath());
-        finfo_close($finfo);
-
-        $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/heic'];
-        if (! in_array($actualMimeType, $allowedMimeTypes)) {
+        // Handle file upload with EXIF correction and date-based storage
+        try {
+            $fileData = $uploadHandler->handleUpload($photo, $user->id);
+        } catch (\RuntimeException $e) {
             return redirect()->route('photos.index')
-                ->withErrors(['photo' => 'Invalid file type detected. Only JPG, PNG, and HEIC images are accepted.']);
+                ->withErrors(['photo' => $e->getMessage()]);
         }
-
-        // Generate unique filename using UUID
-        $filename = Str::uuid() . '.' . $photo->getClientOriginalExtension();
-        $storagePath = storage_path('app/photo-submissions/new/' . $filename);
-
-        // Calculate SHA-256 hash for duplicate detection
-        $fileHash = hash_file('sha256', $photo->getRealPath());
 
         // Check for duplicate uploads (warning only)
         $duplicateExists = PhotoSubmission::query()
             ->forUser($user->id)
-            ->where('file_hash', $fileHash)
+            ->where('file_hash', $fileData['file_hash'])
             ->exists();
-
-        // Process image with EXIF orientation correction
-        try {
-            $image = Image::read($photo->getRealPath());
-            $image->orient();
-
-            // Save the corrected image to storage
-            $fileStored = Storage::put($storagePath, (string) $image->encode());
-
-            if (! $fileStored) {
-                throw new \RuntimeException('Failed to store uploaded image.');
-            }
-
-        } catch (\Throwable $e) {
-            // Log the error for debugging
-            logger()->error('EXIF orientation correction failed', [
-                'error' => $e->getMessage(),
-                'file' => $photo->getClientOriginalName(),
-            ]);
-
-            // Fallback: store without orientation correction
-            $result = Storage::putFileAs(
-                'photo-submissions/new',
-                $photo,
-                $filename
-            );
-
-            if (! $result) {
-                return redirect()->route('photos.index')
-                    ->withErrors(['photo' => 'Failed to store uploaded image. Please try again.']);
-            }
-
-            $fileStored = true;
-        }
-
-        // Verify file was actually stored before creating database record
-        if (! $fileStored || ! Storage::exists($storagePath)) {
-            return redirect()->route('photos.index')
-                ->withErrors(['photo' => 'Failed to store uploaded image. Please try again.']);
-        }
 
         // Generate FWB ID
         $fwbId = $this->generateFwbId();
@@ -197,23 +147,22 @@ class PhotoSubmissionController extends Controller
             PhotoSubmission::create([
                 'fwb_id' => $fwbId,
                 'user_id' => $user->id,
-                'original_filename' => $photo->getClientOriginalName(),
-                'stored_filename' => $filename,
-                'file_path' => $storagePath,
-                'file_size' => $photo->getSize(),
-                'file_hash' => $fileHash,
-                'mime_type' => $photo->getMimeType(),
+                'original_filename' => $fileData['original_filename'],
+                'stored_filename' => $fileData['filename'],
+                'file_path' => $fileData['storage_path'],
+                'file_size' => $fileData['file_size'],
+                'file_hash' => $fileData['file_hash'],
+                'mime_type' => $fileData['mime_type'],
                 'status' => 'new',
                 'submitted_at' => now(),
             ]);
         } catch (\Throwable $e) {
-
             // If database creation fails, clean up the stored file
-            Storage::delete($storagePath);
+            Storage::delete($fileData['storage_path']);
 
             logger()->error('Failed to create photo submission record', [
                 'error' => $e->getMessage(),
-                'file' => $photo->getClientOriginalName(),
+                'file' => $fileData['original_filename'],
             ]);
 
             return redirect()->route('photos.index')
