@@ -34,11 +34,10 @@ class UploadFileHandler
         // Generate unique filename using UUID
         $filename = Str::uuid().'.'.$file->getClientOriginalExtension();
 
-        // Generate date-based storage path (YYYY/MM/DD)
+        // Generate date-based storage path (YYYY/MM/DD) - relative path for Storage facade
         $now = Carbon::now();
         $datePath = $now->format('Y/m/d');
-        $relativePath = "photo-submissions/new/{$datePath}/{$filename}";
-        $storagePath = storage_path("app/{$relativePath}");
+        $storagePath = "photo-submissions/new/{$datePath}/{$filename}";
 
         // Calculate SHA-256 hash for duplicate detection
         $fileHash = hash_file('sha256', $file->getRealPath());
@@ -48,7 +47,7 @@ class UploadFileHandler
             $image = Image::read($file->getRealPath());
             $image->orient();
 
-            // Save the corrected image to storage
+            // Save the corrected image to storage (Storage facade creates directories automatically)
             $fileStored = Storage::put($storagePath, (string) $image->encode());
 
             if (! $fileStored) {
@@ -62,9 +61,9 @@ class UploadFileHandler
                 'user_id' => $userId,
             ]);
 
-            // Fallback: store without orientation correction
+            // Fallback: store without orientation correction (using relative path)
             $result = Storage::putFileAs(
-                storage_path("app/photo-submissions/new/{$datePath}"),
+                "photo-submissions/new/{$datePath}",
                 $file,
                 $filename
             );
@@ -110,12 +109,11 @@ class UploadFileHandler
         // Extract filename from current path
         $filename = basename($currentPath);
 
-        // Generate date-based path using submission date
+        // Generate date-based path using submission date (relative path for Storage facade)
         $datePath = $submissionDate->format('Y/m/d');
-        $relativePath = "photo-submissions/{$newFolder}/{$datePath}/{$filename}";
-        $newPath = storage_path("app/{$relativePath}");
+        $newPath = "photo-submissions/{$newFolder}/{$datePath}/{$filename}";
 
-        // Move the file to the new location
+        // Move the file to the new location (Storage facade creates directories automatically)
         try {
             $moved = Storage::move($currentPath, $newPath);
 
