@@ -232,3 +232,4 @@ Always check existing components before creating new ones.
 
 ## Recent Changes
 - 001-photo-upload: Added PHP 8.4, TypeScript (React 19) + Laravel 12, Inertia.js v2, Laravel Fortify, Laravel Wayfinder, Radix UI components, Tailwind CSS v4
+- 1
