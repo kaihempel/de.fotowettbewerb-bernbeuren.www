@@ -58,7 +58,9 @@ export default function TwoFactorChallenge() {
                   </div>
                 </Link>
                 <div className="space-y-2 text-center">
-                  <h1 className="text-xl font-medium">{authConfigContent.title}</h1>
+                  <h1 className="text-xl font-medium">
+                    {authConfigContent.title}
+                  </h1>
                   <p className="text-center text-sm text-muted-foreground">
                     {authConfigContent.description}
                   </p>

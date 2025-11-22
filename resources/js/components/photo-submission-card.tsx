@@ -105,14 +105,17 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
   };
 
   return (
-    <OxCard className="overflow-hidden transition-shadow hover:shadow-md" padding="none">
+    <OxCard
+      className="overflow-hidden transition-shadow hover:shadow-md"
+      padding="none"
+    >
       <OxCard.Body className="p-0">
         {/* Photo Thumbnail */}
-        <div className="relative aspect-[4/3] w-full overflow-hidden bg-muted">
+        <div className="relative w-full overflow-hidden bg-muted">
           <img
             src={submission.file_url}
             alt={submission.original_filename}
-            className="size-full object-cover transition-transform hover:scale-105"
+            className="aspect-auto w-full object-contain transition-transform hover:scale-105"
             loading="lazy"
           />
 

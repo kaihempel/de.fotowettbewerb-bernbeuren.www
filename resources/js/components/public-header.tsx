@@ -1,9 +1,15 @@
 import type { FC } from "react";
 import { useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
-import { mdiMenu, mdiLogout, mdiCog, mdiAccount } from '@mdi/js';
+import { mdiMenu, mdiLogout, mdiCog, mdiAccount } from "@mdi/js";
 import { useScrollPosition } from "@/hooks/use-scroll-position";
-import { OxDrawer, OxLink, OxHeading, OxIcon, OxSeparator } from "@noxickon/onyx";
+import {
+  OxDrawer,
+  OxLink,
+  OxHeading,
+  OxIcon,
+  OxSeparator,
+} from "@noxickon/onyx";
 import { cn } from "@/lib/utils";
 import { login, dashboard, logout } from "@/routes";
 import { edit as editProfile } from "@/routes/profile";
@@ -98,117 +104,110 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
     <>
       <OxMainContent.Header className="flex flex-row justify-between">
         {/* Logo */}
-          <Link
-              href="/"
-              className="flex items-center transition-transform duration-[350ms] ease-in-out"
-              aria-label="Home"
-          >
-            <AppLogoIcon className="size-15 stroke-white"></AppLogoIcon>
-          </Link>
+        <Link
+          href="/"
+          className="flex items-center transition-transform duration-[350ms] ease-in-out"
+          aria-label="Home"
+        >
+          <AppLogoIcon className="size-15 stroke-white"></AppLogoIcon>
+        </Link>
 
-          <div className="align-middle min-h-max">
+        <div className="align-middle min-h-max">
           {/* Mobile Navigation Menu */}
-              <OxDrawer open={menuOpen} onOpenChange={setMenuOpen}>
-                  <OxDrawer.Trigger>
-                      <OxIcon path={mdiMenu}/>
-                  </OxDrawer.Trigger>
-                  <OxDrawer.Content side="right">
-                      <OxDrawer.Header>
-                          <OxHeading as="h2" level={2}>
-                              Navigation
-                          </OxHeading>
-                      </OxDrawer.Header>
-                      <OxDrawer.Body>
-                          <div
-                              id="navigation-menu"
-                              className="space-y-2"
-                              aria-label="Main navigation"
-                          >
-                              {/* Main Navigation Items */}
-                              {menuItems.map((item) => (
-                                  <OxLink
-                                      key={item.href}
-                                      className="w-full justify-start"
-                                      variant="ghost"
-                                      href={item.href}
-                                      onClick={handleMenuItemClick}
-                                  >
-                                      {item.label}
-                                  </OxLink>
-                              ))}
+          <OxDrawer open={menuOpen} onOpenChange={setMenuOpen}>
+            <OxDrawer.Trigger>
+              <OxIcon path={mdiMenu} />
+            </OxDrawer.Trigger>
+            <OxDrawer.Content side="right">
+              <OxDrawer.Header>
+                <OxHeading as="h2" level={2}>
+                  Navigation
+                </OxHeading>
+              </OxDrawer.Header>
+              <OxDrawer.Body>
+                <div
+                  id="navigation-menu"
+                  className="space-y-2"
+                  aria-label="Main navigation"
+                >
+                  {/* Main Navigation Items */}
+                  {menuItems.map((item) => (
+                    <OxLink
+                      key={item.href}
+                      className="w-full justify-start"
+                      variant="ghost"
+                      href={item.href}
+                      onClick={handleMenuItemClick}
+                    >
+                      {item.label}
+                    </OxLink>
+                  ))}
 
-                              <OxSeparator className="my-4" />
+                  <OxSeparator className="my-4" />
 
-                              {/* User Account Section */}
-                              {isAuthenticated && (
-                                  <>
-                                      <div className="px-3 py-2">
-                                          <p className="text-sm font-medium text-foreground">
-                                              {auth.user.name}
-                                          </p>
-                                          <p className="text-xs text-muted-foreground">
-                                              {auth.user.email}
-                                          </p>
-                                      </div>
-                                  </>
-                              )}
+                  {/* User Account Section */}
+                  {isAuthenticated && (
+                    <>
+                      <div className="px-3 py-2">
+                        <p className="text-sm font-medium text-foreground">
+                          {auth.user.name}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {auth.user.email}
+                        </p>
+                      </div>
+                    </>
+                  )}
 
-                              {userMenuItems.map((item) => (
-                                  <OxLink
-                                      key={item.href}
-                                      className="w-full justify-start"
-                                      variant="ghost"
-                                      href={item.href}
-                                      onClick={handleMenuItemClick}
-                                  >
-                                      <OxIcon path={item.label === "Settings" ? mdiCog : mdiAccount} className="mr-2 size-4" />
-                                      {item.label}
-                                  </OxLink>
-                              ))}
+                  {userMenuItems.map((item) => (
+                    <OxLink
+                      key={item.href}
+                      className="w-full justify-start"
+                      variant="ghost"
+                      href={item.href}
+                      onClick={handleMenuItemClick}
+                    >
+                      <OxIcon
+                        path={item.label === "Settings" ? mdiCog : mdiAccount}
+                        className="mr-2 size-4"
+                      />
+                      {item.label}
+                    </OxLink>
+                  ))}
 
-                              {isAuthenticated && (
-                                  <Link
-                                      href={logout()}
-                                      method="post"
-                                      as="button"
-                                      className="flex w-full items-center justify-start rounded-md px-3 py-2 text-sm font-medium text-destructive hover:bg-destructive/10"
-                                      onClick={handleMenuItemClick}
-                                  >
-                                      <OxIcon path={mdiLogout} className="mr-2 size-4" />
-                                      Logout
-                                  </Link>
-                              )}
+                  {isAuthenticated && (
+                    <Link
+                      href={logout()}
+                      method="post"
+                      as="button"
+                      className="flex w-full items-center justify-start rounded-md px-3 py-2 text-sm font-medium text-destructive hover:bg-destructive/10"
+                      onClick={handleMenuItemClick}
+                    >
+                      <OxIcon path={mdiLogout} className="mr-2 size-4" />
+                      Logout
+                    </Link>
+                  )}
 
-                              <OxSeparator className="my-4" />
+                  <OxSeparator className="my-4" />
 
-                              {/* Footer Items */}
-                              {footerItems.map((item) => (
-                                  <OxLink
-                                      key={item.href}
-                                      className="w-full justify-start text-muted-foreground"
-                                      variant="ghost"
-                                      href={item.href}
-                                      onClick={handleMenuItemClick}
-                                  >
-                                      {item.label}
-                                  </OxLink>
-                              ))}
-                          </div>
-                      </OxDrawer.Body>
-                  </OxDrawer.Content>
-              </OxDrawer>
-          </div>
+                  {/* Footer Items */}
+                  {footerItems.map((item) => (
+                    <OxLink
+                      key={item.href}
+                      className="w-full justify-start text-muted-foreground"
+                      variant="ghost"
+                      href={item.href}
+                      onClick={handleMenuItemClick}
+                    >
+                      {item.label}
+                    </OxLink>
+                  ))}
+                </div>
+              </OxDrawer.Body>
+            </OxDrawer.Content>
+          </OxDrawer>
+        </div>
       </OxMainContent.Header>
-
-        {/* Spacer to prevent content hiding under fixed header */}
-        <div
-            className={cn(
-                "transition-all duration-[350ms] ease-in-out",
-                isScrolled ? "h-20" : "h-[20vh]",
-            )}
-            aria-hidden="true"
-        />
-
     </>
   );
 };

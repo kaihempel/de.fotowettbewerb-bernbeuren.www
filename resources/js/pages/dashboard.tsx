@@ -22,7 +22,6 @@ interface DashboardProps {
   };
 }
 
-
 export default function Dashboard({
   submissions,
   statusFilter = "all",
@@ -43,7 +42,9 @@ export default function Dashboard({
               iconDivClass="bg-green-500/20"
             />
             <span className="text-green-800 dark:text-green-200">
-              <strong className="text-green-900 dark:text-green-100">Success</strong>
+              <strong className="text-green-900 dark:text-green-100">
+                Success
+              </strong>
               <br />
               {flash.success}
             </span>
@@ -83,7 +84,11 @@ export default function Dashboard({
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             <OxCard>
               <OxCard.Header
-                title={<span className="text-sm font-medium text-muted-foreground">Total Submissions</span>}
+                title={
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Total Submissions
+                  </span>
+                }
                 className="pb-3"
               />
               <OxCard.Body>
@@ -93,7 +98,11 @@ export default function Dashboard({
 
             <OxCard>
               <OxCard.Header
-                title={<span className="text-sm font-medium text-muted-foreground">Pending Review</span>}
+                title={
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Pending Review
+                  </span>
+                }
                 className="pb-3"
               />
               <OxCard.Body>
@@ -105,7 +114,11 @@ export default function Dashboard({
 
             <OxCard>
               <OxCard.Header
-                title={<span className="text-sm font-medium text-muted-foreground">Approved</span>}
+                title={
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Approved
+                  </span>
+                }
                 className="pb-3"
               />
               <OxCard.Body>
@@ -117,7 +130,11 @@ export default function Dashboard({
 
             <OxCard>
               <OxCard.Header
-                title={<span className="text-sm font-medium text-muted-foreground">Declined</span>}
+                title={
+                  <span className="text-sm font-medium text-muted-foreground">
+                    Declined
+                  </span>
+                }
                 className="pb-3"
               />
               <OxCard.Body>

@@ -1,8 +1,8 @@
-import { useCallback, useEffect, useRef, useState, type FC } from 'react';
-import { router } from '@inertiajs/react';
-import type { GalleryPhoto } from '@/types';
-import { GalleryPhotoCard } from '@/components/gallery-photo-card';
-import { SkeletonLoader } from '@/components/skeleton-loader';
+import { useCallback, useEffect, useRef, useState, type FC } from "react";
+import { router } from "@inertiajs/react";
+import type { GalleryPhoto } from "@/types";
+import { GalleryPhotoCard } from "@/components/gallery-photo-card";
+import { SkeletonLoader } from "@/components/skeleton-loader";
 
 interface PhotoGridProps {
   initialPhotos: GalleryPhoto[];
@@ -31,12 +31,12 @@ export const PhotoGrid: FC<PhotoGridProps> = ({
     setIsLoading(true);
 
     router.get(
-      '/gallery/list',
+      "/gallery/list",
       { cursor },
       {
         preserveScroll: true,
         preserveState: true,
-        only: ['photos', 'next_cursor', 'has_more'],
+        only: ["photos", "next_cursor", "has_more"],
         onSuccess: (page) => {
           const newPhotos = (page.props.photos as GalleryPhoto[]) || [];
           const newCursor = (page.props.next_cursor as string | null) || null;
@@ -47,12 +47,12 @@ export const PhotoGrid: FC<PhotoGridProps> = ({
           setHasMore(newHasMore);
         },
         onError: (errors) => {
-          console.error('Failed to load more photos:', errors);
+          console.error("Failed to load more photos:", errors);
         },
         onFinish: () => {
           setIsLoading(false);
         },
-      }
+      },
     );
   }, [isLoading, hasMore, cursor]);
 
@@ -60,7 +60,7 @@ export const PhotoGrid: FC<PhotoGridProps> = ({
     // Set up Intersection Observer
     const options: IntersectionObserverInit = {
       root: null,
-      rootMargin: '100px', // Trigger 100px before reaching the sentinel
+      rootMargin: "100px", // Trigger 100px before reaching the sentinel
       threshold: 0.1,
     };
 
@@ -143,7 +143,10 @@ export const PhotoGrid: FC<PhotoGridProps> = ({
             aria-atomic="true"
           >
             {isLoading && (
-              <p className="text-sm text-muted-foreground" aria-label="Loading more photos">
+              <p
+                className="text-sm text-muted-foreground"
+                aria-label="Loading more photos"
+              >
                 Loading more photos...
               </p>
             )}

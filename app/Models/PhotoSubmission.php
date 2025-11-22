@@ -304,7 +304,7 @@ class PhotoSubmission extends Model
     {
         return Attribute::make(
             get: fn () => $this->thumbnail_path
-                ? Storage::url($this->thumbnail_path)
+                ? Storage::disk($this->getStorageDisk())->url($this->thumbnail_path)
                 : null
         );
     }
@@ -316,8 +316,17 @@ class PhotoSubmission extends Model
     {
         return Attribute::make(
             get: fn () => $this->file_path
-                ? Storage::url($this->file_path)
+                ? Storage::disk($this->getStorageDisk())->url($this->file_path)
                 : null
         );
+    }
+
+    /**
+     * Determine which disk to use based on photo status.
+     * Approved photos are on the public disk, others on local.
+     */
+    protected function getStorageDisk(): string
+    {
+        return $this->status === 'approved' ? 'public' : 'local';
     }
 }

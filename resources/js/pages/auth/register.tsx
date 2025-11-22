@@ -6,7 +6,13 @@ import InputError from "@/components/input-error";
 import TextLink from "@/components/text-link";
 import GlobalLayout from "@/layouts/global-layout";
 import AppLogoIcon from "@/components/app-logo-icon";
-import { OxButton, OxLabel, OxSpinner, OxTextInput, OxCard } from "@noxickon/onyx";
+import {
+  OxButton,
+  OxLabel,
+  OxSpinner,
+  OxTextInput,
+  OxCard,
+} from "@noxickon/onyx";
 
 export default function Register() {
   return (
@@ -60,7 +66,10 @@ export default function Register() {
 
                     <div className="grid gap-2">
                       <OxLabel htmlFor="email">Email address</OxLabel>
-                      <OxTextInput.Container type="email" error={!!errors.email}>
+                      <OxTextInput.Container
+                        type="email"
+                        error={!!errors.email}
+                      >
                         <OxTextInput
                           id="email"
                           name="email"
@@ -73,7 +82,10 @@ export default function Register() {
 
                     <div className="grid gap-2">
                       <OxLabel htmlFor="password">Password</OxLabel>
-                      <OxTextInput.Container type="password" error={!!errors.password}>
+                      <OxTextInput.Container
+                        type="password"
+                        error={!!errors.password}
+                      >
                         <OxTextInput
                           id="password"
                           name="password"
@@ -86,8 +98,13 @@ export default function Register() {
                     </div>
 
                     <div className="grid gap-2">
-                      <OxLabel htmlFor="password_confirmation">Confirm password</OxLabel>
-                      <OxTextInput.Container type="password" error={!!errors.password_confirmation}>
+                      <OxLabel htmlFor="password_confirmation">
+                        Confirm password
+                      </OxLabel>
+                      <OxTextInput.Container
+                        type="password"
+                        error={!!errors.password_confirmation}
+                      >
                         <OxTextInput
                           id="password_confirmation"
                           name="password_confirmation"

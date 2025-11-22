@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Events\PhotoApproved;
+use App\Listeners\GeneratePhotoThumbnailOnApproval;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\ServiceProvider;
@@ -32,5 +35,11 @@ class AppServiceProvider extends ServiceProvider
         RateLimiter::for('votes', function (Request $request) {
             return Limit::perHour(60)->by($request->ip());
         });
+
+        // Register event listeners
+        Event::listen(
+            PhotoApproved::class,
+            GeneratePhotoThumbnailOnApproval::class
+        );
     }
 }

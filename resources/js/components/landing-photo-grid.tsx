@@ -2,7 +2,8 @@ import type { FC } from "react";
 import { Link } from "@inertiajs/react";
 import type { GalleryPhoto } from "@/types/index.d";
 import { cn } from "@/lib/utils";
-import {OxCard, OxHeading} from "@noxickon/onyx";
+import { OxCard, OxHeading } from "@noxickon/onyx";
+import { show } from "@/routes/gallery";
 
 interface LandingPhotoGridProps {
   photos: GalleryPhoto[];
@@ -24,33 +25,30 @@ export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
 }) => {
   if (photos.length === 0) {
     return (
-        <OxCard>
-            <OxCard.Body className={cn(
-                "text-center",
-                className
-            )}>
-                <svg
-                  className="mb-4 size-16 text-gray-400 dark:text-gray-600"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  aria-hidden="true"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-                  />
-                </svg>
-                <OxHeading as="h3" level={3}>
-                  No photos available yet
-                </OxHeading>
-                <p className="text-sm text-gray-1100 mb-4">
-                  Check back soon for contest entries!
-                </p>
-            </OxCard.Body>
-        </OxCard>
+      <OxCard>
+        <OxCard.Body className={cn("text-center", className)}>
+          <svg
+            className="mb-4 size-16 text-gray-400 dark:text-gray-600"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={1.5}
+              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
+            />
+          </svg>
+          <OxHeading as="h3" level={3}>
+            No photos available yet
+          </OxHeading>
+          <p className="text-sm text-gray-1100 mb-4">
+            Check back soon for contest entries!
+          </p>
+        </OxCard.Body>
+      </OxCard>
     );
   }
 
@@ -66,16 +64,16 @@ export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
       {photos.map((photo, index) => (
         <Link
           key={photo.id}
-          href={`/gallery/${photo.id}`}
+          href={show.url(photo)}
           className="group relative overflow-hidden rounded-lg bg-gray-100 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl dark:bg-gray-800"
           role="listitem"
         >
-          <div className="relative aspect-auto">
+          <div className="relative">
             <img
               src={photo.thumbnail_url}
               alt={`Contest photo ${photo.id}`}
               loading={index < 12 ? "eager" : "lazy"}
-              className="h-full w-full object-contain"
+              className="aspect-auto w-full object-contain"
             />
             {/* Hover overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />

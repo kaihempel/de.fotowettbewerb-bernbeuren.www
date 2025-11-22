@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { router } from "@inertiajs/react";
 import { ChevronLeft, ChevronRight, FileQuestion } from "lucide-react";
-import { OxButton } from "@noxickon/onyx";
+import { OxButton, OxCard, OxSkeleton, OxSkeletonText } from "@noxickon/onyx";
 import { PhotoSubmissionCard } from "@/components/photo-submission-card";
 import type { PhotoSubmission, PaginatedResponse } from "@/types";
 import { cn } from "@/lib/utils";
@@ -11,19 +11,61 @@ interface PhotoSubmissionListProps {
   currentFilter?: string;
 }
 
+// Skeleton loader component for loading state
+const SubmissionCardSkeleton: FC = () => (
+  <OxCard className="overflow-hidden" padding="none">
+    <OxCard.Body className="p-0">
+      {/* Photo Thumbnail Skeleton */}
+      <OxSkeleton className="aspect-auto w-full" shape="rectangle" animate />
+
+      {/* Card Info Skeleton */}
+      <div className="space-y-3 p-4">
+        {/* User Info Skeleton */}
+        <div className="flex items-center gap-2">
+          <OxSkeleton width="16px" height="16px" shape="circle" animate />
+          <OxSkeletonText width="120px" height="14px" animate />
+        </div>
+
+        {/* Submission Date Skeleton */}
+        <OxSkeletonText width="180px" height="12px" animate />
+
+        {/* Photo ID Skeleton */}
+        <OxSkeletonText width="140px" height="12px" animate />
+
+        {/* Action Buttons Skeleton */}
+        <div className="flex gap-2 pt-2">
+          <OxSkeleton
+            className="flex-1"
+            height="36px"
+            shape="rectangle"
+            animate
+          />
+          <OxSkeleton
+            className="flex-1"
+            height="36px"
+            shape="rectangle"
+            animate
+          />
+        </div>
+      </div>
+    </OxCard.Body>
+  </OxCard>
+);
+
 export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
   submissions,
   currentFilter = "all",
 }) => {
-  // Early return if submissions is undefined
+  // Show skeleton loaders if submissions is undefined or still loading
   if (!submissions) {
     return (
-      <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
-        <FileQuestion className="mb-4 size-12 text-muted-foreground/50" />
-        <h3 className="mb-2 text-lg font-semibold">Loading submissions...</h3>
-        <p className="max-w-sm text-sm text-muted-foreground">
-          Please wait while we load the submissions.
-        </p>
+      <div className="space-y-6">
+        {/* Grid of skeleton cards */}
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <SubmissionCardSkeleton key={index} />
+          ))}
+        </div>
       </div>
     );
   }
@@ -167,7 +209,10 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
                     onClick={() => handlePageChange(pageNum)}
                     variant={isActive ? "primary" : "secondary"}
                     size="sm"
-                    className={cn("min-w-[2.5rem]", isActive && "pointer-events-none")}
+                    className={cn(
+                      "min-w-[2.5rem]",
+                      isActive && "pointer-events-none",
+                    )}
                   >
                     {pageNum}
                   </OxButton>

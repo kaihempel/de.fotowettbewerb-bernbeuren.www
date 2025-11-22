@@ -1,5 +1,5 @@
-import type { FC } from 'react';
-import { OxSkeleton } from '@noxickon/onyx';
+import type { FC } from "react";
+import { OxSkeleton } from "@noxickon/onyx";
 
 interface SkeletonLoaderProps {
   count?: number;

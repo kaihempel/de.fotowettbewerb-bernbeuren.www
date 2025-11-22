@@ -7,7 +7,14 @@ import InputError from "@/components/input-error";
 import TextLink from "@/components/text-link";
 import GlobalLayout from "@/layouts/global-layout";
 import AppLogoIcon from "@/components/app-logo-icon";
-import { OxAlert, OxButton, OxLabel, OxSpinner, OxTextInput, OxCard } from "@noxickon/onyx";
+import {
+  OxAlert,
+  OxButton,
+  OxLabel,
+  OxSpinner,
+  OxTextInput,
+  OxCard,
+} from "@noxickon/onyx";
 import { mdiCheckCircle } from "@mdi/js";
 
 export default function ForgotPassword({ status }: { status?: string }) {
@@ -57,7 +64,10 @@ export default function ForgotPassword({ status }: { status?: string }) {
                   <>
                     <div className="grid gap-2">
                       <OxLabel htmlFor="email">Email address</OxLabel>
-                      <OxTextInput.Container type="email" error={!!errors.email}>
+                      <OxTextInput.Container
+                        type="email"
+                        error={!!errors.email}
+                      >
                         <OxTextInput
                           id="email"
                           name="email"

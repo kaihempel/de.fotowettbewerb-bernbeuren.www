@@ -1,18 +1,18 @@
-import { Head, router } from '@inertiajs/react';
-import { useEffect, useState } from 'react';
-import PhotoNavigation from '@/components/photo-navigation';
-import PhotoViewer from '@/components/photo-viewer';
-import VotingButtons from '@/components/voting-buttons';
+import { Head, router } from "@inertiajs/react";
+import { useEffect, useState } from "react";
+import PhotoNavigation from "@/components/photo-navigation";
+import PhotoViewer from "@/components/photo-viewer";
+import VotingButtons from "@/components/voting-buttons";
 import { OxAlert } from "@noxickon/onyx";
-import { mdiCheck, mdiRocket } from '@mdi/js';
-import GlobalLayout from '@/layouts/global-layout';
+import { mdiCheck, mdiRocket } from "@mdi/js";
+import GlobalLayout from "@/layouts/global-layout";
 
 interface Photo {
   id: number;
-  image_url: string;
+  full_image_url: string;
   title?: string;
   rate: number;
-  user_vote: 'up' | 'down' | null;
+  user_vote: "up" | "down" | null;
   created_at: string;
 }
 
@@ -34,15 +34,16 @@ function GalleryContent({
   progress,
 }: GalleryProps) {
   // Track optimistic updates separately from server state
-  const [optimisticVote, setOptimisticVote] = useState<'up' | 'down' | null>(
-    null
+  const [optimisticVote, setOptimisticVote] = useState<"up" | "down" | null>(
+    null,
   );
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [retryCount, setRetryCount] = useState(0);
 
   // Current vote is either the optimistic update or the server state
-  const currentVote = optimisticVote !== null ? optimisticVote : photo.user_vote;
+  const currentVote =
+    optimisticVote !== null ? optimisticVote : photo.user_vote;
 
   // Keyboard navigation
   useEffect(() => {
@@ -55,22 +56,22 @@ function GalleryContent({
         return;
       }
 
-      if (event.key === 'ArrowLeft' && previousPhoto) {
+      if (event.key === "ArrowLeft" && previousPhoto) {
         router.visit(`/gallery/${previousPhoto.id}`, {
           preserveScroll: false,
         });
-      } else if (event.key === 'ArrowRight' && nextPhoto) {
+      } else if (event.key === "ArrowRight" && nextPhoto) {
         router.visit(`/gallery/${nextPhoto.id}`, {
           preserveScroll: false,
         });
       }
     };
 
-    window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
   }, [nextPhoto, previousPhoto]);
 
-  const handleVote = (voteType: 'up' | 'down') => {
+  const handleVote = (voteType: "up" | "down") => {
     // If clicking the same vote, do nothing
     if (currentVote === voteType) {
       return;
@@ -100,7 +101,7 @@ function GalleryContent({
               setOptimisticVote(previousVote);
               setErrorMessage(
                 errors.vote_type ||
-                  'Failed to submit vote after multiple attempts. Please try again.'
+                  "Failed to submit vote after multiple attempts. Please try again.",
               );
               setRetryCount(0);
             }
@@ -113,7 +114,7 @@ function GalleryContent({
           onFinish: () => {
             setIsSubmitting(false);
           },
-        }
+        },
       );
     };
 
@@ -137,14 +138,14 @@ function GalleryContent({
         {/* Error Message */}
         {errorMessage && (
           <div className="fixed left-1/2 top-4 z-10 w-full max-w-md -translate-x-1/2">
-              <OxAlert type="default">
-                  <OxAlert.Icon
-                      path={mdiRocket}
-                      iconClass="text-orange-400"
-                      iconDivClass="bg-orange-500/20"
-                  />
-                  <span>{errorMessage}</span>
-              </OxAlert>
+            <OxAlert type="default">
+              <OxAlert.Icon
+                path={mdiRocket}
+                iconClass="text-orange-400"
+                iconDivClass="bg-orange-500/20"
+              />
+              <span>{errorMessage}</span>
+            </OxAlert>
           </div>
         )}
 
@@ -160,23 +161,24 @@ function GalleryContent({
         {/* Completion Message */}
         {isCompleted && !errorMessage && (
           <div className="fixed left-1/2 top-4 z-10 w-full max-w-md -translate-x-1/2">
-              <OxAlert type="default">
-                  <OxAlert.Icon
-                      path={mdiCheck}
-                      iconClass="text-orange-400"
-                      iconDivClass="bg-orange-500/20"
-                  />
-                  <span>
-                      You have rated all {progress.total} photos. You can still navigate and change your votes.
-                  </span>
-              </OxAlert>
+            <OxAlert type="default">
+              <OxAlert.Icon
+                path={mdiCheck}
+                iconClass="text-orange-400"
+                iconDivClass="bg-orange-500/20"
+              />
+              <span>
+                You have rated all {progress.total} photos. You can still
+                navigate and change your votes.
+              </span>
+            </OxAlert>
           </div>
         )}
 
         {/* Main Content */}
         <div className="flex flex-1 flex-col items-center justify-center p-4 pb-32 pt-20 md:p-6 md:pb-40">
           <PhotoViewer
-            imageUrl={photo.image_url}
+            imageUrl={photo.full_image_url}
             title={photo.title}
             rate={photo.rate}
           />
@@ -194,10 +196,7 @@ function GalleryContent({
         </div>
 
         {/* Navigation Arrows */}
-        <PhotoNavigation
-          previousPhoto={previousPhoto}
-          nextPhoto={nextPhoto}
-        />
+        <PhotoNavigation previousPhoto={previousPhoto} nextPhoto={nextPhoto} />
       </div>
     </GlobalLayout>
   );

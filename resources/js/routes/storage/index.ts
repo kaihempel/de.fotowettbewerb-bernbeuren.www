@@ -1,23 +1,23 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see routes/web.php:16
 * @route '/storage/{path}'
 */
-export const local = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: local.url(args, options),
+export const publicMethod = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: publicMethod.url(args, options),
     method: 'get',
 })
 
-local.definition = {
+publicMethod.definition = {
     methods: ["get","head"],
     url: '/storage/{path}',
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see routes/web.php:16
 * @route '/storage/{path}'
 */
-local.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
+publicMethod.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
     if (typeof args === 'string' || typeof args === 'number') {
         args = { path: args }
     }
@@ -34,53 +34,53 @@ local.url = (args: { path: string | number } | [path: string | number ] | string
         path: args.path,
     }
 
-    return local.definition.url
+    return publicMethod.definition.url
             .replace('{path}', parsedArgs.path.toString())
             .replace(/\/+$/, '') + queryParams(options)
 }
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see routes/web.php:16
 * @route '/storage/{path}'
 */
-local.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
-    url: local.url(args, options),
+publicMethod.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
+    url: publicMethod.url(args, options),
     method: 'get',
 })
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see routes/web.php:16
 * @route '/storage/{path}'
 */
-local.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
-    url: local.url(args, options),
+publicMethod.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
+    url: publicMethod.url(args, options),
     method: 'head',
 })
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see routes/web.php:16
 * @route '/storage/{path}'
 */
-const localForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: local.url(args, options),
+const publicMethodForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: publicMethod.url(args, options),
     method: 'get',
 })
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see routes/web.php:16
 * @route '/storage/{path}'
 */
-localForm.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: local.url(args, options),
+publicMethodForm.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: publicMethod.url(args, options),
     method: 'get',
 })
 
 /**
-* @see vendor/laravel/framework/src/Illuminate/Filesystem/FilesystemServiceProvider.php:98
+* @see routes/web.php:16
 * @route '/storage/{path}'
 */
-localForm.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: local.url(args, {
+publicMethodForm.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
+    action: publicMethod.url(args, {
         [options?.mergeQuery ? 'mergeQuery' : 'query']: {
             _method: 'HEAD',
             ...(options?.query ?? options?.mergeQuery ?? {}),
@@ -89,10 +89,10 @@ localForm.head = (args: { path: string | number } | [path: string | number ] | s
     method: 'get',
 })
 
-local.form = localForm
+publicMethod.form = publicMethodForm
 
 const storage = {
-    local: Object.assign(local, local),
+    public: Object.assign(publicMethod, publicMethod),
 }
 
 export default storage

@@ -1,6 +1,6 @@
-import { useState, type FC } from 'react';
-import { Link } from '@inertiajs/react';
-import type { GalleryPhoto } from '@/types';
+import { useState, type FC } from "react";
+import { Link } from "@inertiajs/react";
+import type { GalleryPhoto } from "@/types";
 
 interface GalleryPhotoCardProps {
   photo: GalleryPhoto;
@@ -63,7 +63,7 @@ export const GalleryPhotoCard: FC<GalleryPhotoCardProps> = ({
             onLoad={handleLoad}
             onError={handleError}
             className={`h-full w-full object-cover transition-opacity duration-300 ${
-              isLoaded ? 'opacity-100' : 'opacity-0'
+              isLoaded ? "opacity-100" : "opacity-0"
             }`}
           />
 
@@ -73,7 +73,7 @@ export const GalleryPhotoCard: FC<GalleryPhotoCardProps> = ({
           {/* Rating Badge (if available) */}
           {photo.rate !== null && (
             <div className="absolute right-2 top-2 rounded-md bg-black/60 px-2 py-1 text-xs font-medium text-white backdrop-blur-sm">
-              {photo.rate > 0 ? '+' : ''}
+              {photo.rate > 0 ? "+" : ""}
               {photo.rate}
             </div>
           )}

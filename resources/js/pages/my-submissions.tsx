@@ -9,10 +9,7 @@ import {
 } from "@/components/ui/card";
 import GlobalLayout from "@/layouts/global-layout";
 import { cn } from "@/lib/utils";
-import {
-  type PhotoSubmission,
-  type PaginatedResponse,
-} from "@/types";
+import { type PhotoSubmission, type PaginatedResponse } from "@/types";
 import { Head, router } from "@inertiajs/react";
 import { Download, Upload, Image as ImageIcon } from "lucide-react";
 import { type FC } from "react";
@@ -21,7 +18,6 @@ interface MySubmissionsPageProps {
   submissions: PaginatedResponse<PhotoSubmission>;
   remainingSlots: number;
 }
-
 
 const getStatusColor = (status: PhotoSubmission["status"]): string => {
   switch (status) {
@@ -179,7 +175,9 @@ export default function MySubmissionsPage({
                       <div className="flex items-center justify-between">
                         <span>Reviewed:</span>
                         <span className="font-medium text-foreground">
-                          {new Date(submission.reviewed_at).toLocaleDateString()}
+                          {new Date(
+                            submission.reviewed_at,
+                          ).toLocaleDateString()}
                         </span>
                       </div>
                     )}
@@ -209,7 +207,8 @@ export default function MySubmissionsPage({
                   )}
                   {submission.status === "approved" && (
                     <p className="text-xs text-muted-foreground">
-                      Your photo has been approved and is entered in the contest!
+                      Your photo has been approved and is entered in the
+                      contest!
                     </p>
                   )}
                   {submission.status === "declined" && (

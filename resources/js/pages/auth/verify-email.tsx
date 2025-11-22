@@ -29,7 +29,8 @@ export default function VerifyEmail({ status }: { status?: string }) {
                 <div className="space-y-2 text-center">
                   <h1 className="text-xl font-medium">Verify email</h1>
                   <p className="text-center text-sm text-muted-foreground">
-                    Please verify your email address by clicking on the link we just emailed to you.
+                    Please verify your email address by clicking on the link we
+                    just emailed to you.
                   </p>
                 </div>
               </div>

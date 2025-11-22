@@ -3,7 +3,13 @@ import GlobalLayout from "@/layouts/global-layout";
 import AppLogoIcon from "@/components/app-logo-icon";
 import { home } from "@/routes";
 import { store } from "@/routes/password/confirm";
-import { OxButton, OxLabel, OxSpinner, OxTextInput, OxCard } from "@noxickon/onyx";
+import {
+  OxButton,
+  OxLabel,
+  OxSpinner,
+  OxTextInput,
+  OxCard,
+} from "@noxickon/onyx";
 import { Form, Head, Link } from "@inertiajs/react";
 
 export default function ConfirmPassword() {
@@ -27,7 +33,8 @@ export default function ConfirmPassword() {
                 <div className="space-y-2 text-center">
                   <h1 className="text-xl font-medium">Confirm your password</h1>
                   <p className="text-center text-sm text-muted-foreground">
-                    This is a secure area of the application. Please confirm your password before continuing.
+                    This is a secure area of the application. Please confirm
+                    your password before continuing.
                   </p>
                 </div>
               </div>
@@ -39,7 +46,10 @@ export default function ConfirmPassword() {
                 <div className="space-y-6">
                   <div className="grid gap-2">
                     <OxLabel htmlFor="password">Password</OxLabel>
-                    <OxTextInput.Container type="password" error={!!errors.password}>
+                    <OxTextInput.Container
+                      type="password"
+                      error={!!errors.password}
+                    >
                       <OxTextInput
                         id="password"
                         name="password"

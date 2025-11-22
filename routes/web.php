@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia;
-
+use Illuminate\Support\Facades\Storage;
 
 // Public gallery routes (no authentication required)
 Route::get('/', [App\Http\Controllers\PublicGalleryController::class, 'gallery'])->name('home');
@@ -13,10 +12,18 @@ Route::post('gallery/{photoSubmission}/vote', [App\Http\Controllers\PublicGaller
     ->middleware('throttle:votes')
     ->name('gallery.vote');
 
+// Serve public storage files (for approved photos and thumbnails)
+Route::get('storage/{path}', function (string $path) {
+    if (! Storage::disk('public')->exists($path)) {
+        abort(404);
+    }
+
+    return Storage::disk('public')->response($path);
+})->where('path', '.*')->name('storage.public');
+
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('dashboard', function () {
-        return Inertia::render('dashboard');
-    })->name('dashboard');
+    // Main dashboard route - shows photo review dashboard
+    Route::get('dashboard', [App\Http\Controllers\PhotoSubmissionController::class, 'dashboard'])->name('dashboard');
 
     // Photo submission routes
     Route::get('photos', [App\Http\Controllers\PhotoSubmissionController::class, 'index'])->name('photos.index');
@@ -24,11 +31,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('photos/upload', [App\Http\Controllers\PhotoSubmissionController::class, 'store'])->name('photos.upload');
     Route::get('photos/{submission}/download', [App\Http\Controllers\PhotoSubmissionController::class, 'download'])->name('photos.download');
 
-    // Photo review dashboard routes (for reviewers/admins)
-    Route::get('dashboard/photos', [App\Http\Controllers\PhotoSubmissionController::class, 'dashboard'])->name('photos.dashboard');
+    // Photo review actions (for reviewers/admins)
     Route::patch('photos/{submission}/approve', [App\Http\Controllers\PhotoSubmissionController::class, 'approve'])->name('photos.approve');
     Route::patch('photos/{submission}/decline', [App\Http\Controllers\PhotoSubmissionController::class, 'decline'])->name('photos.decline');
 });
-
 
 require __DIR__.'/settings.php';

@@ -102,7 +102,7 @@ class UploadFileHandler
      */
     public function moveFile(string $currentPath, string $newFolder, Carbon $submissionDate): string
     {
-        if (! Storage::exists($currentPath)) {
+        if (! Storage::disk('local')->exists($currentPath)) {
             throw new \RuntimeException("Source file not found: {$currentPath}");
         }
 
@@ -113,16 +113,26 @@ class UploadFileHandler
         $datePath = $submissionDate->format('Y/m/d');
         $newPath = "photo-submissions/{$newFolder}/{$datePath}/{$filename}";
 
-        // Move the file to the new location (Storage facade creates directories automatically)
-        try {
-            $moved = Storage::move($currentPath, $newPath);
+        // Determine target disk: 'public' for approved, 'local' for declined
+        $targetDisk = $newFolder === 'approved' ? 'public' : 'local';
 
-            if (! $moved) {
-                throw new \RuntimeException("Failed to move file from {$currentPath} to {$newPath}");
+        // Move the file to the new location
+        try {
+            // Get file content from source (local disk)
+            $fileContent = Storage::disk('local')->get($currentPath);
+
+            // Save to target disk with public visibility for approved photos
+            $stored = Storage::disk($targetDisk)->put($newPath, $fileContent);
+
+            if (! $stored) {
+                throw new \RuntimeException("Failed to store file to {$targetDisk} disk at {$newPath}");
             }
 
+            // Delete original file from local disk
+            Storage::disk('local')->delete($currentPath);
+
             // Verify the file exists at new location
-            if (! Storage::exists($newPath)) {
+            if (! Storage::disk($targetDisk)->exists($newPath)) {
                 throw new \RuntimeException("File not found at new location: {$newPath}");
             }
 
@@ -132,6 +142,7 @@ class UploadFileHandler
                 'error' => $e->getMessage(),
                 'source' => $currentPath,
                 'destination' => $newPath,
+                'target_disk' => $targetDisk ?? 'unknown',
             ]);
 
             throw new \RuntimeException("Failed to move file: {$e->getMessage()}");

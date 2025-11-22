@@ -20,9 +20,7 @@ const GlobalLayout: FC<GlobalLayoutProps> = ({ children, className }) => {
       <PublicHeader />
 
       {/* Main Content */}
-      <OxMainContent.Body className={className}>
-        {children}
-      </OxMainContent.Body>
+      <OxMainContent.Body className={className}>{children}</OxMainContent.Body>
     </>
   );
 };

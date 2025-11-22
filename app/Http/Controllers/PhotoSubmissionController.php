@@ -34,41 +34,48 @@ class PhotoSubmissionController extends Controller
     }
 
     /**
-     * Display the photo review dashboard (for reviewers/admins).
+     * Display the dashboard - shows review dashboard for reviewers/admins,
+     * or user's own submissions for regular users.
      */
-    public function dashboard(): InertiaResponse
+    public function dashboard(): InertiaResponse|RedirectResponse
     {
-        $this->authorize('viewAny', PhotoSubmission::class);
+        $user = auth()->user();
 
-        $status = request('status');
+        // Reviewers and admins see the full review dashboard
+        if ($user->isReviewer()) {
+            $status = request('status');
 
-        $query = PhotoSubmission::query()
-            ->with(['user:id,name,email', 'reviewer:id,name,email', 'auditLogs.user'])
-            ->recent();
+            $query = PhotoSubmission::query()
+                ->with(['user:id,name,email', 'reviewer:id,name,email', 'auditLogs.user'])
+                ->recent();
 
-        if ($status && in_array($status, ['new', 'approved', 'declined'])) {
-            $query->byStatus($status);
+            if ($status && in_array($status, ['new', 'approved', 'declined'])) {
+                $query->byStatus($status);
+            }
+
+            $submissions = $query->paginate(15)->withQueryString();
+
+            // Calculate status counts for statistics cards using single query
+            $counts = PhotoSubmission::selectRaw('status, COUNT(*) as count')
+                ->groupBy('status')
+                ->pluck('count', 'status');
+
+            $statusCounts = [
+                'all' => $counts->sum(),
+                'new' => $counts->get('new', 0),
+                'approved' => $counts->get('approved', 0),
+                'declined' => $counts->get('declined', 0),
+            ];
+
+            return Inertia::render('dashboard', [
+                'submissions' => $submissions,
+                'statusCounts' => $statusCounts,
+                'statusFilter' => $status ?? 'all',
+            ]);
         }
 
-        $submissions = $query->paginate(15)->withQueryString();
-
-        // Calculate status counts for statistics cards using single query
-        $counts = PhotoSubmission::selectRaw('status, COUNT(*) as count')
-            ->groupBy('status')
-            ->pluck('count', 'status');
-
-        $statusCounts = [
-            'total' => $counts->sum(),
-            'new' => $counts->get('new', 0),
-            'approved' => $counts->get('approved', 0),
-            'declined' => $counts->get('declined', 0),
-        ];
-
-        return Inertia::render('dashboard', [
-            'submissions' => $submissions,
-            'statusCounts' => $statusCounts,
-            'currentStatus' => $status,
-        ]);
+        // Regular users see their own submissions
+        return redirect()->route('photos.index');
     }
 
     /**
@@ -183,17 +190,20 @@ class PhotoSubmissionController extends Controller
 
     /**
      * Download a photo submission.
+     * All authenticated users can access all photo submissions.
      */
     public function download(PhotoSubmission $submission): StreamedResponse
     {
-        $user = auth()->user();
+        // Determine which disk to use based on photo status
+        // Approved photos are on the public disk, others on local
+        $disk = $submission->status === 'approved' ? 'public' : 'local';
 
-        // Authorization: user owns submission OR status is approved
-        if ($submission->user_id !== $user->id && $submission->status !== 'approved') {
-            abort(403, 'This action is unauthorized.');
+        // Verify file exists
+        if (! Storage::disk($disk)->exists($submission->file_path)) {
+            abort(404, 'Photo file not found.');
         }
 
-        return Storage::download(
+        return Storage::disk($disk)->download(
             $submission->file_path,
             $submission->original_filename
         );

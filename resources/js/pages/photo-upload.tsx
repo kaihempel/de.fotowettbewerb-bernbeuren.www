@@ -20,7 +20,6 @@ interface PhotoUploadPageProps {
   };
 }
 
-
 export default function PhotoUploadPage({
   remainingSlots,
   submissions,
@@ -88,7 +87,9 @@ export default function PhotoUploadPage({
         },
         onError: (errors) => {
           const errorMessage =
-            errors.photo || errors.general || "Upload failed. Please try again.";
+            errors.photo ||
+            errors.general ||
+            "Upload failed. Please try again.";
           setUploadError(errorMessage);
           NProgress.done();
           setIsUploading(false);
@@ -129,7 +130,9 @@ export default function PhotoUploadPage({
               iconDivClass="bg-green-500/20"
             />
             <span className="text-green-800 dark:text-green-200">
-              <strong className="text-green-900 dark:text-green-100">Success!</strong>
+              <strong className="text-green-900 dark:text-green-100">
+                Success!
+              </strong>
               <br />
               {flash.success}
             </span>
