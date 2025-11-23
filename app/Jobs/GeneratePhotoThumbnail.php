@@ -26,6 +26,11 @@ class GeneratePhotoThumbnail implements ShouldQueue
      */
     public function handle(): void
     {
+        // Refresh the model to get the latest database state
+        // This is crucial when the job is queued during approval,
+        // as the model needs the updated status and file_path
+        $this->photoSubmission->refresh();
+
         // Read the original image from storage
         $originalPath = $this->photoSubmission->file_path;
 

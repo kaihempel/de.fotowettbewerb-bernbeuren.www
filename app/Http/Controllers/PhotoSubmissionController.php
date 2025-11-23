@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PhotoSubmissionRequest;
+use App\Jobs\GeneratePhotoThumbnail;
 use App\Models\PhotoSubmission;
 use App\Services\UploadFileHandler;
 use Illuminate\Http\RedirectResponse;
@@ -151,7 +152,7 @@ class PhotoSubmissionController extends Controller
 
         // Create photo submission record only after successful file storage
         try {
-            PhotoSubmission::create([
+            $submission = PhotoSubmission::create([
                 'fwb_id' => $fwbId,
                 'user_id' => $user->id,
                 'original_filename' => $fileData['original_filename'],
@@ -163,6 +164,9 @@ class PhotoSubmissionController extends Controller
                 'status' => 'new',
                 'submitted_at' => now(),
             ]);
+
+            // Dispatch thumbnail generation job for the newly uploaded photo
+            GeneratePhotoThumbnail::dispatch($submission);
         } catch (\Throwable $e) {
             // If database creation fails, clean up the stored file
             Storage::delete($fileData['storage_path']);

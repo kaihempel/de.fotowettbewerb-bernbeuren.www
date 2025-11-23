@@ -6,12 +6,11 @@ use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use Intervention\Image\Laravel\Facades\Image;
 
 class UploadFileHandler
 {
     /**
-     * Handle file upload with EXIF correction and date-based storage.
+     * Handle file upload with date-based storage (preserves original image untouched).
      *
      * @param  UploadedFile  $file  The uploaded file
      * @param  int  $userId  The user ID for logging purposes
@@ -42,41 +41,25 @@ class UploadFileHandler
         // Calculate SHA-256 hash for duplicate detection
         $fileHash = hash_file('sha256', $file->getRealPath());
 
-        // Process image with EXIF orientation correction
-        try {
-            $image = Image::read($file->getRealPath());
-            $image->orient();
+        // Store original image WITHOUT modification to preserve EXIF metadata
+        // Orientation correction is applied to thumbnails only (see GeneratePhotoThumbnail job)
+        // This ensures:
+        // - Original contest entries remain exactly as uploaded
+        // - EXIF metadata (camera, date, location, orientation) is preserved
+        // - Files can be re-processed later if needed
+        // - Thumbnails display correctly (via orient() in GeneratePhotoThumbnail)
+        $result = Storage::putFileAs(
+            "photo-submissions/new/{$datePath}",
+            $file,
+            $filename
+        );
 
-            // Save the corrected image to storage (Storage facade creates directories automatically)
-            $fileStored = Storage::put($storagePath, (string) $image->encode());
-
-            if (! $fileStored) {
-                throw new \RuntimeException('Failed to store uploaded image.');
-            }
-        } catch (\Throwable $e) {
-            // Log the error for debugging
-            logger()->error('EXIF orientation correction failed', [
-                'error' => $e->getMessage(),
-                'file' => $file->getClientOriginalName(),
-                'user_id' => $userId,
-            ]);
-
-            // Fallback: store without orientation correction (using relative path)
-            $result = Storage::putFileAs(
-                "photo-submissions/new/{$datePath}",
-                $file,
-                $filename
-            );
-
-            if (! $result) {
-                throw new \RuntimeException('Failed to store uploaded image. Please try again.');
-            }
-
-            $fileStored = true;
+        if (! $result) {
+            throw new \RuntimeException('Failed to store uploaded image. Please try again.');
         }
 
         // Verify file was actually stored before returning
-        if (! $fileStored || ! Storage::exists($storagePath)) {
+        if (! Storage::exists($storagePath)) {
             throw new \RuntimeException('Failed to store uploaded image. Please try again.');
         }
 

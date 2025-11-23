@@ -11,13 +11,18 @@ interface LandingPhotoGridProps {
 }
 
 /**
- * Responsive photo grid component for the landing page
+ * Responsive masonry photo grid component for the landing page
+ * Uses CSS Grid masonry layout for Pinterest-style dynamic spacing
  * - 1 column on mobile (320px-768px)
  * - 3 columns on tablet (768px-1024px)
  * - 4 columns on desktop (1024px+)
- * - Preserves aspect ratios without cropping
+ * - Preserves natural aspect ratios without cropping
  * - Lazy loads images below the fold
  * - Click to navigate to photo rating page
+ *
+ * Browser Support:
+ * - Modern browsers: CSS Grid masonry (grid-template-rows: masonry)
+ * - Fallback browsers: Standard grid with auto-flow dense for best-fit
  */
 export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
   photos,
@@ -58,6 +63,12 @@ export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
         "grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4",
         className,
       )}
+      style={{
+        // CSS Grid masonry for modern browsers (experimental feature)
+        gridTemplateRows: "masonry" as const,
+        // Fallback for browsers without masonry support
+        gridAutoFlow: "dense",
+      }}
       role="list"
       aria-label="Photo gallery"
     >
@@ -73,7 +84,7 @@ export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
               src={photo.thumbnail_url}
               alt={`Contest photo ${photo.id}`}
               loading={index < 12 ? "eager" : "lazy"}
-              className="aspect-auto w-full object-contain"
+              className="w-full object-cover"
             />
             {/* Hover overlay */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
