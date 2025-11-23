@@ -14,11 +14,29 @@ Route::post('gallery/{photoSubmission}/vote', [App\Http\Controllers\PublicGaller
 
 // Serve public storage files (for approved photos and thumbnails)
 Route::get('storage/{path}', function (string $path) {
-    if (! Storage::disk('public')->exists($path)) {
+    $disk = Storage::disk('public');
+
+    if (! $disk->exists($path)) {
         abort(404);
     }
 
-    return Storage::disk('public')->response($path);
+    // Stream large files efficiently to prevent buffering issues
+    return response()->stream(function () use ($disk, $path) {
+        $stream = $disk->readStream($path);
+        if ($stream === false) {
+            abort(500, 'Failed to read file');
+        }
+
+        fpassthru($stream);
+
+        if (is_resource($stream)) {
+            fclose($stream);
+        }
+    }, 200, [
+        'Content-Type' => $disk->mimeType($path),
+        'Content-Length' => $disk->size($path),
+        'Cache-Control' => 'public, max-age=31536000',
+    ]);
 })->where('path', '.*')->name('storage.public');
 
 Route::middleware(['auth', 'verified'])->group(function () {

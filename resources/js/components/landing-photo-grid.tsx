@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { Link } from "@inertiajs/react";
+import Masonry from "react-masonry-css";
 import type { GalleryPhoto } from "@/types/index.d";
 import { cn } from "@/lib/utils";
 import { OxCard, OxHeading } from "@noxickon/onyx";
@@ -12,7 +13,7 @@ interface LandingPhotoGridProps {
 
 /**
  * Responsive masonry photo grid component for the landing page
- * Uses CSS Grid masonry layout for Pinterest-style dynamic spacing
+ * Uses react-masonry-css for Pinterest-style dynamic spacing
  * - 1 column on mobile (320px-768px)
  * - 3 columns on tablet (768px-1024px)
  * - 4 columns on desktop (1024px+)
@@ -21,8 +22,8 @@ interface LandingPhotoGridProps {
  * - Click to navigate to photo rating page
  *
  * Browser Support:
- * - Modern browsers: CSS Grid masonry (grid-template-rows: masonry)
- * - Fallback browsers: Standard grid with auto-flow dense for best-fit
+ * - All modern browsers (Chrome, Firefox, Safari, Edge)
+ * - Previous CSS Grid masonry approach was experimental and not widely supported
  */
 export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
   photos,
@@ -57,18 +58,18 @@ export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
     );
   }
 
+  // Responsive breakpoints for masonry columns
+  const breakpointColumnsObj = {
+    default: 4, // Desktop (1024px+)
+    1024: 3, // Tablet (768px-1024px)
+    768: 1, // Mobile (320px-768px)
+  };
+
   return (
-    <div
-      className={cn(
-        "grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4",
-        className,
-      )}
-      style={{
-        // CSS Grid masonry for modern browsers (experimental feature)
-        gridTemplateRows: "masonry" as const,
-        // Fallback for browsers without masonry support
-        gridAutoFlow: "dense",
-      }}
+    <Masonry
+      breakpointCols={breakpointColumnsObj}
+      className={cn("-ml-4 flex w-auto", className)}
+      columnClassName="pl-4 bg-clip-padding"
       role="list"
       aria-label="Photo gallery"
     >
@@ -76,7 +77,7 @@ export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
         <Link
           key={photo.id}
           href={show.url(photo)}
-          className="group relative overflow-hidden rounded-lg bg-gray-100 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl dark:bg-gray-800"
+          className="group relative mb-4 block overflow-hidden rounded-lg bg-gray-100 shadow-md transition-all duration-300 hover:scale-[1.02] hover:shadow-xl dark:bg-gray-800"
           role="listitem"
         >
           <div className="relative">
@@ -105,6 +106,6 @@ export const LandingPhotoGrid: FC<LandingPhotoGridProps> = ({
           )}
         </Link>
       ))}
-    </div>
+    </Masonry>
   );
 };
