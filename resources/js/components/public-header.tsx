@@ -50,6 +50,16 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
       href: "/",
       description: "View all contest photos",
     },
+    {
+      label: "About Us",
+      href: "/about-us",
+      description: "Learn more about us",
+    },
+    {
+      label: "Project",
+      href: "/project",
+      description: "About the photo contest",
+    },
   ];
 
   // Authenticated user menu items

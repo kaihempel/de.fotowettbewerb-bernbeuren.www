@@ -12,6 +12,11 @@ Route::post('gallery/{photoSubmission}/vote', [App\Http\Controllers\PublicGaller
     ->middleware('throttle:votes')
     ->name('gallery.vote');
 
+// Static content pages
+Route::get('impressum', [App\Http\Controllers\StaticPageController::class, 'imprint'])->name('imprint');
+Route::get('about-us', [App\Http\Controllers\StaticPageController::class, 'aboutUs'])->name('about-us');
+Route::get('project', [App\Http\Controllers\StaticPageController::class, 'project'])->name('project');
+
 // Serve public storage files (for approved photos and thumbnails)
 Route::get('storage/{path}', function (string $path) {
     $disk = Storage::disk('public');

@@ -94,7 +94,7 @@ class PublicGalleryController extends Controller
             ->distinct('photo_submission_id')
             ->count('photo_submission_id');
 
-        return Inertia::render('Gallery', [
+        return Inertia::render('gallery', [
             'photo' => $photoSubmission,
             'nextPhoto' => $nextPhoto,
             'previousPhoto' => $previousPhoto,

@@ -15,33 +15,6 @@ export default function VotingButtons({
 }: VotingButtonsProps) {
   return (
     <div className="flex items-center justify-center gap-4 md:gap-6">
-      {/* Thumbs Down Button */}
-      <OxButton
-        variant={currentVote === "down" ? "danger" : "secondary"}
-        onClick={() => onVote("down")}
-        disabled={isSubmitting}
-        className={cn(
-          "min-h-[44px] min-w-[44px] gap-3 px-6 py-3 text-base transition-all md:min-h-[48px] md:min-w-[48px] md:px-8 md:py-4 md:text-lg",
-          currentVote === "down" &&
-            "bg-red-600 text-white hover:bg-red-700 dark:bg-red-700 dark:hover:bg-red-800",
-          currentVote !== "down" &&
-            "border-2 hover:border-red-600 hover:bg-red-50 dark:hover:border-red-700 dark:hover:bg-red-950/30",
-        )}
-        aria-label="Vote thumbs down"
-        aria-pressed={currentVote === "down"}
-      >
-        {isSubmitting && currentVote === "down" ? (
-          <OxSpinner className="size-5 md:size-6" />
-        ) : (
-          <ThumbsDown
-            className={cn(
-              "size-5 md:size-6",
-              currentVote === "down" && "fill-current",
-            )}
-          />
-        )}
-        <span className="font-semibold">Thumbs Down</span>
-      </OxButton>
 
       {/* Thumbs Up Button */}
       <OxButton

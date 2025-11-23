@@ -62,7 +62,7 @@ class PublicGalleryTest extends TestCase
 
         $response->assertOk();
         $response->assertInertia(fn ($page) => $page
-            ->component('Gallery')
+            ->component('gallery')
             ->has('photo')
             ->where('photo.id', $photo->id)
         );

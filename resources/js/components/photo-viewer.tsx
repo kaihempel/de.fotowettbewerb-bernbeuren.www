@@ -19,7 +19,7 @@ export default function PhotoViewer({
         <img
           src={imageUrl}
           alt={title || "Contest photo"}
-          className="h-auto w-full max-h-[calc(100vh-20rem)] object-contain md:max-h-[calc(100vh-24rem)]"
+          className="h-auto w-full max-h-[calc(100vh-20rem)] object-contain md:max-h-[calc(100vh-13rem)]"
           loading="eager"
         />
       </div>

@@ -49,7 +49,7 @@ class PhotoSubmissionTest extends TestCase
         $this->assertEquals($photo3->id, $nextPhoto->id);
     }
 
-    public function test_get_next_unrated_for_returns_null_when_all_rated(): void
+    public function test_get_next_unrated_for_returns_next_photo_even_when_rated(): void
     {
         $user = User::factory()->create();
         $fwbId = 'test-visitor-uuid';
@@ -74,10 +74,11 @@ class PhotoSubmissionTest extends TestCase
             'photo_submission_id' => $photo2->id,
         ]);
 
-        // From photo1, there should be no next unrated photo
+        // From photo1, should still get photo2 as fallback (even though it's rated)
         $nextPhoto = $photo1->getNextUnratedFor($fwbId);
 
-        $this->assertNull($nextPhoto);
+        $this->assertNotNull($nextPhoto);
+        $this->assertEquals($photo2->id, $nextPhoto->id);
     }
 
     public function test_get_next_unrated_for_skips_unapproved_photos(): void
@@ -148,20 +149,47 @@ class PhotoSubmissionTest extends TestCase
         $this->assertEquals($photo2->id, $previousPhoto->id);
     }
 
-    public function test_get_previous_rated_for_returns_null_when_none_rated(): void
+    public function test_get_previous_rated_for_returns_null_when_first_photo(): void
     {
         $user = User::factory()->create();
         $fwbId = 'test-visitor-uuid';
 
+        // Create only one photo - should be null since there's no previous photo at all
         $photo = PhotoSubmission::factory()->create([
             'user_id' => $user->id,
             'status' => 'approved',
+            'created_at' => now(),
         ]);
 
-        // No votes, so no previous rated photo
+        // No previous photos at all
         $previousPhoto = $photo->getPreviousRatedFor($fwbId);
 
         $this->assertNull($previousPhoto);
+    }
+
+    public function test_get_previous_rated_for_returns_previous_photo_even_when_unrated(): void
+    {
+        $user = User::factory()->create();
+        $fwbId = 'test-visitor-uuid';
+
+        $photo1 = PhotoSubmission::factory()->create([
+            'user_id' => $user->id,
+            'status' => 'approved',
+            'created_at' => now()->subDays(2),
+        ]);
+
+        $photo2 = PhotoSubmission::factory()->create([
+            'user_id' => $user->id,
+            'status' => 'approved',
+            'created_at' => now()->subDays(1),
+        ]);
+
+        // No votes on either photo
+        // From photo2, should still get photo1 as fallback (even though it's unrated)
+        $previousPhoto = $photo2->getPreviousRatedFor($fwbId);
+
+        $this->assertNotNull($previousPhoto);
+        $this->assertEquals($photo1->id, $previousPhoto->id);
     }
 
     public function test_update_rate_adjusts_correctly(): void

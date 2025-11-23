@@ -243,26 +243,60 @@ class PhotoSubmission extends Model
     }
 
     /**
-     * Get the next unrated photo for a visitor.
+     * Get the next photo for a visitor (prefers unrated, but allows any).
      */
     public function getNextUnratedFor(?string $fwbId): ?self
     {
-        return static::approved()
+        // First try to get next unrated photo
+        $nextUnrated = static::approved()
             ->where('created_at', '>', $this->created_at)
             ->whereDoesntHave('votes', fn ($q) => $q->where('fwb_id', $fwbId))
             ->orderBy('created_at', 'asc')
+            ->orderBy('id', 'asc')
+            ->first();
+
+        if ($nextUnrated) {
+            return $nextUnrated;
+        }
+
+        // If no unrated photos, get any next photo
+        return static::approved()
+            ->where('created_at', '>', $this->created_at)
+            ->orWhere(function ($query) {
+                $query->where('created_at', '=', $this->created_at)
+                    ->where('id', '>', $this->id);
+            })
+            ->orderBy('created_at', 'asc')
+            ->orderBy('id', 'asc')
             ->first();
     }
 
     /**
-     * Get the previous rated photo for a visitor.
+     * Get the previous photo for a visitor (prefers rated, but allows any).
      */
     public function getPreviousRatedFor(?string $fwbId): ?self
     {
-        return static::approved()
+        // First try to get previous rated photo
+        $previousRated = static::approved()
             ->where('created_at', '<', $this->created_at)
             ->whereHas('votes', fn ($q) => $q->where('fwb_id', $fwbId))
             ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        if ($previousRated) {
+            return $previousRated;
+        }
+
+        // If no rated photos, get any previous photo
+        return static::approved()
+            ->where('created_at', '<', $this->created_at)
+            ->orWhere(function ($query) {
+                $query->where('created_at', '=', $this->created_at)
+                    ->where('id', '<', $this->id);
+            })
+            ->orderBy('created_at', 'desc')
+            ->orderBy('id', 'desc')
             ->first();
     }
 
