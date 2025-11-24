@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('photo_submissions', function (Blueprint $table) {
             // Make user_id nullable to support public uploads
-            $table->foreignId('user_id')->nullable()->change();
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade')->change();
 
             // Add visitor tracking for public submissions
             $table->string('visitor_fwb_id', 36)->nullable()->after('user_id');
