@@ -32,7 +32,7 @@ return new class extends Migration
             // Reverse changes - note: this will fail if null user_ids exist
             $table->dropIndex(['visitor_fwb_id', 'status']);
             $table->dropColumn('visitor_fwb_id');
-            $table->foreignId('user_id')->nullable(false)->change();
+            $table->foreignId('user_id')->nullable(false)->constrained()->onDelete('cascade')->change();
         });
     }
 };
