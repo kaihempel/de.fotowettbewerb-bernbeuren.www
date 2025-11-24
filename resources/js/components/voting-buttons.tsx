@@ -1,6 +1,6 @@
 import { OxButton, OxSpinner } from "@noxickon/onyx";
 import { cn } from "@/lib/utils";
-import { ThumbsDown, ThumbsUp } from "lucide-react";
+import { ThumbsUp } from "lucide-react";
 
 interface VotingButtonsProps {
   currentVote: "up" | "down" | null;

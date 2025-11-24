@@ -115,17 +115,14 @@ This application uses Laravel 12's streamlined file structure:
 ### Frontend Architecture
 
 **React Components** (`resources/js/components/`)
-- `ui/` - 25+ Radix UI-based components (Button, Card, Dialog, Sheet, Sidebar, Avatar, Checkbox, Toggle, Tooltip, etc.)
-- Application-specific components at root level (app-header, app-sidebar, breadcrumbs, etc.)
-- Authentication components: alert-error, delete-user, two-factor-setup-modal, two-factor-recovery-codes
+- `ui/` - Radix UI-based components (Alert, Button, Card, Dialog, Sheet, Sidebar, Avatar, Checkbox, Input-OTP, Label, Toggle, Tooltip, etc.)
+- Application-specific components at root level (app-sidebar, breadcrumbs, public-header, etc.)
+- Authentication components: delete-user, two-factor-setup-modal, two-factor-recovery-codes
 - Appearance components: appearance-tabs, appearance-dropdown with light/dark/system theme support
 - TypeScript with strict typing enabled
 
 **Layouts** (`resources/js/layouts/`)
-- `app-layout.tsx` - Main authenticated app layout with sidebar navigation
-- `auth-layout.tsx` - Authentication pages layout
-- `app/` - App-specific layout components
-- `auth/` - Auth-specific layout components
+- `global-layout.tsx` - Main layout used by all pages with dynamic sidebar navigation
 - `settings/` - Settings section layout
 
 **Custom Hooks** (`resources/js/hooks/`)
@@ -211,12 +208,12 @@ This application uses Laravel 12's streamlined file structure:
 
 ### UI Component Library
 The application uses a comprehensive set of pre-built UI components from Radix UI:
-- Form controls: Button, Checkbox, Input-OTP, Label, Toggle, Toggle-Group
+- Form controls: Button, Checkbox, Input-OTP, Label, Toggle
 - Layout: Card, Separator, Sheet, Sidebar
-- Navigation: Breadcrumb, Navigation-Menu
+- Navigation: Breadcrumb
 - Overlays: Alert, Dialog, Tooltip
-- Data display: Avatar, Badge, Placeholder-Pattern, Spinner
-- Interactive: Collapsible, Icon
+- Data display: Avatar, Badge, Spinner
+- Interactive: Icon
 
 Always check existing components before creating new ones.
 
