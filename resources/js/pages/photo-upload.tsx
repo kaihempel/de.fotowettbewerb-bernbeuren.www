@@ -82,11 +82,13 @@ export default function PhotoUploadPage({
 
       const formData = new FormData();
       formData.append("photo", selectedFile);
-      if (photographerName) {
-        formData.append("photographer_name", photographerName);
+      const trimmedName = photographerName.trim();
+      const trimmedEmail = photographerEmail.trim();
+      if (trimmedName) {
+        formData.append("photographer_name", trimmedName);
       }
-      if (photographerEmail) {
-        formData.append("photographer_email", photographerEmail);
+      if (trimmedEmail) {
+        formData.append("photographer_email", trimmedEmail);
       }
 
       router.post("/photos/upload", formData, {
