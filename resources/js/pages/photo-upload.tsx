@@ -7,6 +7,8 @@ import { Head, router } from "@inertiajs/react";
 import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
 import NProgress from "nprogress";
 import { useCallback, useEffect, useState } from "react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 interface PhotoUploadPageProps {
   remainingSlots: number;
@@ -29,6 +31,8 @@ export default function PhotoUploadPage({
   const [preview, setPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [photographerName, setPhotographerName] = useState<string>("");
+  const [photographerEmail, setPhotographerEmail] = useState<string>("");
 
   const hasReachedLimit = remainingSlots === 0;
 
@@ -59,6 +63,8 @@ export default function PhotoUploadPage({
     setSelectedFile(null);
     setPreview(null);
     setUploadError(null);
+    setPhotographerName("");
+    setPhotographerEmail("");
   }, []);
 
   const handleUpload = useCallback(
@@ -76,18 +82,28 @@ export default function PhotoUploadPage({
 
       const formData = new FormData();
       formData.append("photo", selectedFile);
+      if (photographerName) {
+        formData.append("photographer_name", photographerName);
+      }
+      if (photographerEmail) {
+        formData.append("photographer_email", photographerEmail);
+      }
 
       router.post("/photos/upload", formData, {
         preserveScroll: true,
         onSuccess: () => {
           setSelectedFile(null);
           setPreview(null);
+          setPhotographerName("");
+          setPhotographerEmail("");
           NProgress.done();
           setIsUploading(false);
         },
         onError: (errors) => {
           const errorMessage =
             errors.photo ||
+            errors.photographer_name ||
+            errors.photographer_email ||
             errors.general ||
             "Upload failed. Please try again.";
           setUploadError(errorMessage);
@@ -100,7 +116,7 @@ export default function PhotoUploadPage({
         },
       });
     },
-    [selectedFile],
+    [selectedFile, photographerName, photographerEmail],
   );
 
   // Warn user before navigating away during upload
@@ -215,6 +231,54 @@ export default function PhotoUploadPage({
                   error={uploadError}
                   warning={flash?.warning || null}
                 />
+
+                {/* Photographer Information (Optional) */}
+                <div className="space-y-4 rounded-lg border bg-muted/30 p-4">
+                  <div className="space-y-1">
+                    <h3 className="text-sm font-medium">
+                      Photographer Information{" "}
+                      <span className="text-xs text-muted-foreground">
+                        (Optional)
+                      </span>
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      This information is only visible to administrators and will
+                      not be shown publicly.
+                    </p>
+                  </div>
+
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="photographer_name">
+                        Photographer Name
+                      </Label>
+                      <Input
+                        id="photographer_name"
+                        type="text"
+                        placeholder="Enter photographer name"
+                        value={photographerName}
+                        onChange={(e) => setPhotographerName(e.target.value)}
+                        disabled={isUploading}
+                        maxLength={255}
+                      />
+                    </div>
+
+                    <div className="space-y-2">
+                      <Label htmlFor="photographer_email">
+                        Photographer Email
+                      </Label>
+                      <Input
+                        id="photographer_email"
+                        type="email"
+                        placeholder="photographer@example.com"
+                        value={photographerEmail}
+                        onChange={(e) => setPhotographerEmail(e.target.value)}
+                        disabled={isUploading}
+                        maxLength={255}
+                      />
+                    </div>
+                  </div>
+                </div>
 
                 <div className="flex items-center justify-between rounded-lg border bg-muted/50 p-4">
                   <div className="space-y-1">

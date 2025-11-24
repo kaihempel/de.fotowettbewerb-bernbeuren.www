@@ -34,6 +34,8 @@ class PhotoSubmission extends Model
         'file_size',
         'file_hash',
         'mime_type',
+        'photographer_name',
+        'photographer_email',
         'status',
         'rate',
         'submitted_at',
