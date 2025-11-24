@@ -106,6 +106,20 @@ class PhotoSubmission extends Model
     }
 
     /**
+     * Scope query to active submissions for a user OR visitor.
+     *
+     * @param  int|string  $identifier  User ID (int) or Visitor FWB ID (string)
+     */
+    public function scopeForSubmitter(Builder $query, int|string $identifier): Builder
+    {
+        if (is_int($identifier)) {
+            return $query->where('user_id', $identifier);
+        }
+
+        return $query->where('visitor_fwb_id', $identifier);
+    }
+
+    /**
      * Scope query to submissions by status.
      */
     public function scopeByStatus(Builder $query, string $status): Builder
@@ -251,6 +265,47 @@ class PhotoSubmission extends Model
         return $this->auditLogs()
             ->whereIn('action_type', ['approved', 'declined'])
             ->count();
+    }
+
+    /**
+     * Check if submission is from authenticated user.
+     */
+    public function isAuthenticatedSubmission(): bool
+    {
+        return $this->user_id !== null;
+    }
+
+    /**
+     * Check if submission is from public visitor.
+     */
+    public function isPublicSubmission(): bool
+    {
+        return $this->visitor_fwb_id !== null;
+    }
+
+    /**
+     * Get submission count for identifier (user or visitor).
+     *
+     * @param  int|string  $identifier  User ID (int) or Visitor FWB ID (string)
+     */
+    public static function getSubmissionCount(int|string $identifier): int
+    {
+        return static::query()
+            ->forSubmitter($identifier)
+            ->active()
+            ->count();
+    }
+
+    /**
+     * Get remaining slots for identifier.
+     *
+     * @param  int|string  $identifier  User ID (int) or Visitor FWB ID (string)
+     */
+    public static function getRemainingSlots(int|string $identifier): int
+    {
+        $count = static::getSubmissionCount($identifier);
+
+        return max(0, 3 - $count);
     }
 
     /**

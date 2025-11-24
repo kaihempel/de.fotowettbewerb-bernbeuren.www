@@ -104,6 +104,48 @@ composer run dev:ssr
 - Loading states and error handling
 - Toast notifications
 
+### Public Photo Submission
+
+The application supports public photo submissions without authentication.
+
+**Features:**
+- Cookie-based visitor identification
+- 3 photos per visitor limit
+- hCaptcha bot protection
+- Rate limiting (5/hour, 15/day)
+- Honeypot field for additional bot detection
+
+**Setup:**
+
+1. Obtain hCaptcha keys from https://www.hcaptcha.com/
+2. Add to `.env`:
+   ```env
+   HCAPTCHA_SITE_KEY=your_site_key
+   HCAPTCHA_SECRET_KEY=your_secret_key
+   VITE_HCAPTCHA_SITE_KEY=your_site_key
+   ```
+
+3. Run migrations:
+   ```bash
+   php artisan migrate
+   ```
+
+**Security:**
+
+- Server-side CAPTCHA validation
+- IP + Cookie rate limiting
+- Honeypot field for bot detection
+- Storage quota monitoring
+- Automated cleanup of declined submissions
+
+**Endpoints:**
+
+- `GET /submit-photo` - Public upload page
+- `POST /submit-photo` - Submit photo (public)
+- `GET /photos` - View submissions (authenticated)
+
+See `docs/public-uploads.md` for detailed documentation.
+
 ## Project Structure
 
 ```
