@@ -13,12 +13,12 @@ class UploadFileHandler
      * Handle file upload with date-based storage (preserves original image untouched).
      *
      * @param  UploadedFile  $file  The uploaded file
-     * @param  int  $userId  The user ID for logging purposes
+     * @param  int|null  $userId  The user ID for logging purposes (null for public uploads)
      * @return array{filename: string, storage_path: string, file_hash: string, mime_type: string, file_size: int, original_filename: string}
      *
      * @throws \RuntimeException If file storage fails
      */
-    public function handleUpload(UploadedFile $file, int $userId): array
+    public function handleUpload(UploadedFile $file, ?int $userId): array
     {
         // Verify MIME type using magic bytes (extra security)
         $finfo = finfo_open(FILEINFO_MIME_TYPE);

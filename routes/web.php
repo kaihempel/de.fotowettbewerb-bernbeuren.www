@@ -17,6 +17,16 @@ Route::get('impressum', [App\Http\Controllers\StaticPageController::class, 'impr
 Route::get('about-us', [App\Http\Controllers\StaticPageController::class, 'aboutUs'])->name('about-us');
 Route::get('project', [App\Http\Controllers\StaticPageController::class, 'project'])->name('project');
 
+// Public photo submission (no authentication required)
+Route::middleware([\App\Http\Middleware\EnsureFwbId::class])->group(function () {
+    Route::get('submit-photo', [App\Http\Controllers\PublicPhotoController::class, 'index'])
+        ->name('public.photos.index');
+
+    Route::post('submit-photo', [App\Http\Controllers\PublicPhotoController::class, 'store'])
+        ->name('public.photos.store')
+        ->middleware('throttle:5,60'); // 5 uploads per hour
+});
+
 // Serve public storage files (for approved photos and thumbnails)
 Route::get('storage/{path}', function (string $path) {
     $disk = Storage::disk('public');
