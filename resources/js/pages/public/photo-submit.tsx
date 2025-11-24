@@ -1,16 +1,17 @@
-import { PhotoUpload } from "@/components/photo-upload";
-import { OxAlert, OxButton, OxCard } from "@noxickon/onyx";
-import GlobalLayout from "@/layouts/global-layout";
-import { cn } from "@/lib/utils";
-import { type PhotoSubmission } from "@/types";
+import { useState, useCallback, useEffect } from "react";
 import { Head, router } from "@inertiajs/react";
-import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
-import NProgress from "nprogress";
-import { useCallback, useEffect, useState } from "react";
+import { PhotoUpload } from "@/components/photo-upload";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { OxButton, OxCard, OxAlert } from "@noxickon/onyx";
+import { PublicLayout } from "@/layouts/public-layout";
+import { HCaptcha } from "@/components/hcaptcha";
+import { cn } from "@/lib/utils";
+import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
+import NProgress from "nprogress";
+import type { PhotoSubmission } from "@/types";
 
-interface PhotoUploadPageProps {
+interface PublicPhotoSubmitProps {
   remainingSlots: number;
   submissions: {
     data: PhotoSubmission[];
@@ -22,30 +23,28 @@ interface PhotoUploadPageProps {
   };
 }
 
-export default function PhotoUploadPage({
+export default function PublicPhotoSubmit({
   remainingSlots,
   submissions,
   flash,
-}: PhotoUploadPageProps) {
+}: PublicPhotoSubmitProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
   const [photographerName, setPhotographerName] = useState<string>("");
   const [photographerEmail, setPhotographerEmail] = useState<string>("");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+  const [honeypot, setHoneypot] = useState<string>(""); // Honeypot field
 
   const hasReachedLimit = remainingSlots === 0;
 
-  // Configure NProgress
   useEffect(() => {
     NProgress.configure({ showSpinner: false });
   }, []);
 
-  // Generate preview when file is selected
   useEffect(() => {
-    if (!selectedFile) {
-      return;
-    }
+    if (!selectedFile) return;
 
     const reader = new FileReader();
     reader.onloadend = () => {
@@ -63,8 +62,10 @@ export default function PhotoUploadPage({
     setSelectedFile(null);
     setPreview(null);
     setUploadError(null);
-    setPhotographerName("");
-    setPhotographerEmail("");
+  }, []);
+
+  const handleCaptchaVerify = useCallback((token: string) => {
+    setCaptchaToken(token);
   }, []);
 
   const handleUpload = useCallback(
@@ -76,28 +77,40 @@ export default function PhotoUploadPage({
         return;
       }
 
+      if (!captchaToken) {
+        setUploadError("Please complete the CAPTCHA verification.");
+        return;
+      }
+
+      if (!photographerName.trim()) {
+        setUploadError("Please enter your name.");
+        return;
+      }
+
+      if (!photographerEmail.trim()) {
+        setUploadError("Please enter your email address.");
+        return;
+      }
+
       setIsUploading(true);
       setUploadError(null);
       NProgress.start();
 
       const formData = new FormData();
       formData.append("photo", selectedFile);
-      const trimmedName = photographerName.trim();
-      const trimmedEmail = photographerEmail.trim();
-      if (trimmedName) {
-        formData.append("photographer_name", trimmedName);
-      }
-      if (trimmedEmail) {
-        formData.append("photographer_email", trimmedEmail);
-      }
+      formData.append("captcha_token", captchaToken);
+      formData.append("photographer_name", photographerName.trim());
+      formData.append("photographer_email", photographerEmail.trim());
+      formData.append("website", honeypot); // Honeypot field
 
-      router.post("/photos/upload", formData, {
+      router.post("/submit-photo", formData, {
         preserveScroll: true,
         onSuccess: () => {
           setSelectedFile(null);
           setPreview(null);
           setPhotographerName("");
           setPhotographerEmail("");
+          setCaptchaToken(null);
           NProgress.done();
           setIsUploading(false);
         },
@@ -106,6 +119,7 @@ export default function PhotoUploadPage({
             errors.photo ||
             errors.photographer_name ||
             errors.photographer_email ||
+            errors.captcha_token ||
             errors.general ||
             "Upload failed. Please try again.";
           setUploadError(errorMessage);
@@ -118,10 +132,9 @@ export default function PhotoUploadPage({
         },
       });
     },
-    [selectedFile, photographerName, photographerEmail],
+    [selectedFile, captchaToken, photographerName, photographerEmail, honeypot],
   );
 
-  // Warn user before navigating away during upload
   useEffect(() => {
     const handleBeforeUnload = (e: BeforeUnloadEvent) => {
       if (isUploading) {
@@ -135,11 +148,11 @@ export default function PhotoUploadPage({
   }, [isUploading]);
 
   return (
-    <GlobalLayout>
-      <Head title="Upload Photo" />
+    <PublicLayout>
+      <Head title="Submit Your Photo" />
 
       <div className="mx-auto max-w-4xl space-y-6 p-4">
-        {/* Success Flash Message */}
+        {/* Flash Messages */}
         {flash?.success && (
           <OxAlert type="success">
             <OxAlert.Icon
@@ -157,7 +170,6 @@ export default function PhotoUploadPage({
           </OxAlert>
         )}
 
-        {/* Error Flash Message */}
         {flash?.error && (
           <OxAlert type="error">
             <OxAlert.Icon
@@ -173,11 +185,11 @@ export default function PhotoUploadPage({
           </OxAlert>
         )}
 
-        {/* Header Card with Submission Counter */}
+        {/* Upload Card */}
         <OxCard>
           <OxCard.Header
             title="Submit Your Photo"
-            subtitle="Upload your high-quality photograph for the contest. Maximum file size: 15MB."
+            subtitle="Upload your photograph for the Fotowettbewerb Bernbeuren. Maximum 3 submissions per person."
             action={
               <div className="shrink-0">
                 <div
@@ -217,9 +229,8 @@ export default function PhotoUploadPage({
                 <span>
                   <strong>Maximum Submissions Reached</strong>
                   <br />
-                  You have reached the maximum of 3 photo submissions for this
-                  contest. Only photos with status "new" or "approved" count
-                  toward this limit.
+                  You have submitted the maximum of 3 photos. Thank you for your
+                  participation!
                 </span>
               </OxAlert>
             ) : (
@@ -234,54 +245,81 @@ export default function PhotoUploadPage({
                   warning={flash?.warning || null}
                 />
 
-                {/* Photographer Information (Optional) */}
+                {/* Photographer Information (Required) */}
                 <div className="space-y-4 rounded-lg border bg-muted/30 p-4">
                   <div className="space-y-1">
                     <h3 className="text-sm font-medium">
                       Photographer Information{" "}
-                      <span className="text-xs text-muted-foreground">
-                        (Optional)
-                      </span>
+                      <span className="text-destructive">*</span>
                     </h3>
                     <p className="text-xs text-muted-foreground">
-                      This information is only visible to administrators and
-                      will not be shown publicly.
+                      Required for contest participation. Your information will
+                      be kept private.
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     <div className="space-y-2">
                       <Label htmlFor="photographer_name">
-                        Photographer Name
+                        Your Name <span className="text-destructive">*</span>
                       </Label>
                       <Input
                         id="photographer_name"
                         type="text"
-                        placeholder="Enter photographer name"
+                        placeholder="John Doe"
                         value={photographerName}
                         onChange={(e) => setPhotographerName(e.target.value)}
                         disabled={isUploading}
                         maxLength={255}
+                        required
                       />
                     </div>
 
                     <div className="space-y-2">
                       <Label htmlFor="photographer_email">
-                        Photographer Email
+                        Your Email <span className="text-destructive">*</span>
                       </Label>
                       <Input
                         id="photographer_email"
                         type="email"
-                        placeholder="photographer@example.com"
+                        placeholder="john@example.com"
                         value={photographerEmail}
                         onChange={(e) => setPhotographerEmail(e.target.value)}
                         disabled={isUploading}
                         maxLength={255}
+                        required
                       />
                     </div>
+
+                    {/* Honeypot field - hidden from users */}
+                    <input
+                      type="text"
+                      name="website"
+                      value={honeypot}
+                      onChange={(e) => setHoneypot(e.target.value)}
+                      style={{
+                        position: "absolute",
+                        left: "-9999px",
+                        width: "1px",
+                        height: "1px",
+                      }}
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                    />
                   </div>
                 </div>
 
+                {/* CAPTCHA */}
+                <div className="rounded-lg border bg-muted/30 p-4">
+                  <HCaptcha
+                    siteKey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+                    onVerify={handleCaptchaVerify}
+                    onExpire={() => setCaptchaToken(null)}
+                  />
+                </div>
+
+                {/* Submit Button */}
                 <div className="flex items-center justify-between rounded-lg border bg-muted/50 p-4">
                   <div className="space-y-1">
                     <p className="text-sm font-medium">
@@ -289,14 +327,14 @@ export default function PhotoUploadPage({
                       remaining
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      Declined submissions free up a slot for resubmission.
+                      File size limit: 15MB. Formats: JPG, PNG, HEIC
                     </p>
                   </div>
                   <OxButton
                     type="submit"
-                    disabled={!selectedFile || isUploading}
+                    disabled={!selectedFile || !captchaToken || isUploading}
                   >
-                    {isUploading ? "Uploading..." : "Upload Photo"}
+                    {isUploading ? "Uploading..." : "Submit Photo"}
                   </OxButton>
                 </div>
               </form>
@@ -304,27 +342,16 @@ export default function PhotoUploadPage({
           </OxCard.Body>
         </OxCard>
 
-        {/* Recent Submissions Preview */}
+        {/* Recent Submissions */}
         {submissions.data.length > 0 && (
           <OxCard>
-            <OxCard.Header
-              title="Your Submissions"
-              action={
-                <OxButton
-                  variant="secondary"
-                  size="sm"
-                  onClick={() => router.visit("/photos/submissions")}
-                >
-                  View All
-                </OxButton>
-              }
-            />
+            <OxCard.Header title="Your Recent Submissions" />
             <OxCard.Body>
               <div className="space-y-3">
-                {submissions.data.slice(0, 3).map((submission) => (
+                {submissions.data.map((submission) => (
                   <div
                     key={submission.id}
-                    className="flex items-center justify-between rounded-lg border p-3 hover:bg-accent/50"
+                    className="flex items-center justify-between rounded-lg border p-3"
                   >
                     <div className="flex-1 space-y-1">
                       <p className="text-sm font-medium">
@@ -355,6 +382,6 @@ export default function PhotoUploadPage({
           </OxCard>
         )}
       </div>
-    </GlobalLayout>
+    </PublicLayout>
   );
 }

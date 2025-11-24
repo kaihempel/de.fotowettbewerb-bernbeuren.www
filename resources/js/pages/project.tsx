@@ -29,7 +29,9 @@ export default function Project({ title }: ProjectProps) {
             title={
               <div className="flex items-center gap-2">
                 <Info className="size-5 text-primary" />
-                <span className="text-xl font-semibold">Was ist der Fotowettbewerb Bernbeuren?</span>
+                <span className="text-xl font-semibold">
+                  Was ist der Fotowettbewerb Bernbeuren?
+                </span>
               </div>
             }
           />
@@ -38,8 +40,8 @@ export default function Project({ title }: ProjectProps) {
               Der Fotowettbewerb Bernbeuren ist ein jährlich stattfindender
               Wettbewerb für Fotografie-Begeisterte aus der Region und darüber
               hinaus. Ob Hobbyfotograf oder Profi - bei uns ist jeder
-              willkommen, seine besten Aufnahmen einzureichen und mit anderen
-              zu teilen.
+              willkommen, seine besten Aufnahmen einzureichen und mit anderen zu
+              teilen.
             </p>
             <p>
               Die Plattform ermöglicht es den Teilnehmern, ihre Fotos
@@ -60,9 +62,7 @@ export default function Project({ title }: ProjectProps) {
           />
           <OxCard.Body className="prose prose-neutral dark:prose-invert max-w-none">
             <ul>
-              <li>
-                Förderung der Fotografie-Kultur in der Region Bernbeuren
-              </li>
+              <li>Förderung der Fotografie-Kultur in der Region Bernbeuren</li>
               <li>
                 Schaffung einer Plattform für Austausch und Vernetzung von
                 Fotografen
@@ -74,9 +74,7 @@ export default function Project({ title }: ProjectProps) {
               <li>
                 Organisation einer öffentlichen Ausstellung der besten Werke
               </li>
-              <li>
-                Auszeichnung herausragender fotografischer Leistungen
-              </li>
+              <li>Auszeichnung herausragender fotografischer Leistungen</li>
             </ul>
           </OxCard.Body>
         </OxCard>
@@ -86,7 +84,9 @@ export default function Project({ title }: ProjectProps) {
             title={
               <div className="flex items-center gap-2">
                 <Calendar className="size-5 text-primary" />
-                <span className="text-xl font-semibold">Ablauf des Wettbewerbs</span>
+                <span className="text-xl font-semibold">
+                  Ablauf des Wettbewerbs
+                </span>
               </div>
             }
           />
@@ -121,7 +121,9 @@ export default function Project({ title }: ProjectProps) {
             title={
               <div className="flex items-center gap-2">
                 <Award className="size-5 text-primary" />
-                <span className="text-xl font-semibold">Kategorien & Preise</span>
+                <span className="text-xl font-semibold">
+                  Kategorien & Preise
+                </span>
               </div>
             }
           />

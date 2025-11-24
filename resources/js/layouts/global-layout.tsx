@@ -22,7 +22,10 @@ const GlobalLayout: FC<GlobalLayoutProps> = ({ children, className }) => {
       <PublicHeader />
 
       {/* Main Content with bottom padding to prevent footer overlap */}
-      <OxMainContent.Body className={className} style={{ paddingBottom: "30px" }}>
+      <OxMainContent.Body
+        className={className}
+        style={{ paddingBottom: "30px" }}
+      >
         {children}
       </OxMainContent.Body>
 
