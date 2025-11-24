@@ -1,7 +1,7 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\PublicPhotoController::index
-* @see app/Http/Controllers/PublicPhotoController.php:20
+* @see app/Http/Controllers/PublicPhotoController.php:21
 * @route '/submit-photo'
 */
 export const index = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -16,7 +16,7 @@ index.definition = {
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::index
-* @see app/Http/Controllers/PublicPhotoController.php:20
+* @see app/Http/Controllers/PublicPhotoController.php:21
 * @route '/submit-photo'
 */
 index.url = (options?: RouteQueryOptions) => {
@@ -25,7 +25,7 @@ index.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::index
-* @see app/Http/Controllers/PublicPhotoController.php:20
+* @see app/Http/Controllers/PublicPhotoController.php:21
 * @route '/submit-photo'
 */
 index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -35,7 +35,7 @@ index.get = (options?: RouteQueryOptions): RouteDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::index
-* @see app/Http/Controllers/PublicPhotoController.php:20
+* @see app/Http/Controllers/PublicPhotoController.php:21
 * @route '/submit-photo'
 */
 index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -45,7 +45,7 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::index
-* @see app/Http/Controllers/PublicPhotoController.php:20
+* @see app/Http/Controllers/PublicPhotoController.php:21
 * @route '/submit-photo'
 */
 const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -55,7 +55,7 @@ const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => (
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::index
-* @see app/Http/Controllers/PublicPhotoController.php:20
+* @see app/Http/Controllers/PublicPhotoController.php:21
 * @route '/submit-photo'
 */
 indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -65,7 +65,7 @@ indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::index
-* @see app/Http/Controllers/PublicPhotoController.php:20
+* @see app/Http/Controllers/PublicPhotoController.php:21
 * @route '/submit-photo'
 */
 indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -82,7 +82,7 @@ index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::store
-* @see app/Http/Controllers/PublicPhotoController.php:40
+* @see app/Http/Controllers/PublicPhotoController.php:41
 * @route '/submit-photo'
 */
 export const store = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -97,7 +97,7 @@ store.definition = {
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::store
-* @see app/Http/Controllers/PublicPhotoController.php:40
+* @see app/Http/Controllers/PublicPhotoController.php:41
 * @route '/submit-photo'
 */
 store.url = (options?: RouteQueryOptions) => {
@@ -106,7 +106,7 @@ store.url = (options?: RouteQueryOptions) => {
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::store
-* @see app/Http/Controllers/PublicPhotoController.php:40
+* @see app/Http/Controllers/PublicPhotoController.php:41
 * @route '/submit-photo'
 */
 store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
@@ -116,7 +116,7 @@ store.post = (options?: RouteQueryOptions): RouteDefinition<'post'> => ({
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::store
-* @see app/Http/Controllers/PublicPhotoController.php:40
+* @see app/Http/Controllers/PublicPhotoController.php:41
 * @route '/submit-photo'
 */
 const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
@@ -126,7 +126,7 @@ const storeForm = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => 
 
 /**
 * @see \App\Http\Controllers\PublicPhotoController::store
-* @see app/Http/Controllers/PublicPhotoController.php:40
+* @see app/Http/Controllers/PublicPhotoController.php:41
 * @route '/submit-photo'
 */
 storeForm.post = (options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({

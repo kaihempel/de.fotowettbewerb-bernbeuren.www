@@ -46,6 +46,10 @@ class PublicPhotoSubmissionRequest extends FormRequest
                 'email:filter',
                 'max:255',
             ],
+            'website' => [
+                'nullable',
+                'max:0', // Honeypot field - must be empty
+            ],
         ];
     }
 

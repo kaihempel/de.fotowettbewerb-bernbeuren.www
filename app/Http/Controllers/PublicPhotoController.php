@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PublicPhotoSubmissionRequest;
 use App\Jobs\GeneratePhotoThumbnail;
 use App\Models\PhotoSubmission;
+use App\Services\StorageQuotaMonitor;
 use App\Services\UploadFileHandler;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\DB;
@@ -41,6 +42,14 @@ class PublicPhotoController extends Controller
     {
         $fwbId = $request->cookie('fwb_id');
         $photo = $request->file('photo');
+
+        // Check storage quota before upload
+        $quotaMonitor = new StorageQuotaMonitor;
+        if (! $quotaMonitor->isQuotaAvailable($photo->getSize())) {
+            return redirect()->route('public.photos.index')
+                ->withErrors(['photo' => 'Storage capacity reached. Please try again later.']);
+        }
+
         $uploadHandler = new UploadFileHandler;
 
         // Handle file upload with EXIF correction and date-based storage

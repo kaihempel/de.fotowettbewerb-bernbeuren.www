@@ -18,13 +18,20 @@ Route::get('about-us', [App\Http\Controllers\StaticPageController::class, 'about
 Route::get('project', [App\Http\Controllers\StaticPageController::class, 'project'])->name('project');
 
 // Public photo submission (no authentication required)
-Route::middleware([\App\Http\Middleware\EnsureFwbId::class])->group(function () {
+Route::middleware([
+    \App\Http\Middleware\EnsureFwbId::class,
+    \App\Http\Middleware\BlockSuspiciousIPs::class,
+])->group(function () {
     Route::get('submit-photo', [App\Http\Controllers\PublicPhotoController::class, 'index'])
         ->name('public.photos.index');
 
     Route::post('submit-photo', [App\Http\Controllers\PublicPhotoController::class, 'store'])
         ->name('public.photos.store')
-        ->middleware('throttle:5,60'); // 5 uploads per hour
+        ->middleware([
+            \App\Http\Middleware\CheckHoneypot::class,
+            \App\Http\Middleware\LogPublicUploadAttempts::class,
+            \App\Http\Middleware\RateLimitPublicUploads::class,
+        ]);
 });
 
 // Serve public storage files (for approved photos and thumbnails)
