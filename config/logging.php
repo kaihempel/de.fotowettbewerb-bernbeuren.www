@@ -112,6 +112,20 @@ return [
             'replace_placeholders' => true,
         ],
 
+        'public_uploads' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/public-uploads.log'),
+            'level' => 'info',
+            'days' => 30,
+        ],
+
+        'security' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/security.log'),
+            'level' => 'warning',
+            'days' => 90,
+        ],
+
         'errorlog' => [
             'driver' => 'errorlog',
             'level' => env('LOG_LEVEL', 'debug'),
