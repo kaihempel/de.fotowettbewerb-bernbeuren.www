@@ -27,6 +27,7 @@ class PhotoSubmission extends Model
     protected $fillable = [
         'fwb_id',
         'user_id',
+        'visitor_fwb_id',
         'original_filename',
         'stored_filename',
         'file_path',
