@@ -186,7 +186,7 @@ function GalleryContent({
         </div>
 
         {/* Voting Buttons - Fixed at bottom */}
-        <div className="fixed bottom-0 left-0 right-0 bg-background/80 p-4 backdrop-blur-sm dark:bg-background/90 md:p-6">
+        <div className="fixed bottom-7 left-0 right-0 bg-background/80 p-4 backdrop-blur-sm dark:bg-background/90 md:p-6">
           <div className="mx-auto max-w-2xl">
             <VotingButtons
               currentVote={currentVote}

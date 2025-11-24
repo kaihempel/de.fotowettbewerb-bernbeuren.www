@@ -1,6 +1,7 @@
 import { AppShell } from "@/components/app-shell";
 import { AppSidebar } from "@/components/app-sidebar";
 import { AppSidebarHeader } from "@/components/app-sidebar-header";
+import { Footer } from "@/components/footer";
 import { type BreadcrumbItem } from "@/types";
 import { OxMainContent } from "@noxickon/onyx/layouts";
 import { type PropsWithChildren } from "react";
@@ -16,8 +17,11 @@ export default function AppSidebarLayout({
         <OxMainContent.Header>
           <AppSidebarHeader breadcrumbs={breadcrumbs} />
         </OxMainContent.Header>
-        <OxMainContent.Body>{children}</OxMainContent.Body>
+        <OxMainContent.Body style={{ paddingBottom: "30px" }}>
+          {children}
+        </OxMainContent.Body>
       </OxMainContent>
+      <Footer />
     </AppShell>
   );
 }
