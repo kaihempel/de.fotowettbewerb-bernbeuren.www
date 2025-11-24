@@ -15,7 +15,6 @@ export default function VotingButtons({
 }: VotingButtonsProps) {
   return (
     <div className="flex items-center justify-center gap-4 md:gap-6">
-
       {/* Thumbs Up Button */}
       <OxButton
         variant={currentVote === "up" ? "primary" : "secondary"}

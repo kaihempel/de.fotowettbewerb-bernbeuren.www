@@ -128,7 +128,6 @@ function GalleryContent({
       <Head title="Photo Voting Gallery" />
 
       <div className="flex min-h-screen flex-col bg-background">
-
         {/* Error Message */}
         {errorMessage && (
           <div className="fixed left-1/2 top-4 z-10 w-full max-w-md -translate-x-1/2">
@@ -171,12 +170,12 @@ function GalleryContent({
 
         {/* Main Content */}
         <div className="flex flex-1 flex-col items-center gap-6 p-4 pt-8 md:p-6 md:pt-12">
-            {/* Progress Indicator */}
-            <div className="rounded-lg bg-background/80 px-4 py-2 shadow-lg backdrop-blur-sm dark:bg-background/90">
-                <p className="text-sm font-medium text-muted-foreground">
-                    {progress.rated} of {progress.total} photos rated
-                </p>
-            </div>
+          {/* Progress Indicator */}
+          <div className="rounded-lg bg-background/80 px-4 py-2 shadow-lg backdrop-blur-sm dark:bg-background/90">
+            <p className="text-sm font-medium text-muted-foreground">
+              {progress.rated} of {progress.total} photos rated
+            </p>
+          </div>
 
           <PhotoViewer
             imageUrl={photo.full_image_url}
