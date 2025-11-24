@@ -1,6 +1,6 @@
 import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
-* @see routes/web.php:21
+* @see routes/web.php:31
 * @route '/storage/{path}'
 */
 export const publicMethod = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -14,7 +14,7 @@ publicMethod.definition = {
 } satisfies RouteDefinition<["get","head"]>
 
 /**
-* @see routes/web.php:21
+* @see routes/web.php:31
 * @route '/storage/{path}'
 */
 publicMethod.url = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions) => {
@@ -40,7 +40,7 @@ publicMethod.url = (args: { path: string | number } | [path: string | number ] |
 }
 
 /**
-* @see routes/web.php:21
+* @see routes/web.php:31
 * @route '/storage/{path}'
 */
 publicMethod.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'get'> => ({
@@ -49,7 +49,7 @@ publicMethod.get = (args: { path: string | number } | [path: string | number ] |
 })
 
 /**
-* @see routes/web.php:21
+* @see routes/web.php:31
 * @route '/storage/{path}'
 */
 publicMethod.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteDefinition<'head'> => ({
@@ -58,7 +58,7 @@ publicMethod.head = (args: { path: string | number } | [path: string | number ] 
 })
 
 /**
-* @see routes/web.php:21
+* @see routes/web.php:31
 * @route '/storage/{path}'
 */
 const publicMethodForm = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -67,7 +67,7 @@ const publicMethodForm = (args: { path: string | number } | [path: string | numb
 })
 
 /**
-* @see routes/web.php:21
+* @see routes/web.php:31
 * @route '/storage/{path}'
 */
 publicMethodForm.get = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
@@ -76,7 +76,7 @@ publicMethodForm.get = (args: { path: string | number } | [path: string | number
 })
 
 /**
-* @see routes/web.php:21
+* @see routes/web.php:31
 * @route '/storage/{path}'
 */
 publicMethodForm.head = (args: { path: string | number } | [path: string | number ] | string | number, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({

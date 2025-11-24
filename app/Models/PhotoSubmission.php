@@ -98,6 +98,14 @@ class PhotoSubmission extends Model
     }
 
     /**
+     * Scope query to submissions for a specific visitor (by cookie).
+     */
+    public function scopeForVisitor(Builder $query, string $fwbId): Builder
+    {
+        return $query->where('visitor_fwb_id', $fwbId);
+    }
+
+    /**
      * Scope query to submissions by status.
      */
     public function scopeByStatus(Builder $query, string $status): Builder
