@@ -2,7 +2,6 @@ import type { FC } from "react";
 import { useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
 import { mdiMenu, mdiLogout, mdiCog, mdiAccount } from "@mdi/js";
-import { useScrollPosition } from "@/hooks/use-scroll-position";
 import {
   OxDrawer,
   OxLink,
@@ -10,7 +9,6 @@ import {
   OxIcon,
   OxSeparator,
 } from "@noxickon/onyx";
-import { cn } from "@/lib/utils";
 import { login, dashboard, logout } from "@/routes";
 import { edit as editProfile } from "@/routes/profile";
 import { OxMainContent } from "@noxickon/onyx/layouts";
@@ -39,7 +37,6 @@ interface MenuItem {
  */
 export const PublicHeader: FC<PublicHeaderProps> = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const isScrolled = useScrollPosition({ threshold: 100 });
   const { auth } = usePage<SharedData>().props;
   const isAuthenticated = !!auth?.user;
 
