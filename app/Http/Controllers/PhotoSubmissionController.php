@@ -161,6 +161,8 @@ class PhotoSubmissionController extends Controller
                 'file_size' => $fileData['file_size'],
                 'file_hash' => $fileData['file_hash'],
                 'mime_type' => $fileData['mime_type'],
+                'photographer_name' => $request->input('photographer_name'),
+                'photographer_email' => $request->input('photographer_email'),
                 'status' => 'new',
                 'submitted_at' => now(),
             ]);

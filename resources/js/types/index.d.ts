@@ -52,6 +52,8 @@ export interface PhotoSubmission {
   file_size: number;
   file_hash: string;
   mime_type: string;
+  photographer_name: string | null;
+  photographer_email: string | null;
   status: "new" | "approved" | "declined";
   rate: number | null;
   submitted_at: string;

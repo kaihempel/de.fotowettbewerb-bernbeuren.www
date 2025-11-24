@@ -149,6 +149,31 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
             </span>
           </div>
 
+          {/* Photographer Information */}
+          {(submission.photographer_name || submission.photographer_email) && (
+            <div className="rounded-md border border-muted bg-muted/30 p-3 text-xs">
+              <div className="mb-1 font-medium text-muted-foreground">
+                Photographer:
+              </div>
+              {submission.photographer_name && (
+                <div className="flex items-start justify-between gap-2">
+                  <span className="text-muted-foreground">Name:</span>
+                  <span className="font-medium text-right break-words">
+                    {submission.photographer_name}
+                  </span>
+                </div>
+              )}
+              {submission.photographer_email && (
+                <div className="flex items-start justify-between gap-2 mt-1">
+                  <span className="text-muted-foreground">Email:</span>
+                  <span className="font-medium text-right break-all">
+                    {submission.photographer_email}
+                  </span>
+                </div>
+              )}
+            </div>
+          )}
+
           {/* Submission Date */}
           <div className="text-xs text-muted-foreground">
             Submitted: {formatDate(submission.submitted_at)}

@@ -30,6 +30,16 @@ class PhotoSubmissionRequest extends FormRequest
                 'mimes:jpg,jpeg,png,heic',
                 'max:15360', // 15MB in kilobytes
             ],
+            'photographer_name' => [
+                'nullable',
+                'string',
+                'max:255',
+            ],
+            'photographer_email' => [
+                'nullable',
+                'email:filter',
+                'max:255',
+            ],
         ];
     }
 
@@ -46,6 +56,9 @@ class PhotoSubmissionRequest extends FormRequest
             'photo.mimes' => 'Only JPG, PNG, and HEIC images are accepted. Please upload an image in one of these formats.',
             'photo.max' => 'The photo must be smaller than 15MB. Please reduce the file size and try again.',
             'photo.uploaded' => 'The upload failed. This usually happens when the file is too large. Please try with a smaller file (maximum 15MB) or a different format (JPG, PNG, or HEIC).',
+            'photographer_name.max' => 'The photographer name must not exceed 255 characters.',
+            'photographer_email.email' => 'Please enter a valid email address.',
+            'photographer_email.max' => 'The photographer email must not exceed 255 characters.',
         ];
     }
 
