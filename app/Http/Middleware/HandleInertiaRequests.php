@@ -51,6 +51,7 @@ class HandleInertiaRequests extends Middleware
             ],
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'fwb_id' => $request->cookie('fwb_id'),
+            'hcaptcha_sitekey' => config('services.hcaptcha.site_key'),
         ];
     }
 }

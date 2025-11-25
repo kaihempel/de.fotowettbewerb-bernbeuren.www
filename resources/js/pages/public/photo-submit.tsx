@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect } from "react";
-import { Head, router } from "@inertiajs/react";
+import { Head, router, usePage } from "@inertiajs/react";
 import { PhotoUpload } from "@/components/photo-upload";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -9,7 +9,7 @@ import { HCaptcha } from "@/components/hcaptcha";
 import { cn } from "@/lib/utils";
 import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
 import NProgress from "nprogress";
-import type { PhotoSubmission } from "@/types";
+import type { PhotoSubmission, SharedData } from "@/types";
 
 interface PublicPhotoSubmitProps {
   remainingSlots: number;
@@ -28,6 +28,7 @@ export default function PublicPhotoSubmit({
   submissions,
   flash,
 }: PublicPhotoSubmitProps) {
+  const { hcaptcha_sitekey } = usePage<SharedData>().props;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -313,7 +314,7 @@ export default function PublicPhotoSubmit({
                 {/* CAPTCHA */}
                 <div className="rounded-lg border bg-muted/30 p-4">
                   <HCaptcha
-                    siteKey={import.meta.env.VITE_HCAPTCHA_SITE_KEY}
+                    siteKey={hcaptcha_sitekey}
                     onVerify={handleCaptchaVerify}
                     onExpire={() => setCaptchaToken(null)}
                   />

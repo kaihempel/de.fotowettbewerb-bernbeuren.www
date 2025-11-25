@@ -27,6 +27,7 @@ export interface SharedData {
   quote: { message: string; author: string };
   auth: Auth;
   sidebarOpen: boolean;
+  hcaptcha_sitekey: string;
   [key: string]: unknown;
 }
 

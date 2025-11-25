@@ -51,11 +51,11 @@ class GeneratePhotoThumbnail implements ShouldQueue
             }
         }
 
-        $imageContent = Storage::disk($sourceDisk)->get($originalPath);
+        $fullPath = Storage::disk($sourceDisk)->path($originalPath);
 
         // Generate thumbnail (500px width, maintain aspect ratio, 80% quality)
-        // Apply EXIF orientation correction before resizing to ensure proper display
-        $thumbnail = Image::read($imageContent)
+        // Apply EXIF orientation correction before resizing to ensure proper display;
+        $thumbnail = Image::read($fullPath)
             ->orient()
             ->scaleDown(width: 500)
             ->toJpeg(quality: 80);

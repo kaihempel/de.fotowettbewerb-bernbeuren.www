@@ -75,7 +75,7 @@ class LandingPageTest extends TestCase
 
         $response->assertStatus(200);
         $response->assertInertia(fn ($page) => $page
-            ->component('Gallery')
+            ->component('gallery')
             ->has('photo.id')
             ->has('photo.file_path')
             ->has('photo.thumbnail_path')

@@ -19,6 +19,14 @@ class DashboardTest extends TestCase
     {
         $this->actingAs($user = User::factory()->create());
 
+        // Regular users are redirected to their submissions page
+        $this->get(route('dashboard'))->assertRedirect(route('photos.submissions'));
+    }
+
+    public function test_reviewers_can_visit_the_dashboard()
+    {
+        $this->actingAs($reviewer = User::factory()->reviewer()->create());
+
         $this->get(route('dashboard'))->assertOk();
     }
 }

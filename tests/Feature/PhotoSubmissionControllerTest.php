@@ -19,16 +19,16 @@ class PhotoSubmissionControllerTest extends TestCase
     {
         $user = User::factory()->create(['role' => 'user']);
 
-        $response = $this->actingAs($user)->get('/dashboard/photos');
+        $response = $this->actingAs($user)->get(route('dashboard'));
 
-        $response->assertStatus(403);
+        $response->assertRedirect(route('photos.submissions'));
     }
 
     public function test_reviewer_can_access_dashboard(): void
     {
         $reviewer = User::factory()->reviewer()->create();
 
-        $response = $this->actingAs($reviewer)->get('/dashboard/photos');
+        $response = $this->actingAs($reviewer)->get(route('dashboard'));
 
         $response->assertStatus(200);
     }
@@ -37,7 +37,7 @@ class PhotoSubmissionControllerTest extends TestCase
     {
         $admin = User::factory()->admin()->create();
 
-        $response = $this->actingAs($admin)->get('/dashboard/photos');
+        $response = $this->actingAs($admin)->get(route('dashboard'));
 
         $response->assertStatus(200);
     }
@@ -47,7 +47,7 @@ class PhotoSubmissionControllerTest extends TestCase
         $reviewer = User::factory()->reviewer()->create();
         PhotoSubmission::factory()->count(20)->create();
 
-        $response = $this->actingAs($reviewer)->get('/dashboard/photos');
+        $response = $this->actingAs($reviewer)->get(route('dashboard'));
 
         $response->assertStatus(200);
         $response->assertInertia(fn ($page) => $page
@@ -64,7 +64,7 @@ class PhotoSubmissionControllerTest extends TestCase
         PhotoSubmission::factory()->approved()->count(3)->create();
         PhotoSubmission::factory()->declined()->count(2)->create();
 
-        $response = $this->actingAs($reviewer)->get('/dashboard/photos?status=new');
+        $response = $this->actingAs($reviewer)->get(route('dashboard').'?status=new');
 
         $response->assertStatus(200);
         $response->assertInertia(fn ($page) => $page

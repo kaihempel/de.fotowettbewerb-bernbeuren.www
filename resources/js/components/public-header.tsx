@@ -11,6 +11,7 @@ import {
 } from "@noxickon/onyx";
 import { login, dashboard, logout } from "@/routes";
 import { edit as editProfile } from "@/routes/profile";
+import { index as publicPhotosIndex } from "@/routes/public/photos";
 import { OxMainContent } from "@noxickon/onyx/layouts";
 import AppLogoIcon from "@/components/app-logo-icon";
 import type { SharedData } from "@/types";
@@ -48,6 +49,11 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
       description: "View all contest photos",
     },
     {
+      label: "Upload",
+      href: publicPhotosIndex.url(),
+      description: "Submit your photo",
+    },
+    {
       label: "About Us",
       href: "/about-us",
       description: "Learn more about us",
@@ -62,11 +68,6 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
   // Authenticated user menu items
   const authMenuItems: MenuItem[] = isAuthenticated
     ? [
-        {
-          label: "Upload",
-          href: "/photos",
-          description: "Submit your photo",
-        },
         {
           label: "Dashboard",
           href: dashboard().url,

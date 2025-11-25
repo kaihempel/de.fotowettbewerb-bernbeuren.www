@@ -21,24 +21,11 @@ class PublicUploadIntegrationTest extends TestCase
         Http::fake(['hcaptcha.com/*' => Http::response(['success' => true])]);
     }
 
-    public function test_authenticated_and_public_uploads_tracked_separately(): void
+    public function test_public_uploads_tracked_by_visitor_id(): void
     {
-        $user = User::factory()->create();
         $fwbId = 'visitor-cookie';
 
-        // User uploads 3 photos while authenticated
-        $this->actingAs($user);
-        for ($i = 0; $i < 3; $i++) {
-            $photo = UploadedFile::fake()->image("auth{$i}.jpg");
-            $this->post('/photos/upload', [
-                'photo' => $photo,
-                'photographer_name' => 'User',
-                'photographer_email' => 'user@example.com',
-            ]);
-        }
-
-        // Same person uploads 3 more as public visitor (different limit)
-        auth()->logout();
+        // Visitor uploads 3 photos via public endpoint
         $this->withCookie('fwb_id', $fwbId);
 
         for ($i = 0; $i < 3; $i++) {
@@ -52,13 +39,10 @@ class PublicUploadIntegrationTest extends TestCase
             $response->assertRedirect();
         }
 
-        // Verify 6 total submissions: 3 authenticated + 3 public
-        $this->assertDatabaseCount('photo_submissions', 6);
+        // Verify 3 total submissions
+        $this->assertDatabaseCount('photo_submissions', 3);
 
-        // Verify user submissions
-        $this->assertEquals(3, PhotoSubmission::forUser($user->id)->count());
-
-        // Verify public submissions
+        // Verify public submissions tracked by visitor ID
         $this->assertEquals(3, PhotoSubmission::forVisitor($fwbId)->count());
     }
 
