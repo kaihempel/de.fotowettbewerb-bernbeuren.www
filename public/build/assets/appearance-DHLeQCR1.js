@@ -1,0 +1,16 @@
+import{c as x,b as g,j as a,H as v}from"./app-D5FN9qVZ.js";import{e as h}from"./utils-DPAYgDfm.js";import{c as u}from"./createLucideIcon-DzMZR0w6.js";import{S as j,H as _}from"./layout-Cm2P_zU3.js";import{G as N}from"./global-layout-BeWeqX2L.js";/* empty css            */import"./button-CsRu43-A.js";import"./index-ClffO-g5.js";import"./index-C1CadkhT.js";import"./index-CMRe_TTF.js";/**
+ * @license lucide-react v0.554.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const w=[["rect",{width:"20",height:"14",x:"2",y:"3",rx:"2",key:"48i651"}],["line",{x1:"8",x2:"16",y1:"21",y2:"21",key:"1svkeh"}],["line",{x1:"12",x2:"12",y1:"17",y2:"21",key:"vw1qmm"}]],S=u("monitor",w);/**
+ * @license lucide-react v0.554.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const M=[["path",{d:"M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401",key:"kfwtm"}]],A=u("moon",M);/**
+ * @license lucide-react v0.554.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */const H=[["circle",{cx:"12",cy:"12",r:"4",key:"4exip2"}],["path",{d:"M12 2v2",key:"tus03m"}],["path",{d:"M12 20v2",key:"1lh1kg"}],["path",{d:"m4.93 4.93 1.41 1.41",key:"149t6j"}],["path",{d:"m17.66 17.66 1.41 1.41",key:"ptbguv"}],["path",{d:"M2 12h2",key:"1t8f8n"}],["path",{d:"M20 12h2",key:"1q8mjw"}],["path",{d:"m6.34 17.66-1.41 1.41",key:"1m8zz5"}],["path",{d:"m19.07 4.93-1.41 1.41",key:"1shlcs"}]],L=u("sun",H);function $(s){const e=x.c(13);let t,l;e[0]!==s?({className:l,...t}=s,e[0]=s,e[1]=t,e[2]=l):(t=e[1],l=e[2]);const i=l===void 0?"":l,{appearance:m,updateAppearance:p}=g();let c;e[3]===Symbol.for("react.memo_cache_sentinel")?(c=[{value:"light",icon:L,label:"Light"},{value:"dark",icon:A,label:"Dark"},{value:"system",icon:S,label:"System"}],e[3]=c):c=e[3];const y=c;let n;e[4]!==i?(n=h("inline-flex gap-1 rounded-lg bg-neutral-100 p-1 dark:bg-neutral-800",i),e[4]=i,e[5]=n):n=e[5];let o;e[6]!==m||e[7]!==p?(o=y.map(k=>{const{value:d,icon:f,label:b}=k;return a.jsxs("button",{onClick:()=>p(d),className:h("flex items-center rounded-md px-3.5 py-1.5 transition-colors",m===d?"bg-white shadow-xs dark:bg-neutral-700 dark:text-neutral-100":"text-neutral-500 hover:bg-neutral-200/60 hover:text-black dark:text-neutral-400 dark:hover:bg-neutral-700/60"),children:[a.jsx(f,{className:"-ml-1 h-4 w-4"}),a.jsx("span",{className:"ml-1.5 text-sm",children:b})]},d)}),e[6]=m,e[7]=p,e[8]=o):o=e[8];let r;return e[9]!==t||e[10]!==n||e[11]!==o?(r=a.jsx("div",{className:n,...t,children:o}),e[9]=t,e[10]=n,e[11]=o,e[12]=r):r=e[12],r}function B(){const s=x.c(2);let e;s[0]===Symbol.for("react.memo_cache_sentinel")?(e=a.jsx(v,{title:"Appearance settings"}),s[0]=e):e=s[0];let t;return s[1]===Symbol.for("react.memo_cache_sentinel")?(t=a.jsxs(N,{children:[e,a.jsx("div",{className:"mx-auto max-w-4xl",children:a.jsx(j,{children:a.jsxs("div",{className:"space-y-6",children:[a.jsx(_,{title:"Appearance settings",description:"Update your account's appearance settings"}),a.jsx($,{})]})})})]}),s[1]=t):t=s[1],t}export{B as default};
