@@ -1,9 +1,7 @@
 import { useState, useCallback, useEffect } from "react";
 import { Head, router, usePage } from "@inertiajs/react";
 import { PhotoUpload } from "@/components/photo-upload";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { OxButton, OxCard, OxAlert } from "@noxickon/onyx";
+import { OxButton, OxCard, OxAlert, OxTextInput, OxLabel } from "@noxickon/onyx";
 import { PublicLayout } from "@/layouts/public-layout";
 import { HCaptcha } from "@/components/hcaptcha";
 import { cn } from "@/lib/utils";
@@ -261,35 +259,39 @@ export default function PublicPhotoSubmit({
 
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="photographer_name">
-                        Your Name <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="photographer_name"
-                        type="text"
-                        placeholder="John Doe"
+                      <OxLabel htmlFor="photographer_name" required>
+                        Your Name
+                      </OxLabel>
+                      <OxTextInput.Container
                         value={photographerName}
-                        onChange={(e) => setPhotographerName(e.target.value)}
+                        onChange={(val) => setPhotographerName(val)}
                         disabled={isUploading}
-                        maxLength={255}
                         required
-                      />
+                      >
+                        <OxTextInput
+                          id="photographer_name"
+                          placeholder="John Doe"
+                          maxLength={255}
+                        />
+                      </OxTextInput.Container>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="photographer_email">
-                        Your Email <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="photographer_email"
-                        type="email"
-                        placeholder="john@example.com"
+                      <OxLabel htmlFor="photographer_email" required>
+                        Your Email
+                      </OxLabel>
+                      <OxTextInput.Container
                         value={photographerEmail}
-                        onChange={(e) => setPhotographerEmail(e.target.value)}
+                        onChange={(val) => setPhotographerEmail(val)}
                         disabled={isUploading}
-                        maxLength={255}
                         required
-                      />
+                      >
+                        <OxTextInput
+                          id="photographer_email"
+                          placeholder="john@example.com"
+                          maxLength={255}
+                        />
+                      </OxTextInput.Container>
                     </div>
 
                     {/* Honeypot field - hidden from users */}
