@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "ext-fileinfo": "*",
+        "ext-exif": "*",
         "buzz/laravel-h-captcha": "^v1.0.6",
         "inertiajs/inertia-laravel": "^v2.0.10",
         "intervention/image-laravel": "^1.5.6",

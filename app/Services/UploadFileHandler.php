@@ -14,7 +14,7 @@ class UploadFileHandler
      *
      * @param  UploadedFile  $file  The uploaded file
      * @param  int|null  $userId  The user ID for logging purposes (null for public uploads)
-     * @return array{filename: string, storage_path: string, file_hash: string, mime_type: string, file_size: int, original_filename: string}
+     * @return array{filename: string, storage_path: string, file_hash: string, mime_type: string, file_size: int, original_filename: string, exif_orientation: int|null}
      *
      * @throws \RuntimeException If file storage fails
      */
@@ -28,6 +28,19 @@ class UploadFileHandler
         $allowedMimeTypes = ['image/jpeg', 'image/png', 'image/heic'];
         if (! in_array($actualMimeType, $allowedMimeTypes)) {
             throw new \RuntimeException('Invalid file type detected. Only JPG, PNG, and HEIC images are accepted.');
+        }
+
+        // Extract EXIF orientation data for thumbnail generation
+        // - JPEG files typically contain EXIF orientation (values 1-8)
+        // - PNG files don't support EXIF, will return null
+        // - HEIC files may not be supported by exif_read_data(), will return null
+        // - Suppress warnings with @ for files without EXIF support
+        $exifOrientation = null;
+        if ($actualMimeType === 'image/jpeg') {
+            $exifData = @exif_read_data($file->getRealPath());
+            if ($exifData !== false && isset($exifData['Orientation'])) {
+                $exifOrientation = $exifData['Orientation'];
+            }
         }
 
         // Generate unique filename using UUID
@@ -70,6 +83,7 @@ class UploadFileHandler
             'mime_type' => $file->getMimeType(),
             'file_size' => $file->getSize(),
             'original_filename' => $file->getClientOriginalName(),
+            'exif_orientation' => $exifOrientation,
         ];
     }
 

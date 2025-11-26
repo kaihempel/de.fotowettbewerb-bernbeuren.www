@@ -8,6 +8,23 @@ RUN NUMPROC=$(grep -c ^processor /proc/cpuinfo 2>/dev/null || 1) \
 
 RUN docker-php-ext-install bcmath
 RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install exif
+
+RUN apt-get update && apt-get install -y imagemagick libmagickwand-dev git \
+    && apt-get clean
+
+RUN git clone https://github.com/Imagick/imagick --depth 1 /tmp/imagick
+RUN cd /tmp/imagick \
+    && phpize && ./configure \
+    && make \
+    && make install \
+    && apt-get clean
+
+RUN docker-php-ext-enable imagick
+
+RUN pecl install -o -f redis \
+    &&  rm -rf /tmp/pear \
+    &&  docker-php-ext-enable redis
 
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug \
