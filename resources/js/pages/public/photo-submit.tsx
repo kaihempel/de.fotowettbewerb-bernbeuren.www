@@ -1,9 +1,8 @@
 import { useState, useCallback, useEffect } from "react";
 import { Head, router, usePage } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 import { PhotoUpload } from "@/components/photo-upload";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { OxButton, OxCard, OxAlert } from "@noxickon/onyx";
+import { OxButton, OxCard, OxAlert, OxTextInput, OxLabel } from "@noxickon/onyx";
 import { PublicLayout } from "@/layouts/public-layout";
 import { HCaptcha } from "@/components/hcaptcha";
 import { cn } from "@/lib/utils";
@@ -28,6 +27,7 @@ export default function PublicPhotoSubmit({
   submissions,
   flash,
 }: PublicPhotoSubmitProps) {
+  const { t } = useTranslation(["submissions", "common"]);
   const { hcaptcha_sitekey } = usePage<SharedData>().props;
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [preview, setPreview] = useState<string | null>(null);
@@ -74,22 +74,22 @@ export default function PublicPhotoSubmit({
       e.preventDefault();
 
       if (!selectedFile) {
-        setUploadError("Please select a photo to upload.");
+        setUploadError(t("submissions:validation.photoRequired"));
         return;
       }
 
       if (!captchaToken) {
-        setUploadError("Please complete the CAPTCHA verification.");
+        setUploadError(t("submissions:captcha.required"));
         return;
       }
 
       if (!photographerName.trim()) {
-        setUploadError("Please enter your name.");
+        setUploadError(t("submissions:validation.nameRequired"));
         return;
       }
 
       if (!photographerEmail.trim()) {
-        setUploadError("Please enter your email address.");
+        setUploadError(t("submissions:validation.emailRequired"));
         return;
       }
 
@@ -122,7 +122,7 @@ export default function PublicPhotoSubmit({
             errors.photographer_email ||
             errors.captcha_token ||
             errors.general ||
-            "Upload failed. Please try again.";
+            t("submissions:alerts.error.message");
           setUploadError(errorMessage);
           NProgress.done();
           setIsUploading(false);
@@ -133,7 +133,7 @@ export default function PublicPhotoSubmit({
         },
       });
     },
-    [selectedFile, captchaToken, photographerName, photographerEmail, honeypot],
+    [selectedFile, captchaToken, photographerName, photographerEmail, honeypot, t],
   );
 
   useEffect(() => {
@@ -150,7 +150,7 @@ export default function PublicPhotoSubmit({
 
   return (
     <PublicLayout>
-      <Head title="Submit Your Photo" />
+      <Head title={t("submissions:pageTitle")} />
 
       <div className="mx-auto max-w-4xl space-y-6 p-4">
         {/* Flash Messages */}
@@ -163,7 +163,7 @@ export default function PublicPhotoSubmit({
             />
             <span className="text-green-800 dark:text-green-200">
               <strong className="text-green-900 dark:text-green-100">
-                Success!
+                {t("submissions:alerts.success.title")}
               </strong>
               <br />
               {flash.success}
@@ -179,7 +179,7 @@ export default function PublicPhotoSubmit({
               iconDivClass="bg-red-500/20"
             />
             <span>
-              <strong>Error</strong>
+              <strong>{t("submissions:alerts.error.title")}</strong>
               <br />
               {flash.error}
             </span>
@@ -189,8 +189,8 @@ export default function PublicPhotoSubmit({
         {/* Upload Card */}
         <OxCard>
           <OxCard.Header
-            title="Submit Your Photo"
-            subtitle="Upload your photograph for the Fotowettbewerb Bernbeuren. Maximum 3 submissions per person."
+            title={t("submissions:card.title")}
+            subtitle={t("submissions:card.subtitle")}
             action={
               <div className="shrink-0">
                 <div
@@ -202,7 +202,7 @@ export default function PublicPhotoSubmit({
                   )}
                 >
                   <p className="text-sm font-medium text-muted-foreground">
-                    Submissions
+                    {t("submissions:counter.label")}
                   </p>
                   <p
                     className={cn(
@@ -228,10 +228,9 @@ export default function PublicPhotoSubmit({
                   iconDivClass="bg-red-500/20"
                 />
                 <span>
-                  <strong>Maximum Submissions Reached</strong>
+                  <strong>{t("submissions:alerts.maxReached.title")}</strong>
                   <br />
-                  You have submitted the maximum of 3 photos. Thank you for your
-                  participation!
+                  {t("submissions:alerts.maxReached.message")}
                 </span>
               </OxAlert>
             ) : (
@@ -250,46 +249,49 @@ export default function PublicPhotoSubmit({
                 <div className="space-y-4 rounded-lg border bg-muted/30 p-4">
                   <div className="space-y-1">
                     <h3 className="text-sm font-medium">
-                      Photographer Information{" "}
-                      <span className="text-destructive">*</span>
+                      {t("submissions:photographerInfo.title")}{" "}
+                      <span className="text-destructive">{t("submissions:photographerInfo.required")}</span>
                     </h3>
                     <p className="text-xs text-muted-foreground">
-                      Required for contest participation. Your information will
-                      be kept private.
+                      {t("submissions:photographerInfo.description")}
                     </p>
                   </div>
 
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label htmlFor="photographer_name">
-                        Your Name <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="photographer_name"
-                        type="text"
-                        placeholder="John Doe"
+                      <OxLabel htmlFor="photographer_name" required>
+                        {t("submissions:form.photographerName")}
+                      </OxLabel>
+                      <OxTextInput.Container
                         value={photographerName}
-                        onChange={(e) => setPhotographerName(e.target.value)}
+                        onChange={(val) => setPhotographerName(val)}
                         disabled={isUploading}
-                        maxLength={255}
                         required
-                      />
+                      >
+                        <OxTextInput
+                          id="photographer_name"
+                          placeholder={t("submissions:form.photographerNamePlaceholder")}
+                          maxLength={255}
+                        />
+                      </OxTextInput.Container>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="photographer_email">
-                        Your Email <span className="text-destructive">*</span>
-                      </Label>
-                      <Input
-                        id="photographer_email"
-                        type="email"
-                        placeholder="john@example.com"
+                      <OxLabel htmlFor="photographer_email" required>
+                        {t("submissions:form.photographerEmail")}
+                      </OxLabel>
+                      <OxTextInput.Container
                         value={photographerEmail}
-                        onChange={(e) => setPhotographerEmail(e.target.value)}
+                        onChange={(val) => setPhotographerEmail(val)}
                         disabled={isUploading}
-                        maxLength={255}
                         required
-                      />
+                      >
+                        <OxTextInput
+                          id="photographer_email"
+                          placeholder={t("submissions:form.photographerEmailPlaceholder")}
+                          maxLength={255}
+                        />
+                      </OxTextInput.Container>
                     </div>
 
                     {/* Honeypot field - hidden from users */}
@@ -324,18 +326,17 @@ export default function PublicPhotoSubmit({
                 <div className="flex items-center justify-between rounded-lg border bg-muted/50 p-4">
                   <div className="space-y-1">
                     <p className="text-sm font-medium">
-                      {remainingSlots} {remainingSlots === 1 ? "slot" : "slots"}{" "}
-                      remaining
+                      {t("submissions:requirements.slotsRemaining", { count: remainingSlots })}
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      File size limit: 15MB. Formats: JPG, PNG, HEIC
+                      {t("submissions:requirements.fileSizeLimit")}
                     </p>
                   </div>
                   <OxButton
                     type="submit"
                     disabled={!selectedFile || !captchaToken || isUploading}
                   >
-                    {isUploading ? "Uploading..." : "Submit Photo"}
+                    {isUploading ? t("submissions:form.submitting") : t("submissions:form.submit")}
                   </OxButton>
                 </div>
               </form>
@@ -346,7 +347,7 @@ export default function PublicPhotoSubmit({
         {/* Recent Submissions */}
         {submissions.data.length > 0 && (
           <OxCard>
-            <OxCard.Header title="Your Recent Submissions" />
+            <OxCard.Header title={t("submissions:recentSubmissions.title")} />
             <OxCard.Body>
               <div className="space-y-3">
                 {submissions.data.map((submission) => (
@@ -374,7 +375,7 @@ export default function PublicPhotoSubmit({
                           "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400",
                       )}
                     >
-                      {submission.status}
+                      {t(`submissions:status.${submission.status}`)}
                     </div>
                   </div>
                 ))}

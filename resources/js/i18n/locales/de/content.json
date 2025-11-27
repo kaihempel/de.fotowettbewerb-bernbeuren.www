@@ -1,0 +1,147 @@
+{
+  "aboutUs": {
+    "title": "Ueber uns",
+    "subtitle": "Wer wir sind und was uns bewegt",
+    "mission": {
+      "title": "Unsere Mission",
+      "paragraph1": "Der Fotowettbewerb Bernbeuren ist eine Initiative, die Fotografie und Gemeinschaft zusammenbringt. Wir glauben daran, dass jeder Mensch eine einzigartige Perspektive hat und diese durch die Kunst der Fotografie teilen kann.",
+      "paragraph2": "Unser Ziel ist es, eine Plattform zu schaffen, auf der Fotografen aus der Region und darueber hinaus ihre Werke praesentieren, miteinander in Wettbewerb treten und voneinander lernen koennen."
+    },
+    "values": {
+      "title": "Unsere Werte",
+      "creativity": {
+        "title": "Kreativitaet",
+        "description": "Wir foerdern kuenstlerischen Ausdruck und innovative Perspektiven"
+      },
+      "community": {
+        "title": "Gemeinschaft",
+        "description": "Wir schaffen einen Raum fuer Austausch und gegenseitige Inspiration"
+      },
+      "fairness": {
+        "title": "Fairness",
+        "description": "Wir gewaehrleisten einen transparenten und gerechten Wettbewerb"
+      },
+      "quality": {
+        "title": "Qualitaet",
+        "description": "Wir setzen auf hohe Standards bei allen eingereichten Arbeiten"
+      }
+    },
+    "team": {
+      "title": "Unser Team",
+      "paragraph1": "Hinter dem Fotowettbewerb Bernbeuren steht ein engagiertes Team aus Fotografie-Enthusiasten, Organisatoren und Freiwilligen. Wir arbeiten ehrenamtlich daran, diesen Wettbewerb zu einem unvergesslichen Erlebnis fuer alle Teilnehmer zu machen.",
+      "paragraph2": "Von der technischen Umsetzung ueber die Juryarbeit bis hin zur Organisation der Ausstellung - jeder im Team traegt mit seiner Expertise und Leidenschaft zum Erfolg des Wettbewerbs bei."
+    }
+  },
+  "imprint": {
+    "title": "Impressum",
+    "subtitle": "Angaben gemaess 5 TMG",
+    "responsible": {
+      "title": "Verantwortlich fuer den Inhalt",
+      "name": "Fotowettbewerb Bernbeuren",
+      "street": "Musterstrasse 123",
+      "city": "86975 Bernbeuren"
+    },
+    "contact": {
+      "title": "Kontakt",
+      "email": "E-Mail: info@fotowettbewerb-bernbeuren.de",
+      "phone": "Telefon: +49 (0) 8860 1234567"
+    },
+    "disclaimer": {
+      "title": "Haftungsausschluss",
+      "contentTitle": "Haftung fuer Inhalte",
+      "contentText": "Die Inhalte unserer Seiten wurden mit groesster Sorgfalt erstellt. Fuer die Richtigkeit, Vollstaendigkeit und Aktualitaet der Inhalte koennen wir jedoch keine Gewaehr uebernehmen. Als Diensteanbieter sind wir gemaess 7 Abs.1 TMG fuer eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich.",
+      "linksTitle": "Haftung fuer Links",
+      "linksText": "Unser Angebot enthaelt Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb koennen wir fuer diese fremden Inhalte auch keine Gewaehr uebernehmen. Fuer die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der Seiten verantwortlich."
+    },
+    "copyright": {
+      "title": "Urheberrecht",
+      "text": "Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfaeltigung, Bearbeitung, Verbreitung und jede Art der Verwertung ausserhalb der Grenzen des Urheberrechtes beduerfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers."
+    },
+    "privacy": {
+      "title": "Datenschutzerklaerung",
+      "section1": {
+        "title": "1. Verantwortliche Stelle",
+        "text": "Verantwortlich fuer die Datenverarbeitung auf dieser Website ist: [Ihr Name / Name des Unternehmens] [Ihre Strasse und Hausnummer] [Ihre Postleitzahl und Ort] [Ihre E-Mail-Adresse] [Ihre Telefonnummer (optional)]"
+      },
+      "section2": {
+        "title": "2. Erfassung von Zugriffsdaten (Server-Logfiles)",
+        "text": "Der Hoster dieser Website erhebt und speichert automatisch Informationen in sogenannten Server-Logfiles, die Ihr Browser automatisch an uns uebermittelt. Diese sind: Browsertyp und Browserversion, verwendetes Betriebssystem, Referrer URL (die zuvor besuchte Seite), Hostname des zugreifenden Rechners, Uhrzeit der Serveranfrage, IP-Adresse. Diese Daten dienen der technischen Administration der Website, der Gewaehrleistung der Sicherheit unserer IT-Systeme und der Optimierung unseres Angebotes."
+      },
+      "section3": {
+        "title": "3. Webanalyse mit Google Analytics",
+        "text": "Diese Website nutzt Google Analytics, einen Webanalysedienst der Google Ireland Limited (\"Google\"). Google Analytics verwendet sog. \"Cookies\", Textdateien, die auf Ihrem Computer gespeichert werden und die eine Analyse der Benutzung der Website durch Sie ermoeglichen."
+      },
+      "section4": {
+        "title": "4. Umgang mit Fotos und persoenlichen Daten beim Upload",
+        "subsection1": {
+          "title": "4.1. Hochladen von Fotos",
+          "text": "Wenn Sie Fotos auf unsere Website hochladen, verarbeiten wir die folgenden Daten: Das hochgeladene Foto selbst, die Uhrzeit des Uploads, die IP-Adresse des hochladenden Geraets (zur Missbrauchspraevention). Sie haben die Moeglichkeit, freiwillig persoenliche Informationen (wie z.B. Ihren Namen, einen Titel oder eine Beschreibung) zu dem Foto hinzuzufuegen."
+        },
+        "subsection2": {
+          "title": "4.2. Abtretung der Nutzungsrechte (Lizenz) und Widerruf",
+          "text": "Mit dem Hochladen des Fotos willigen Sie ein, dass Sie die Nutzungsrechte an dem Foto an den Webseiten-Betreiber abtreten. Dies ermoeglicht uns die Veroeffentlichung des Fotos auf unserer Website. Sie koennen diese Einwilligung jederzeit widerrufen."
+        }
+      },
+      "section5": {
+        "title": "5. Betroffenenrechte",
+        "text": "Sie haben jederzeit das Recht: Auskunft ueber Ihre verarbeiteten personenbezogenen Daten zu verlangen (Art. 15 DSGVO), die Berichtigung unrichtiger Daten zu verlangen (Art. 16 DSGVO), die Loeschung Ihrer Daten zu verlangen (Art. 17 DSGVO), die Einschraenkung der Verarbeitung zu verlangen (Art. 18 DSGVO), das Recht auf Datenuebertragbarkeit (Art. 20 DSGVO), Ihre Einwilligung zu widerrufen (Art. 7 Abs. 3 DSGVO), Widerspruch einzulegen (Art. 21 DSGVO), sich bei einer Aufsichtsbehoerde zu beschweren (Art. 77 DSGVO)."
+      }
+    }
+  },
+  "project": {
+    "title": "Das Projekt",
+    "subtitle": "Alles ueber unseren Fotowettbewerb",
+    "whatIs": {
+      "title": "Was ist der Fotowettbewerb Bernbeuren?",
+      "paragraph1": "Der Fotowettbewerb Bernbeuren ist ein jaehrlich stattfindender Wettbewerb fuer Fotografie-Begeisterte aus der Region und darueber hinaus. Ob Hobbyfotograf oder Profi - bei uns ist jeder willkommen, seine besten Aufnahmen einzureichen und mit anderen zu teilen.",
+      "paragraph2": "Die Plattform ermoeglicht es den Teilnehmern, ihre Fotos hochzuladen, von der Jury bewerten zu lassen und am Ende durch oeffentliches Voting die beliebtesten Bilder zu kueren."
+    },
+    "goals": {
+      "title": "Projektziele",
+      "goal1": "Foerderung der Fotografie-Kultur in der Region Bernbeuren",
+      "goal2": "Schaffung einer Plattform fuer Austausch und Vernetzung von Fotografen",
+      "goal3": "Praesentation der vielfaeltigen fotografischen Talente unserer Gemeinschaft",
+      "goal4": "Organisation einer oeffentlichen Ausstellung der besten Werke",
+      "goal5": "Auszeichnung herausragender fotografischer Leistungen"
+    },
+    "process": {
+      "title": "Ablauf des Wettbewerbs",
+      "step1": {
+        "title": "Einreichungsphase",
+        "description": "Fotografen koennen ihre besten Aufnahmen ueber die Plattform hochladen"
+      },
+      "step2": {
+        "title": "Jury-Bewertung",
+        "description": "Eine fachkundige Jury sichtet und bewertet alle eingereichten Fotos"
+      },
+      "step3": {
+        "title": "Oeffentliche Galerie",
+        "description": "Zugelassene Fotos werden in der oeffentlichen Galerie praesentiert"
+      },
+      "step4": {
+        "title": "Publikumsvoting",
+        "description": "Besucher koennen fuer ihre Lieblingsbilder abstimmen"
+      },
+      "step5": {
+        "title": "Ausstellung & Preisverleihung",
+        "description": "Die besten Fotos werden ausgestellt und die Gewinner geehrt"
+      }
+    },
+    "categories": {
+      "title": "Kategorien & Preise",
+      "intro": "Der Wettbewerb umfasst verschiedene Kategorien, um der Vielfalt fotografischer Genres gerecht zu werden:",
+      "category1": "Landschaft & Natur",
+      "category2": "Portraet & Menschen",
+      "category3": "Architektur & Stadt",
+      "category4": "Kreativ & Abstrakt",
+      "outro": "Fuer die Gewinner jeder Kategorie sowie den Gesamtsieger warten attraktive Preise und die Moeglichkeit, ihre Werke in einer oeffentlichen Ausstellung zu praesentieren."
+    }
+  },
+  "landing": {
+    "title": "Fotowettbewerb Galerie",
+    "subtitle": "Entdecken und bewerten Sie erstaunliche Foto-Einreichungen",
+    "meta": {
+      "description": "Durchstoebern und stimmen Sie fuer Foto-Einreichungen ab"
+    }
+  }
+}

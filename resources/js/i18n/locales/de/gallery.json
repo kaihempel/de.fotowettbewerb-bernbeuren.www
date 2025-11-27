@@ -1,0 +1,33 @@
+{
+  "title": "Foto-Galerie",
+  "pageTitle": "Photo Voting Galerie",
+  "voting": {
+    "vote": "Abstimmen",
+    "voted": "Abgestimmt",
+    "thumbsUp": "Daumen hoch",
+    "remaining": "{{count}} Stimme verbleibend",
+    "remaining_plural": "{{count}} Stimmen verbleibend",
+    "noVotes": "Keine Stimmen mehr vorhanden",
+    "success": "Stimme erfasst",
+    "error": "Stimme konnte nicht erfasst werden",
+    "retrying": "Erneuter Versuch... (Versuch {{count}}/3)"
+  },
+  "progress": {
+    "rated": "{{rated}} von {{total}} Fotos bewertet",
+    "completed": "Sie haben alle {{total}} Fotos bewertet. Sie koennen weiterhin navigieren und Ihre Stimmen aendern."
+  },
+  "errors": {
+    "submitFailed": "Abstimmung fehlgeschlagen nach mehreren Versuchen. Bitte erneut versuchen."
+  },
+  "photoCard": {
+    "viewAndVote": "Foto {{id}} ansehen und abstimmen",
+    "failedToLoad": "Bild konnte nicht geladen werden",
+    "photoAlt": "Foto {{id}}"
+  },
+  "viewer": {
+    "contestPhoto": "Wettbewerbsfoto",
+    "rating": "Bewertung: {{rate}}"
+  },
+  "empty": "Keine Fotos zum Anzeigen",
+  "loading": "Fotos werden geladen..."
+}

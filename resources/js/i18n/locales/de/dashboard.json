@@ -1,0 +1,87 @@
+{
+  "title": "Foto Review Dashboard",
+  "pageTitle": "Dashboard - Foto Review",
+  "description": "Ueberpruefen und verwalten Sie Foto-Einreichungen fuer den Wettbewerb",
+  "stats": {
+    "total": "Gesamt Einreichungen",
+    "pending": "Ausstehende Pruefung",
+    "approved": "Genehmigt",
+    "declined": "Abgelehnt"
+  },
+  "filters": {
+    "label": "Nach Status filtern",
+    "all": "Alle",
+    "allDescription": "Alle Einreichungen anzeigen",
+    "pending": "Ausstehend",
+    "pendingDescription": "Wartet auf Pruefung",
+    "approved": "Genehmigt",
+    "approvedDescription": "Akzeptierte Einreichungen",
+    "declined": "Abgelehnt",
+    "declinedDescription": "Abgelehnte Einreichungen"
+  },
+  "actions": {
+    "approve": "Genehmigen",
+    "approving": "Genehmigen...",
+    "decline": "Ablehnen",
+    "declining": "Ablehnen...",
+    "accept": "Akzeptieren",
+    "view": "Details ansehen"
+  },
+  "submission": {
+    "photographer": "Fotograf",
+    "photographerName": "Name",
+    "photographerEmail": "E-Mail",
+    "submittedAt": "Eingereicht",
+    "reviewedAt": "Geprueft",
+    "reviewedBy": "Geprueft von",
+    "rating": "Bewertung",
+    "status": "Status",
+    "photoId": "ID"
+  },
+  "mySubmissions": {
+    "title": "Meine Einreichungen",
+    "pageTitle": "Meine Einreichungen",
+    "heading": "Meine Foto-Einreichungen",
+    "description": "Ansehen und verwalten Sie Ihre Wettbewerbs-Einreichungen",
+    "empty": "Sie haben noch keine Fotos eingereicht",
+    "emptyDescription": "Sie haben noch keine Fotos fuer den Wettbewerb hochgeladen.",
+    "uploadFirst": "Erstes Foto hochladen",
+    "uploadPhoto": "Foto hochladen",
+    "remainingSlots": "Verbleibende Plaetze",
+    "fileSize": "Dateigroesse",
+    "uploaded": "Hochgeladen",
+    "reviewed": "Geprueft",
+    "downloadPhoto": "Foto herunterladen",
+    "statusPending": "Ihr Foto wartet auf Pruefung durch die Wettbewerbs-Administratoren.",
+    "statusApproved": "Ihr Foto wurde genehmigt und nimmt am Wettbewerb teil!",
+    "statusDeclined": "Diese Einreichung wurde nicht akzeptiert. Sie koennen ein neues Foto auf diesem Platz hochladen."
+  },
+  "pagination": {
+    "showing": "Zeige {{from}} bis {{to}} von {{total}} Einreichungen",
+    "showingCount": "Zeige {{count}} von {{total}} {{label}}",
+    "submission": "Einreichung",
+    "submissions": "Einreichungen",
+    "page": "Seite {{current}} von {{total}}",
+    "previous": "Zurueck",
+    "next": "Weiter"
+  },
+  "empty": {
+    "title": "Keine Einreichungen gefunden",
+    "pending": "Es gibt derzeit keine ausstehenden Einreichungen zur Pruefung. Schauen Sie spaeter wieder vorbei!",
+    "approved": "Noch keine genehmigten Einreichungen. Beginnen Sie mit der Pruefung, um genehmigte Fotos hier zu sehen.",
+    "declined": "Noch keine abgelehnten Einreichungen. Abgelehnte Fotos erscheinen hier.",
+    "all": "Es wurden noch keine Foto-Einreichungen gemacht. Sie erscheinen hier, sobald Nutzer mit dem Hochladen beginnen."
+  },
+  "flash": {
+    "success": "Erfolg",
+    "error": "Fehler"
+  },
+  "audit": {
+    "created": "Erstellt",
+    "updated": "Aktualisiert",
+    "approved": "Genehmigt",
+    "declined": "Abgelehnt",
+    "reviewHistory": "Pruefverlauf",
+    "actionBy": "{{action}} von {{name}}"
+  }
+}

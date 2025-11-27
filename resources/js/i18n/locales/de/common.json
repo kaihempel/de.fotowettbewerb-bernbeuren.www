@@ -1,0 +1,130 @@
+{
+  "app": {
+    "name": "Fotowettbewerb Bernbeuren"
+  },
+  "navigation": {
+    "home": "Startseite",
+    "gallery": "Galerie",
+    "about": "Ueber uns",
+    "imprint": "Impressum",
+    "project": "Projekt",
+    "submit": "Foto einreichen",
+    "dashboard": "Dashboard",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "mySubmissions": "Meine Einreichungen",
+    "repository": "Repository",
+    "documentation": "Dokumentation"
+  },
+  "sidebar": {
+    "platform": "Plattform"
+  },
+  "buttons": {
+    "submit": "Absenden",
+    "cancel": "Abbrechen",
+    "save": "Speichern",
+    "delete": "Loeschen",
+    "confirm": "Bestaetigen",
+    "close": "Schliessen",
+    "back": "Zurueck",
+    "next": "Weiter",
+    "edit": "Bearbeiten",
+    "view": "Ansehen",
+    "download": "Herunterladen",
+    "upload": "Hochladen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "reset": "Zuruecksetzen",
+    "refresh": "Aktualisieren",
+    "loadMore": "Mehr laden"
+  },
+  "labels": {
+    "email": "E-Mail",
+    "password": "Passwort",
+    "name": "Name",
+    "search": "Suche",
+    "date": "Datum",
+    "status": "Status",
+    "actions": "Aktionen",
+    "description": "Beschreibung",
+    "title": "Titel",
+    "photo": "Foto",
+    "photos": "Fotos",
+    "photographer": "Fotograf",
+    "uploadedAt": "Hochgeladen am",
+    "submittedAt": "Eingereicht am",
+    "votes": "Stimmen",
+    "vote": "Stimme",
+    "language": "Sprache"
+  },
+  "messages": {
+    "loading": "Wird geladen...",
+    "error": "Ein Fehler ist aufgetreten",
+    "success": "Erfolgreich gespeichert",
+    "warning": "Warnung",
+    "noResults": "Keine Ergebnisse gefunden",
+    "confirmDelete": "Sind Sie sicher, dass Sie diesen Eintrag loeschen moechten?",
+    "unsavedChanges": "Sie haben ungespeicherte Aenderungen",
+    "required": "Dieses Feld ist erforderlich",
+    "invalidEmail": "Bitte geben Sie eine gueltige E-Mail-Adresse ein",
+    "sessionExpired": "Ihre Sitzung ist abgelaufen. Bitte melden Sie sich erneut an.",
+    "networkError": "Netzwerkfehler. Bitte ueberpruefen Sie Ihre Internetverbindung."
+  },
+  "footer": {
+    "copyright": "Fotowettbewerb Bernbeuren",
+    "rights": "Alle Rechte vorbehalten",
+    "privacy": "Datenschutz",
+    "terms": "Nutzungsbedingungen",
+    "contact": "Kontakt"
+  },
+  "accessibility": {
+    "skipToContent": "Zum Inhalt springen",
+    "mainNavigation": "Hauptnavigation",
+    "openMenu": "Menue oeffnen",
+    "closeMenu": "Menue schliessen",
+    "toggleTheme": "Design wechseln",
+    "toggleLanguage": "Sprache wechseln",
+    "previousPage": "Vorherige Seite",
+    "nextPage": "Naechste Seite",
+    "goToPage": "Gehe zu Seite {{page}}",
+    "currentPage": "Aktuelle Seite, Seite {{page}}",
+    "imageAlt": "Bild: {{description}}",
+    "loading": "Inhalt wird geladen",
+    "expandMenu": "Untermenue ausklappen",
+    "collapseMenu": "Untermenue einklappen",
+    "removeImage": "Ausgewaehltes Bild entfernen",
+    "previewAlt": "Vorschau des ausgewaehlten Fotos"
+  },
+  "upload": {
+    "dropHere": "Foto hier ablegen",
+    "dragAndDrop": "Ziehen Sie Ihr Foto hierher",
+    "orClickToBrowse": "oder klicken Sie, um Dateien zu durchsuchen",
+    "fileFormats": "JPG, PNG oder HEIC",
+    "maxFileSize": "Maximal 15MB",
+    "uploading": "Foto wird hochgeladen..."
+  },
+  "theme": {
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System",
+    "label": "Erscheinungsbild"
+  },
+  "locale": {
+    "de": "Deutsch",
+    "en": "English",
+    "label": "Sprache"
+  },
+  "time": {
+    "justNow": "Gerade eben",
+    "minutesAgo": "vor {{count}} Minute",
+    "minutesAgo_plural": "vor {{count}} Minuten",
+    "hoursAgo": "vor {{count}} Stunde",
+    "hoursAgo_plural": "vor {{count}} Stunden",
+    "daysAgo": "vor {{count}} Tag",
+    "daysAgo_plural": "vor {{count}} Tagen",
+    "weeksAgo": "vor {{count}} Woche",
+    "weeksAgo_plural": "vor {{count}} Wochen"
+  }
+}

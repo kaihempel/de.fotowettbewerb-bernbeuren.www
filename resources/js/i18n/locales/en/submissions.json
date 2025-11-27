@@ -1,0 +1,63 @@
+{
+  "pageTitle": "Submit Your Photo",
+  "pageDescription": "Share your best photo with the community",
+  "card": {
+    "title": "Submit Your Photo",
+    "subtitle": "Upload your photograph for the Fotowettbewerb Bernbeuren. Maximum 3 submissions per person."
+  },
+  "form": {
+    "photographerName": "Your Name",
+    "photographerNamePlaceholder": "John Doe",
+    "photographerEmail": "Your Email",
+    "photographerEmailPlaceholder": "john@example.com",
+    "submit": "Submit Photo",
+    "submitting": "Uploading..."
+  },
+  "photographerInfo": {
+    "title": "Photographer Information",
+    "required": "*",
+    "description": "Required for contest participation. Your information will be kept private."
+  },
+  "requirements": {
+    "title": "Photo Requirements",
+    "fileTypes": "Accepted formats: JPG, PNG, HEIC",
+    "maxSize": "Maximum file size: 15MB",
+    "slotsRemaining": "{{count}} slot remaining",
+    "slotsRemaining_plural": "{{count}} slots remaining",
+    "fileSizeLimit": "File size limit: 15MB. Formats: JPG, PNG, HEIC"
+  },
+  "counter": {
+    "label": "Submissions",
+    "format": "{{current}}/{{max}}"
+  },
+  "status": {
+    "new": "New",
+    "approved": "Approved",
+    "declined": "Declined"
+  },
+  "recentSubmissions": {
+    "title": "Your Recent Submissions"
+  },
+  "alerts": {
+    "success": {
+      "title": "Success!",
+      "message": "Your photo has been submitted for review."
+    },
+    "error": {
+      "title": "Error",
+      "message": "Upload failed. Please try again."
+    },
+    "maxReached": {
+      "title": "Maximum Submissions Reached",
+      "message": "You have submitted the maximum of 3 photos. Thank you for your participation!"
+    }
+  },
+  "captcha": {
+    "required": "Please complete the CAPTCHA verification."
+  },
+  "validation": {
+    "photoRequired": "Please select a photo to upload.",
+    "nameRequired": "Please enter your name.",
+    "emailRequired": "Please enter your email address."
+  }
+}

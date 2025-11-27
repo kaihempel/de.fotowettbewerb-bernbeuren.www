@@ -1,0 +1,87 @@
+{
+  "title": "Photo Review Dashboard",
+  "pageTitle": "Dashboard - Photo Review",
+  "description": "Review and manage photo submissions for the contest",
+  "stats": {
+    "total": "Total Submissions",
+    "pending": "Pending Review",
+    "approved": "Approved",
+    "declined": "Declined"
+  },
+  "filters": {
+    "label": "Filter by status",
+    "all": "All",
+    "allDescription": "Show all submissions",
+    "pending": "Pending",
+    "pendingDescription": "Awaiting review",
+    "approved": "Approved",
+    "approvedDescription": "Accepted submissions",
+    "declined": "Declined",
+    "declinedDescription": "Rejected submissions"
+  },
+  "actions": {
+    "approve": "Approve",
+    "approving": "Approving...",
+    "decline": "Decline",
+    "declining": "Declining...",
+    "accept": "Accept",
+    "view": "View details"
+  },
+  "submission": {
+    "photographer": "Photographer",
+    "photographerName": "Name",
+    "photographerEmail": "Email",
+    "submittedAt": "Submitted",
+    "reviewedAt": "Reviewed",
+    "reviewedBy": "Reviewed by",
+    "rating": "Rating",
+    "status": "Status",
+    "photoId": "ID"
+  },
+  "mySubmissions": {
+    "title": "My Submissions",
+    "pageTitle": "My Submissions",
+    "heading": "My Photo Submissions",
+    "description": "View and manage your contest photo submissions",
+    "empty": "You haven't submitted any photos yet",
+    "emptyDescription": "You haven't uploaded any photos for the contest.",
+    "uploadFirst": "Upload Your First Photo",
+    "uploadPhoto": "Upload Photo",
+    "remainingSlots": "Remaining Slots",
+    "fileSize": "File Size",
+    "uploaded": "Uploaded",
+    "reviewed": "Reviewed",
+    "downloadPhoto": "Download Photo",
+    "statusPending": "Your photo is awaiting review by contest administrators.",
+    "statusApproved": "Your photo has been approved and is entered in the contest!",
+    "statusDeclined": "This submission was not accepted. You can upload a new photo in this slot."
+  },
+  "pagination": {
+    "showing": "Showing {{from}} to {{to}} of {{total}} submissions",
+    "showingCount": "Showing {{count}} of {{total}} {{label}}",
+    "submission": "submission",
+    "submissions": "submissions",
+    "page": "Page {{current}} of {{total}}",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "empty": {
+    "title": "No submissions found",
+    "pending": "There are no pending submissions to review at the moment. Check back later!",
+    "approved": "No approved submissions yet. Start reviewing to see approved photos here.",
+    "declined": "No declined submissions yet. Declined photos will appear here.",
+    "all": "No photo submissions have been made yet. They will appear here once users start uploading."
+  },
+  "flash": {
+    "success": "Success",
+    "error": "Error"
+  },
+  "audit": {
+    "created": "Created",
+    "updated": "Updated",
+    "approved": "Approved",
+    "declined": "Declined",
+    "reviewHistory": "Review history",
+    "actionBy": "{{action}} by {{name}}"
+  }
+}

@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+
+// Locale switching (available to all users)
+Route::post('locale', [LocaleController::class, 'update'])->name('locale.update');
 
 // Public gallery routes (no authentication required)
 Route::get('/', [App\Http\Controllers\PublicGalleryController::class, 'gallery'])->name('home');

@@ -1,0 +1,33 @@
+{
+  "title": "Photo Gallery",
+  "pageTitle": "Photo Voting Gallery",
+  "voting": {
+    "vote": "Vote",
+    "voted": "Voted",
+    "thumbsUp": "Thumbs Up",
+    "remaining": "{{count}} vote remaining",
+    "remaining_plural": "{{count}} votes remaining",
+    "noVotes": "No votes remaining",
+    "success": "Vote recorded",
+    "error": "Could not record vote",
+    "retrying": "Retrying... (Attempt {{count}}/3)"
+  },
+  "progress": {
+    "rated": "{{rated}} of {{total}} photos rated",
+    "completed": "You have rated all {{total}} photos. You can still navigate and change your votes."
+  },
+  "errors": {
+    "submitFailed": "Failed to submit vote after multiple attempts. Please try again."
+  },
+  "photoCard": {
+    "viewAndVote": "View and vote on photo {{id}}",
+    "failedToLoad": "Failed to load image",
+    "photoAlt": "Photo {{id}}"
+  },
+  "viewer": {
+    "contestPhoto": "Contest photo",
+    "rating": "Rating: {{rate}}"
+  },
+  "empty": "No photos to display",
+  "loading": "Loading photos..."
+}

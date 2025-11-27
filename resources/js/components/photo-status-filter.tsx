@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { router } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 import { Filter, Circle, CheckCircle, XCircle, Clock } from "lucide-react";
 import { OxButton } from "@noxickon/onyx";
 import { cn } from "@/lib/utils";
@@ -18,35 +19,35 @@ interface PhotoStatusFilterProps {
 
 interface FilterOption {
   value: StatusFilter;
-  label: string;
+  labelKey: string;
   icon: typeof Circle;
-  description: string;
+  descriptionKey: string;
 }
 
 const filterOptions: FilterOption[] = [
   {
     value: "all",
-    label: "All",
+    labelKey: "filters.all",
     icon: Circle,
-    description: "Show all submissions",
+    descriptionKey: "filters.allDescription",
   },
   {
     value: "new",
-    label: "Pending",
+    labelKey: "filters.pending",
     icon: Clock,
-    description: "Awaiting review",
+    descriptionKey: "filters.pendingDescription",
   },
   {
     value: "approved",
-    label: "Approved",
+    labelKey: "filters.approved",
     icon: CheckCircle,
-    description: "Accepted submissions",
+    descriptionKey: "filters.approvedDescription",
   },
   {
     value: "declined",
-    label: "Declined",
+    labelKey: "filters.declined",
     icon: XCircle,
-    description: "Rejected submissions",
+    descriptionKey: "filters.declinedDescription",
   },
 ];
 
@@ -54,6 +55,8 @@ export const PhotoStatusFilter: FC<PhotoStatusFilterProps> = ({
   currentFilter,
   counts,
 }) => {
+  const { t } = useTranslation("dashboard");
+
   const handleFilterChange = (filter: StatusFilter) => {
     if (filter === currentFilter) return;
 
@@ -79,7 +82,7 @@ export const PhotoStatusFilter: FC<PhotoStatusFilterProps> = ({
     <div className="space-y-3">
       <div className="flex items-center gap-2 text-sm font-medium text-muted-foreground">
         <Filter className="size-4" />
-        <span>Filter by status</span>
+        <span>{t("filters.label")}</span>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -122,7 +125,7 @@ export const PhotoStatusFilter: FC<PhotoStatusFilterProps> = ({
                     "text-red-600 dark:text-red-400",
                 )}
               />
-              <span>{option.label}</span>
+              <span>{t(option.labelKey)}</span>
               {typeof count === "number" && (
                 <span
                   className={cn(

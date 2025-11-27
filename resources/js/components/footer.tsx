@@ -1,5 +1,7 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { Link } from "@inertiajs/react";
+
 import { aboutUs, imprint, project } from "@/routes";
 import { cn } from "@/lib/utils";
 
@@ -16,10 +18,12 @@ interface FooterProps {
  * - Dark mode support
  */
 export const Footer: FC<FooterProps> = ({ className }) => {
+  const { t } = useTranslation();
+
   const footerLinks = [
-    { label: "About Us", href: aboutUs.url() },
-    { label: "Impressum", href: imprint.url() },
-    { label: "Project", href: project.url() },
+    { label: t("navigation.about"), href: aboutUs.url() },
+    { label: t("navigation.imprint"), href: imprint.url() },
+    { label: t("navigation.project"), href: project.url() },
   ];
 
   return (

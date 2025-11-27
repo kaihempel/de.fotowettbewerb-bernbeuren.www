@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { OxAlert, OxCard, OxSeparator } from "@noxickon/onyx";
 import { PhotoSubmissionList } from "@/components/photo-submission-list";
 import { PhotoStatusFilter } from "@/components/photo-status-filter";
@@ -28,9 +29,11 @@ export default function Dashboard({
   statusCounts,
   flash,
 }: DashboardProps) {
+  const { t } = useTranslation("dashboard");
+
   return (
     <GlobalLayout>
-      <Head title="Dashboard - Photo Review" />
+      <Head title={t("pageTitle")} />
 
       <div className="mx-auto max-w-7xl flex h-full flex-1 flex-col gap-6 p-4 md:p-6">
         {/* Flash Messages */}
@@ -43,7 +46,7 @@ export default function Dashboard({
             />
             <span className="text-green-800 dark:text-green-200">
               <strong className="text-green-900 dark:text-green-100">
-                Success
+                {t("flash.success")}
               </strong>
               <br />
               {flash.success}
@@ -59,7 +62,7 @@ export default function Dashboard({
               iconDivClass="bg-red-500/20"
             />
             <span>
-              <strong>Error</strong>
+              <strong>{t("flash.error")}</strong>
               <br />
               {flash.error}
             </span>
@@ -71,12 +74,10 @@ export default function Dashboard({
           <div className="flex items-center gap-2">
             <Images className="size-6 text-primary" />
             <h1 className="text-2xl font-bold tracking-tight md:text-3xl">
-              Photo Review Dashboard
+              {t("title")}
             </h1>
           </div>
-          <p className="text-muted-foreground">
-            Review and manage photo submissions for the contest
-          </p>
+          <p className="text-muted-foreground">{t("description")}</p>
         </div>
 
         {/* Statistics Cards */}
@@ -86,7 +87,7 @@ export default function Dashboard({
               <OxCard.Header
                 title={
                   <span className="text-sm font-medium text-muted-foreground">
-                    Total Submissions
+                    {t("stats.total")}
                   </span>
                 }
                 className="pb-3"
@@ -100,7 +101,7 @@ export default function Dashboard({
               <OxCard.Header
                 title={
                   <span className="text-sm font-medium text-muted-foreground">
-                    Pending Review
+                    {t("stats.pending")}
                   </span>
                 }
                 className="pb-3"
@@ -116,7 +117,7 @@ export default function Dashboard({
               <OxCard.Header
                 title={
                   <span className="text-sm font-medium text-muted-foreground">
-                    Approved
+                    {t("stats.approved")}
                   </span>
                 }
                 className="pb-3"
@@ -132,7 +133,7 @@ export default function Dashboard({
               <OxCard.Header
                 title={
                   <span className="text-sm font-medium text-muted-foreground">
-                    Declined
+                    {t("stats.declined")}
                   </span>
                 }
                 className="pb-3"

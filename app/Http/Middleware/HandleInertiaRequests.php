@@ -38,6 +38,10 @@ class HandleInertiaRequests extends Middleware
     {
         [$message, $author] = str(Inspiring::quotes()->random())->explode('-');
 
+        // Determine the current locale (priority: session > user preference > app default)
+        $locale = $this->determineLocale($request);
+        app()->setLocale($locale);
+
         return [
             ...parent::share($request),
             'name' => config('app.name'),
@@ -52,6 +56,38 @@ class HandleInertiaRequests extends Middleware
             'sidebarOpen' => ! $request->hasCookie('sidebar_state') || $request->cookie('sidebar_state') === 'true',
             'fwb_id' => $request->cookie('fwb_id'),
             'hcaptcha_sitekey' => config('services.hcaptcha.site_key'),
+            'locale' => $locale,
+            'locales' => config('app.available_locales', ['de', 'en']),
         ];
+    }
+
+    /**
+     * Determine the current locale for the request.
+     *
+     * Priority:
+     * 1. Session locale (for both authenticated and guest users)
+     * 2. User's stored preference (for authenticated users)
+     * 3. Application default
+     */
+    private function determineLocale(Request $request): string
+    {
+        $availableLocales = config('app.available_locales', ['de', 'en']);
+        $defaultLocale = config('app.locale', 'de');
+
+        // Check session first (most recent explicit choice)
+        $sessionLocale = session('locale');
+        if ($sessionLocale && in_array($sessionLocale, $availableLocales)) {
+            return $sessionLocale;
+        }
+
+        // Check authenticated user's stored preference
+        if ($request->user() && $request->user()->locale && in_array($request->user()->locale, $availableLocales)) {
+            // Also sync to session for consistency
+            session(['locale' => $request->user()->locale]);
+
+            return $request->user()->locale;
+        }
+
+        return $defaultLocale;
     }
 }

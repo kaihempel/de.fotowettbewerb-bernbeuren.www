@@ -5,6 +5,7 @@ import SettingsLayout from "@/layouts/settings/layout";
 import { Transition } from "@headlessui/react";
 import { Form, Head } from "@inertiajs/react";
 import { useRef } from "react";
+import { useTranslation } from "react-i18next";
 
 import HeadingSmall from "@/components/heading-small";
 import { Button } from "@/components/ui/button";
@@ -14,17 +15,18 @@ import { Label } from "@/components/ui/label";
 export default function Password() {
   const passwordInput = useRef<HTMLInputElement>(null);
   const currentPasswordInput = useRef<HTMLInputElement>(null);
+  const { t } = useTranslation("settings");
 
   return (
     <GlobalLayout>
-      <Head title="Password settings" />
+      <Head title={t("password.pageTitle")} />
 
       <div className="mx-auto max-w-4xl">
         <SettingsLayout>
           <div className="space-y-6">
             <HeadingSmall
-              title="Update password"
-              description="Ensure your account is using a long, random password to stay secure"
+              title={t("password.title")}
+              description={t("password.description")}
             />
 
             <Form
@@ -52,7 +54,9 @@ export default function Password() {
               {({ errors, processing, recentlySuccessful }) => (
                 <>
                   <div className="grid gap-2">
-                    <Label htmlFor="current_password">Current password</Label>
+                    <Label htmlFor="current_password">
+                      {t("password.current")}
+                    </Label>
 
                     <Input
                       id="current_password"
@@ -61,14 +65,14 @@ export default function Password() {
                       type="password"
                       className="mt-1 block w-full"
                       autoComplete="current-password"
-                      placeholder="Current password"
+                      placeholder={t("password.currentPlaceholder")}
                     />
 
                     <InputError message={errors.current_password} />
                   </div>
 
                   <div className="grid gap-2">
-                    <Label htmlFor="password">New password</Label>
+                    <Label htmlFor="password">{t("password.new")}</Label>
 
                     <Input
                       id="password"
@@ -77,7 +81,7 @@ export default function Password() {
                       type="password"
                       className="mt-1 block w-full"
                       autoComplete="new-password"
-                      placeholder="New password"
+                      placeholder={t("password.newPlaceholder")}
                     />
 
                     <InputError message={errors.password} />
@@ -85,7 +89,7 @@ export default function Password() {
 
                   <div className="grid gap-2">
                     <Label htmlFor="password_confirmation">
-                      Confirm password
+                      {t("password.confirm")}
                     </Label>
 
                     <Input
@@ -94,7 +98,7 @@ export default function Password() {
                       type="password"
                       className="mt-1 block w-full"
                       autoComplete="new-password"
-                      placeholder="Confirm password"
+                      placeholder={t("password.confirmPlaceholder")}
                     />
 
                     <InputError message={errors.password_confirmation} />
@@ -105,7 +109,7 @@ export default function Password() {
                       disabled={processing}
                       data-test="update-password-button"
                     >
-                      Save password
+                      {t("password.save")}
                     </Button>
 
                     <Transition
@@ -115,7 +119,9 @@ export default function Password() {
                       leave="transition ease-in-out"
                       leaveTo="opacity-0"
                     >
-                      <p className="text-sm text-neutral-600">Saved</p>
+                      <p className="text-sm text-neutral-600">
+                        {t("password.saved")}
+                      </p>
                     </Transition>
                   </div>
                 </>

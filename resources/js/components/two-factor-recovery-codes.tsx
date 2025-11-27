@@ -11,6 +11,7 @@ import { regenerateRecoveryCodes } from "@/routes/two-factor";
 import { Form } from "@inertiajs/react";
 import { AlertCircle, Eye, EyeOff, LockKeyhole, RefreshCw } from "lucide-react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 interface TwoFactorRecoveryCodesProps {
   recoveryCodesList: string[];
@@ -23,6 +24,7 @@ export default function TwoFactorRecoveryCodes({
   fetchRecoveryCodes,
   errors,
 }: TwoFactorRecoveryCodesProps) {
+  const { t } = useTranslation("auth");
   const [codesAreVisible, setCodesAreVisible] = useState<boolean>(false);
   const codesSectionRef = useRef<HTMLDivElement | null>(null);
   const canRegenerateCodes = recoveryCodesList.length > 0 && codesAreVisible;
@@ -57,12 +59,9 @@ export default function TwoFactorRecoveryCodes({
       <CardHeader>
         <CardTitle className="flex gap-3">
           <LockKeyhole className="size-4" aria-hidden="true" />
-          2FA Recovery Codes
+          {t("recoveryCodes.title")}
         </CardTitle>
-        <CardDescription>
-          Recovery codes let you regain access if you lose your 2FA device.
-          Store them in a secure password manager.
-        </CardDescription>
+        <CardDescription>{t("recoveryCodes.description")}</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-3 select-none sm:flex-row sm:items-center sm:justify-between">
@@ -73,7 +72,9 @@ export default function TwoFactorRecoveryCodes({
             aria-controls="recovery-codes-section"
           >
             <RecoveryCodeIconComponent className="size-4" aria-hidden="true" />
-            {codesAreVisible ? "Hide" : "View"} Recovery Codes
+            {codesAreVisible
+              ? t("recoveryCodes.hideCodes")
+              : t("recoveryCodes.viewCodes")}
           </Button>
 
           {canRegenerateCodes && (
@@ -89,7 +90,7 @@ export default function TwoFactorRecoveryCodes({
                   disabled={processing}
                   aria-describedby="regenerate-warning"
                 >
-                  <RefreshCw /> Regenerate Codes
+                  <RefreshCw /> {t("recoveryCodes.regenerateCodes")}
                 </Button>
               )}
             </Form>
@@ -104,7 +105,7 @@ export default function TwoFactorRecoveryCodes({
             {errors?.length ? (
               <Alert variant="destructive">
                 <AlertCircle />
-                <AlertTitle>Something went wrong.</AlertTitle>
+                <AlertTitle>{t("recoveryCodes.somethingWentWrong")}</AlertTitle>
                 <AlertDescription>
                   <ul className="list-inside list-disc text-sm">
                     {Array.from(new Set(errors)).map((error, index) => (
@@ -119,7 +120,7 @@ export default function TwoFactorRecoveryCodes({
                   ref={codesSectionRef}
                   className="grid gap-1 rounded-lg bg-muted p-4 font-mono text-sm"
                   role="list"
-                  aria-label="Recovery codes"
+                  aria-label={t("recoveryCodes.codesListLabel")}
                 >
                   {recoveryCodesList.length ? (
                     recoveryCodesList.map((code, index) => (
@@ -130,7 +131,7 @@ export default function TwoFactorRecoveryCodes({
                   ) : (
                     <div
                       className="space-y-2"
-                      aria-label="Loading recovery codes"
+                      aria-label={t("recoveryCodes.loadingCodes")}
                     >
                       {Array.from({ length: 8 }, (_, index) => (
                         <div
@@ -145,9 +146,11 @@ export default function TwoFactorRecoveryCodes({
 
                 <div className="text-xs text-muted-foreground select-none">
                   <p id="regenerate-warning">
-                    Each recovery code can be used once to access your account
-                    and will be removed after use. If you need more, click{" "}
-                    <span className="font-bold">Regenerate Codes</span> above.
+                    {t("recoveryCodes.usageNote")}{" "}
+                    <span className="font-bold">
+                      {t("recoveryCodes.regenerateButton")}
+                    </span>{" "}
+                    above.
                   </p>
                 </div>
               </>

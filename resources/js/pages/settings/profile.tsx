@@ -3,6 +3,7 @@ import { send } from "@/routes/verification";
 import { type SharedData } from "@/types";
 import { Transition } from "@headlessui/react";
 import { Form, Head, Link, usePage } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 
 import DeleteUser from "@/components/delete-user";
 import HeadingSmall from "@/components/heading-small";
@@ -21,17 +22,18 @@ export default function Profile({
   status?: string;
 }) {
   const { auth } = usePage<SharedData>().props;
+  const { t } = useTranslation("settings");
 
   return (
     <GlobalLayout>
-      <Head title="Profile settings" />
+      <Head title={t("profile.pageTitle")} />
 
       <div className="mx-auto max-w-4xl">
         <SettingsLayout>
           <div className="space-y-6">
             <HeadingSmall
-              title="Profile information"
-              description="Update your name and email address"
+              title={t("profile.title")}
+              description={t("profile.description")}
             />
 
             <Form
@@ -44,7 +46,7 @@ export default function Profile({
               {({ processing, recentlySuccessful, errors }) => (
                 <>
                   <div className="grid gap-2">
-                    <Label htmlFor="name">Name</Label>
+                    <Label htmlFor="name">{t("profile.name")}</Label>
 
                     <Input
                       id="name"
@@ -53,14 +55,14 @@ export default function Profile({
                       name="name"
                       required
                       autoComplete="name"
-                      placeholder="Full name"
+                      placeholder={t("profile.namePlaceholder")}
                     />
 
                     <InputError className="mt-2" message={errors.name} />
                   </div>
 
                   <div className="grid gap-2">
-                    <Label htmlFor="email">Email address</Label>
+                    <Label htmlFor="email">{t("profile.email")}</Label>
 
                     <Input
                       id="email"
@@ -70,7 +72,7 @@ export default function Profile({
                       name="email"
                       required
                       autoComplete="username"
-                      placeholder="Email address"
+                      placeholder={t("profile.emailPlaceholder")}
                     />
 
                     <InputError className="mt-2" message={errors.email} />
@@ -79,20 +81,19 @@ export default function Profile({
                   {mustVerifyEmail && auth.user.email_verified_at === null && (
                     <div>
                       <p className="-mt-4 text-sm text-muted-foreground">
-                        Your email address is unverified.{" "}
+                        {t("profile.emailUnverified")}{" "}
                         <Link
                           href={send()}
                           as="button"
                           className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
                         >
-                          Click here to resend the verification email.
+                          {t("profile.resendVerification")}
                         </Link>
                       </p>
 
                       {status === "verification-link-sent" && (
                         <div className="mt-2 text-sm font-medium text-green-600">
-                          A new verification link has been sent to your email
-                          address.
+                          {t("profile.verificationSent")}
                         </div>
                       )}
                     </div>
@@ -103,7 +104,7 @@ export default function Profile({
                       disabled={processing}
                       data-test="update-profile-button"
                     >
-                      Save
+                      {t("profile.save")}
                     </Button>
 
                     <Transition
@@ -113,7 +114,9 @@ export default function Profile({
                       leave="transition ease-in-out"
                       leaveTo="opacity-0"
                     >
-                      <p className="text-sm text-neutral-600">Saved</p>
+                      <p className="text-sm text-neutral-600">
+                        {t("profile.saved")}
+                      </p>
                     </Transition>
                   </div>
                 </>

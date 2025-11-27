@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { router } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 import { ChevronLeft, ChevronRight, FileQuestion } from "lucide-react";
 import { OxButton, OxCard, OxSkeleton, OxSkeletonText } from "@noxickon/onyx";
 import { PhotoSubmissionCard } from "@/components/photo-submission-card";
@@ -56,6 +57,8 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
   submissions,
   currentFilter = "all",
 }) => {
+  const { t } = useTranslation("dashboard");
+
   // Show skeleton loaders if submissions is undefined or still loading
   if (!submissions) {
     return (
@@ -134,21 +137,28 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
     return pages;
   };
 
+  // Get empty state message based on filter
+  const getEmptyMessage = (): string => {
+    switch (currentFilter) {
+      case "new":
+        return t("empty.pending");
+      case "approved":
+        return t("empty.approved");
+      case "declined":
+        return t("empty.declined");
+      default:
+        return t("empty.all");
+    }
+  };
+
   // Empty state
   if (!submissions.data || submissions.data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center rounded-xl border border-dashed py-16 text-center">
         <FileQuestion className="mb-4 size-12 text-muted-foreground/50" />
-        <h3 className="mb-2 text-lg font-semibold">No submissions found</h3>
+        <h3 className="mb-2 text-lg font-semibold">{t("empty.title")}</h3>
         <p className="max-w-sm text-sm text-muted-foreground">
-          {currentFilter === "new" &&
-            "There are no pending submissions to review at the moment. Check back later!"}
-          {currentFilter === "approved" &&
-            "No approved submissions yet. Start reviewing to see approved photos here."}
-          {currentFilter === "declined" &&
-            "No declined submissions yet. Declined photos will appear here."}
-          {currentFilter === "all" &&
-            "No photo submissions have been made yet. They will appear here once users start uploading."}
+          {getEmptyMessage()}
         </p>
       </div>
     );
@@ -168,8 +178,11 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
         <div className="flex flex-col items-center gap-4 sm:flex-row sm:justify-between">
           {/* Results info */}
           <div className="text-sm text-muted-foreground">
-            Showing {submissions.from} to {submissions.to} of{" "}
-            {submissions.total} submissions
+            {t("pagination.showing", {
+              from: submissions.from,
+              to: submissions.to,
+              total: submissions.total,
+            })}
           </div>
 
           {/* Pagination buttons */}
@@ -183,7 +196,7 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
               className="gap-1"
             >
               <ChevronLeft className="size-4" />
-              Previous
+              {t("pagination.previous")}
             </OxButton>
 
             {/* Page numbers */}
@@ -223,7 +236,10 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
             {/* Mobile page indicator */}
             <div className="flex items-center gap-2 sm:hidden">
               <span className="text-sm text-muted-foreground">
-                Page {submissions.current_page} of {submissions.last_page}
+                {t("pagination.page", {
+                  current: submissions.current_page,
+                  total: submissions.last_page,
+                })}
               </span>
             </div>
 
@@ -235,7 +251,7 @@ export const PhotoSubmissionList: FC<PhotoSubmissionListProps> = ({
               size="sm"
               className="gap-1"
             >
-              Next
+              {t("pagination.next")}
               <ChevronRight className="size-4" />
             </OxButton>
           </div>

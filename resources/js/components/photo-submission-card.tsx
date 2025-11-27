@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { router } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 import { CheckCircle, XCircle, Clock, User } from "lucide-react";
 import { OxBadge, OxButton, OxCard, OxSpinner } from "@noxickon/onyx";
 import { AuditTrailIndicator } from "@/components/audit-trail-indicator";
@@ -16,6 +17,7 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
   submission,
   onActionSuccess,
 }) => {
+  const { t, i18n } = useTranslation("dashboard");
   const [isApproving, setIsApproving] = useState(false);
   const [isDeclining, setIsDeclining] = useState(false);
 
@@ -95,7 +97,8 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("de-DE", {
+    const locale = i18n.language === "de" ? "de-DE" : "en-US";
+    return new Date(dateString).toLocaleDateString(locale, {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -153,11 +156,13 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
           {(submission.photographer_name || submission.photographer_email) && (
             <div className="rounded-md border border-muted bg-muted/30 p-3 text-xs">
               <div className="mb-1 font-medium text-muted-foreground">
-                Photographer:
+                {t("submission.photographer")}:
               </div>
               {submission.photographer_name && (
                 <div className="flex items-start justify-between gap-2">
-                  <span className="text-muted-foreground">Name:</span>
+                  <span className="text-muted-foreground">
+                    {t("submission.photographerName")}:
+                  </span>
                   <span className="font-medium text-right break-words">
                     {submission.photographer_name}
                   </span>
@@ -165,7 +170,9 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
               )}
               {submission.photographer_email && (
                 <div className="flex items-start justify-between gap-2 mt-1">
-                  <span className="text-muted-foreground">Email:</span>
+                  <span className="text-muted-foreground">
+                    {t("submission.photographerEmail")}:
+                  </span>
                   <span className="font-medium text-right break-all">
                     {submission.photographer_email}
                   </span>
@@ -176,14 +183,16 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
 
           {/* Submission Date */}
           <div className="text-xs text-muted-foreground">
-            Submitted: {formatDate(submission.submitted_at)}
+            {t("submission.submittedAt")}: {formatDate(submission.submitted_at)}
           </div>
 
           {/* Reviewer Info (if reviewed) */}
           {submission.reviewed_at && submission.reviewer && (
             <div className="rounded-md border border-muted bg-muted/30 p-2 text-xs">
               <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Reviewed by:</span>
+                <span className="text-muted-foreground">
+                  {t("submission.reviewedBy")}:
+                </span>
                 <span className="font-medium">{submission.reviewer.name}</span>
               </div>
               <div className="mt-1 text-muted-foreground">
@@ -195,7 +204,7 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
           {/* Photo ID and Audit Trail */}
           <div className="flex items-center justify-between gap-2">
             <div className="text-xs font-mono text-muted-foreground">
-              ID: {submission.fwb_id}
+              {t("submission.photoId")}: {submission.fwb_id}
             </div>
 
             {/* Audit Trail Indicator - Show for reviewed submissions */}
@@ -223,12 +232,12 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
                 {isApproving ? (
                   <>
                     <OxSpinner className="size-4" />
-                    Approving...
+                    {t("actions.approving")}
                   </>
                 ) : (
                   <>
                     <CheckCircle className="size-4" />
-                    Accept
+                    {t("actions.accept")}
                   </>
                 )}
               </OxButton>
@@ -243,12 +252,12 @@ export const PhotoSubmissionCard: FC<PhotoSubmissionCardProps> = ({
                 {isDeclining ? (
                   <>
                     <OxSpinner className="size-4" />
-                    Declining...
+                    {t("actions.declining")}
                   </>
                 ) : (
                   <>
                     <XCircle className="size-4" />
-                    Decline
+                    {t("actions.decline")}
                   </>
                 )}
               </OxButton>

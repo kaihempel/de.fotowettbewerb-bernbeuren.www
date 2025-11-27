@@ -1,0 +1,147 @@
+{
+  "aboutUs": {
+    "title": "About Us",
+    "subtitle": "Who we are and what drives us",
+    "mission": {
+      "title": "Our Mission",
+      "paragraph1": "The Fotowettbewerb Bernbeuren is an initiative that brings photography and community together. We believe that every person has a unique perspective and can share it through the art of photography.",
+      "paragraph2": "Our goal is to create a platform where photographers from the region and beyond can present their work, compete with each other, and learn from one another."
+    },
+    "values": {
+      "title": "Our Values",
+      "creativity": {
+        "title": "Creativity",
+        "description": "We promote artistic expression and innovative perspectives"
+      },
+      "community": {
+        "title": "Community",
+        "description": "We create a space for exchange and mutual inspiration"
+      },
+      "fairness": {
+        "title": "Fairness",
+        "description": "We ensure a transparent and fair competition"
+      },
+      "quality": {
+        "title": "Quality",
+        "description": "We set high standards for all submitted work"
+      }
+    },
+    "team": {
+      "title": "Our Team",
+      "paragraph1": "Behind the Fotowettbewerb Bernbeuren is a dedicated team of photography enthusiasts, organizers, and volunteers. We work on a voluntary basis to make this competition an unforgettable experience for all participants.",
+      "paragraph2": "From technical implementation to jury work to organizing the exhibition - everyone on the team contributes their expertise and passion to the success of the competition."
+    }
+  },
+  "imprint": {
+    "title": "Imprint",
+    "subtitle": "Information according to Section 5 TMG",
+    "responsible": {
+      "title": "Responsible for content",
+      "name": "Fotowettbewerb Bernbeuren",
+      "street": "Musterstrasse 123",
+      "city": "86975 Bernbeuren"
+    },
+    "contact": {
+      "title": "Contact",
+      "email": "Email: info@fotowettbewerb-bernbeuren.de",
+      "phone": "Phone: +49 (0) 8860 1234567"
+    },
+    "disclaimer": {
+      "title": "Disclaimer",
+      "contentTitle": "Liability for Content",
+      "contentText": "The contents of our pages were created with the greatest care. However, we cannot guarantee the accuracy, completeness, and timeliness of the content. As a service provider, we are responsible for our own content on these pages under general laws according to Section 7(1) TMG.",
+      "linksTitle": "Liability for Links",
+      "linksText": "Our offer contains links to external websites of third parties, over whose content we have no influence. Therefore, we cannot accept any liability for these external contents. The respective provider or operator of the pages is always responsible for the content of the linked pages."
+    },
+    "copyright": {
+      "title": "Copyright",
+      "text": "The content and works on these pages created by the site operators are subject to German copyright law. The reproduction, editing, distribution, and any kind of exploitation outside the limits of copyright require the written consent of the respective author or creator."
+    },
+    "privacy": {
+      "title": "Privacy Policy",
+      "section1": {
+        "title": "1. Responsible Party",
+        "text": "Responsible for data processing on this website is: [Your Name / Company Name] [Your Street and House Number] [Your Postal Code and City] [Your Email Address] [Your Phone Number (optional)]"
+      },
+      "section2": {
+        "title": "2. Collection of Access Data (Server Log Files)",
+        "text": "The host of this website automatically collects and stores information in so-called server log files, which your browser automatically transmits to us. These are: browser type and version, operating system used, referrer URL (previously visited page), hostname of the accessing computer, time of server request, IP address. This data serves the technical administration of the website, ensuring the security of our IT systems, and optimizing our offer."
+      },
+      "section3": {
+        "title": "3. Web Analytics with Google Analytics",
+        "text": "This website uses Google Analytics, a web analytics service provided by Google Ireland Limited (\"Google\"). Google Analytics uses so-called \"cookies\", text files that are stored on your computer and enable an analysis of your use of the website."
+      },
+      "section4": {
+        "title": "4. Handling of Photos and Personal Data during Upload",
+        "subsection1": {
+          "title": "4.1. Uploading Photos",
+          "text": "When you upload photos to our website, we process the following data: the uploaded photo itself, the time of upload, the IP address of the uploading device (for abuse prevention). You have the option to voluntarily add personal information (such as your name, a title, or a description) to the photo."
+        },
+        "subsection2": {
+          "title": "4.2. Transfer of Usage Rights (License) and Revocation",
+          "text": "By uploading the photo, you agree to transfer the usage rights to the photo to the website operator. This allows us to publish the photo on our website. You can revoke this consent at any time."
+        }
+      },
+      "section5": {
+        "title": "5. Data Subject Rights",
+        "text": "You have the right at any time to: request information about your processed personal data (Art. 15 GDPR), request correction of inaccurate data (Art. 16 GDPR), request deletion of your data (Art. 17 GDPR), request restriction of processing (Art. 18 GDPR), the right to data portability (Art. 20 GDPR), revoke your consent (Art. 7(3) GDPR), object (Art. 21 GDPR), file a complaint with a supervisory authority (Art. 77 GDPR)."
+      }
+    }
+  },
+  "project": {
+    "title": "The Project",
+    "subtitle": "Everything about our photo contest",
+    "whatIs": {
+      "title": "What is the Fotowettbewerb Bernbeuren?",
+      "paragraph1": "The Fotowettbewerb Bernbeuren is an annual competition for photography enthusiasts from the region and beyond. Whether hobbyist or professional - everyone is welcome to submit their best shots and share them with others.",
+      "paragraph2": "The platform allows participants to upload their photos, have them evaluated by a jury, and ultimately crown the most popular images through public voting."
+    },
+    "goals": {
+      "title": "Project Goals",
+      "goal1": "Promoting photography culture in the Bernbeuren region",
+      "goal2": "Creating a platform for exchange and networking among photographers",
+      "goal3": "Presenting the diverse photographic talents of our community",
+      "goal4": "Organizing a public exhibition of the best works",
+      "goal5": "Recognizing outstanding photographic achievements"
+    },
+    "process": {
+      "title": "Contest Process",
+      "step1": {
+        "title": "Submission Phase",
+        "description": "Photographers can upload their best shots through the platform"
+      },
+      "step2": {
+        "title": "Jury Evaluation",
+        "description": "An expert jury reviews and evaluates all submitted photos"
+      },
+      "step3": {
+        "title": "Public Gallery",
+        "description": "Approved photos are presented in the public gallery"
+      },
+      "step4": {
+        "title": "Public Voting",
+        "description": "Visitors can vote for their favorite images"
+      },
+      "step5": {
+        "title": "Exhibition & Award Ceremony",
+        "description": "The best photos are exhibited and winners are honored"
+      }
+    },
+    "categories": {
+      "title": "Categories & Prizes",
+      "intro": "The competition includes various categories to accommodate the diversity of photographic genres:",
+      "category1": "Landscape & Nature",
+      "category2": "Portrait & People",
+      "category3": "Architecture & City",
+      "category4": "Creative & Abstract",
+      "outro": "Attractive prizes await the winners of each category as well as the overall winner, along with the opportunity to present their works in a public exhibition."
+    }
+  },
+  "landing": {
+    "title": "Photo Contest Gallery",
+    "subtitle": "Browse and vote on amazing photo submissions",
+    "meta": {
+      "description": "Browse and vote on contest photo entries"
+    }
+  }
+}

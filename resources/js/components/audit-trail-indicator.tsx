@@ -1,4 +1,5 @@
 import type { FC } from "react";
+import { useTranslation } from "react-i18next";
 import { History } from "lucide-react";
 import { OxTooltip } from "@noxickon/onyx";
 import type { User } from "@/types";
@@ -14,8 +15,11 @@ export const AuditTrailIndicator: FC<AuditTrailIndicatorProps> = ({
   reviewedAt,
   status,
 }) => {
+  const { t, i18n } = useTranslation("dashboard");
+
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString("de-DE", {
+    const locale = i18n.language === "de" ? "de-DE" : "en-US";
+    return new Date(dateString).toLocaleDateString(locale, {
       year: "numeric",
       month: "short",
       day: "numeric",
@@ -24,7 +28,8 @@ export const AuditTrailIndicator: FC<AuditTrailIndicatorProps> = ({
     });
   };
 
-  const actionText = status === "approved" ? "Approved" : "Declined";
+  const actionText =
+    status === "approved" ? t("audit.approved") : t("audit.declined");
 
   return (
     <OxTooltip
@@ -32,7 +37,7 @@ export const AuditTrailIndicator: FC<AuditTrailIndicatorProps> = ({
       content={
         <div className="space-y-1">
           <div className="font-medium">
-            {actionText} by {reviewer.name}
+            {t("audit.actionBy", { action: actionText, name: reviewer.name })}
           </div>
           <div className="text-xs opacity-80">{formatDate(reviewedAt)}</div>
         </div>
@@ -40,7 +45,7 @@ export const AuditTrailIndicator: FC<AuditTrailIndicatorProps> = ({
     >
       <div className="flex items-center gap-1.5 text-xs text-muted-foreground">
         <History className="size-3" />
-        <span className="hidden sm:inline">Review history</span>
+        <span className="hidden sm:inline">{t("audit.reviewHistory")}</span>
       </div>
     </OxTooltip>
   );
