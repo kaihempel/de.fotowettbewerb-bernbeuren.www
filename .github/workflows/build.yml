@@ -1,4 +1,4 @@
-name: Deploy to production
+name: Build for production
 on:
   deployment:
   workflow_dispatch:
@@ -10,37 +10,49 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@master
+
       - name: Setup Environment
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
+
       - name: Install Composer Packages
         run: composer install --no-dev
+
       - name: Install Node Packages
         uses: actions/setup-node@v2-beta
         with:
           node-version: '22'
           check-latest: true
+
       - name: Install NPM dependencies
         run: npm install
 
       - name: Compile assets for production
-        run: npm run production
+        run: npm run build
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: production-assets
-          path: public/build
-          if-no-files-found: error
+          name: build
+          path: |
+            !.*
+            !CLAUDE.md
+            !AGENTS.md
+            app/**
+            bootstrap/**
+            public/**
+            resources/**
+            routes/**
+            config/**
+            vendor/**
+            node_modules/**
+            artisan.php
+            composer.json
+            composer.lock
+            package.json
+            package-lock.json
+            README.md
 
-      #- name: Deploy To production
-      #  uses: hypertech-lda/laravel-auto-deploy@1.1
-      #  with:
-      #    user: ${{ secrets.SERVER_USER }}
-      #    host: ${{ secrets.SERVER_HOST }}
-      #    path: ${{ secrets.SERVER_PATH }}
-      #    owner: www
-      #    commands: "# Customer commands"
-      #  env:
-      #    DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          if-no-files-found: error
+          overwrite: true
