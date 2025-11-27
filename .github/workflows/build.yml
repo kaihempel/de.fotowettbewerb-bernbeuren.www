@@ -1,0 +1,38 @@
+name: Deploy to production
+on:
+  deployment
+
+jobs:
+  build:
+    name: Buid & Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@master
+      - name: Setup Environment
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+      - name: Install Composer Packages
+        run: composer install --no-dev
+      - name: Install Node Packages
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: '22'
+          check-latest: true
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Compile assets for production
+        run: npm run production
+
+      #- name: Deploy To production
+      #  uses: hypertech-lda/laravel-auto-deploy@1.1
+      #  with:
+      #    user: ${{ secrets.SERVER_USER }}
+      #    host: ${{ secrets.SERVER_HOST }}
+      #    path: ${{ secrets.SERVER_PATH }}
+      #    owner: www
+      #    commands: "# Customer commands"
+      #  env:
+      #    DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
