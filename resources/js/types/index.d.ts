@@ -28,6 +28,8 @@ export interface SharedData {
   auth: Auth;
   sidebarOpen: boolean;
   hcaptcha_sitekey: string;
+  locale: string;
+  locales: string[];
   [key: string]: unknown;
 }
 

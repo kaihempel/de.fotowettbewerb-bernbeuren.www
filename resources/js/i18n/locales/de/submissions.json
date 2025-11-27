@@ -1,0 +1,63 @@
+{
+  "pageTitle": "Foto einreichen",
+  "pageDescription": "Teilen Sie Ihr bestes Foto mit der Gemeinschaft",
+  "card": {
+    "title": "Foto einreichen",
+    "subtitle": "Laden Sie Ihr Foto fuer den Fotowettbewerb Bernbeuren hoch. Maximal 3 Einreichungen pro Person."
+  },
+  "form": {
+    "photographerName": "Ihr Name",
+    "photographerNamePlaceholder": "Max Mustermann",
+    "photographerEmail": "Ihre E-Mail",
+    "photographerEmailPlaceholder": "max@beispiel.de",
+    "submit": "Foto einreichen",
+    "submitting": "Wird hochgeladen..."
+  },
+  "photographerInfo": {
+    "title": "Angaben zum Fotografen",
+    "required": "*",
+    "description": "Erforderlich fuer die Teilnahme am Wettbewerb. Ihre Daten werden vertraulich behandelt."
+  },
+  "requirements": {
+    "title": "Foto-Anforderungen",
+    "fileTypes": "Akzeptierte Formate: JPG, PNG, HEIC",
+    "maxSize": "Maximale Dateigroesse: 15MB",
+    "slotsRemaining": "{{count}} Platz verbleibend",
+    "slotsRemaining_plural": "{{count}} Plaetze verbleibend",
+    "fileSizeLimit": "Dateigroesse: 15MB. Formate: JPG, PNG, HEIC"
+  },
+  "counter": {
+    "label": "Einreichungen",
+    "format": "{{current}}/{{max}}"
+  },
+  "status": {
+    "new": "Neu",
+    "approved": "Genehmigt",
+    "declined": "Abgelehnt"
+  },
+  "recentSubmissions": {
+    "title": "Ihre letzten Einreichungen"
+  },
+  "alerts": {
+    "success": {
+      "title": "Erfolg!",
+      "message": "Ihr Foto wurde zur Ueberpruefung eingereicht."
+    },
+    "error": {
+      "title": "Fehler",
+      "message": "Hochladen fehlgeschlagen. Bitte versuchen Sie es erneut."
+    },
+    "maxReached": {
+      "title": "Maximale Einreichungen erreicht",
+      "message": "Sie haben bereits 3 Fotos eingereicht. Vielen Dank fuer Ihre Teilnahme!"
+    }
+  },
+  "captcha": {
+    "required": "Bitte fuehren Sie die CAPTCHA-Verifizierung durch."
+  },
+  "validation": {
+    "photoRequired": "Bitte waehlen Sie ein Foto zum Hochladen aus.",
+    "nameRequired": "Bitte geben Sie Ihren Namen ein.",
+    "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein."
+  }
+}

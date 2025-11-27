@@ -16,11 +16,14 @@ import {
   OxCard,
 } from "@noxickon/onyx";
 import { mdiCheckCircle } from "@mdi/js";
+import { useTranslation } from "react-i18next";
 
 export default function ForgotPassword({ status }: { status?: string }) {
+  const { t } = useTranslation("auth");
+
   return (
     <GlobalLayout>
-      <Head title="Forgot password" />
+      <Head title={t("forgotPassword.title")} />
 
       <div className="mx-auto flex min-h-[60vh] max-w-sm flex-col items-center justify-center">
         <OxCard className="w-full">
@@ -36,9 +39,11 @@ export default function ForgotPassword({ status }: { status?: string }) {
                   </div>
                 </Link>
                 <div className="space-y-2 text-center">
-                  <h1 className="text-xl font-medium">Forgot password</h1>
+                  <h1 className="text-xl font-medium">
+                    {t("forgotPassword.title")}
+                  </h1>
                   <p className="text-center text-sm text-muted-foreground">
-                    Enter your email to receive a password reset link
+                    {t("forgotPassword.description")}
                   </p>
                 </div>
               </div>
@@ -63,7 +68,9 @@ export default function ForgotPassword({ status }: { status?: string }) {
                 {({ processing, errors }) => (
                   <>
                     <div className="grid gap-2">
-                      <OxLabel htmlFor="email">Email address</OxLabel>
+                      <OxLabel htmlFor="email">
+                        {t("forgotPassword.email")}
+                      </OxLabel>
                       <OxTextInput.Container
                         type="email"
                         error={!!errors.email}
@@ -88,7 +95,7 @@ export default function ForgotPassword({ status }: { status?: string }) {
                         data-test="email-password-reset-link-button"
                       >
                         {processing && <OxSpinner />}
-                        Email password reset link
+                        {t("forgotPassword.submit")}
                       </OxButton>
                     </div>
                   </>
@@ -96,8 +103,8 @@ export default function ForgotPassword({ status }: { status?: string }) {
               </Form>
 
               <div className="space-x-1 text-center text-sm text-muted-foreground">
-                <span>Or, return to</span>
-                <TextLink href={login()}>log in</TextLink>
+                <span>{t("forgotPassword.backToLogin")}</span>
+                <TextLink href={login()}>{t("forgotPassword.loginLink")}</TextLink>
               </div>
             </div>
           </OxCard.Body>

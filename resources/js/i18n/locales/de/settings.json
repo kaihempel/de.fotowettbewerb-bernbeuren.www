@@ -1,0 +1,76 @@
+{
+  "page": {
+    "title": "Einstellungen",
+    "description": "Verwalten Sie Ihr Profil und Ihre Kontoeinstellungen"
+  },
+  "navigation": {
+    "profile": "Profil",
+    "password": "Passwort",
+    "appearance": "Erscheinungsbild",
+    "twoFactor": "Zwei-Faktor-Auth"
+  },
+  "profile": {
+    "pageTitle": "Profil-Einstellungen",
+    "title": "Profilinformationen",
+    "description": "Aktualisieren Sie Ihren Namen und Ihre E-Mail-Adresse",
+    "name": "Name",
+    "namePlaceholder": "Vollstaendiger Name",
+    "email": "E-Mail-Adresse",
+    "emailPlaceholder": "E-Mail-Adresse",
+    "emailUnverified": "Ihre E-Mail-Adresse ist nicht verifiziert.",
+    "resendVerification": "Klicken Sie hier, um die Verifizierungs-E-Mail erneut zu senden.",
+    "verificationSent": "Ein neuer Verifizierungslink wurde an Ihre E-Mail-Adresse gesendet.",
+    "save": "Speichern",
+    "saved": "Gespeichert"
+  },
+  "password": {
+    "pageTitle": "Passwort-Einstellungen",
+    "title": "Passwort aktualisieren",
+    "description": "Verwenden Sie ein langes, zufaelliges Passwort, um Ihr Konto zu schuetzen",
+    "current": "Aktuelles Passwort",
+    "currentPlaceholder": "Aktuelles Passwort",
+    "new": "Neues Passwort",
+    "newPlaceholder": "Neues Passwort",
+    "confirm": "Passwort bestaetigen",
+    "confirmPlaceholder": "Passwort bestaetigen",
+    "save": "Passwort speichern",
+    "saved": "Gespeichert"
+  },
+  "appearance": {
+    "pageTitle": "Erscheinungsbild-Einstellungen",
+    "title": "Erscheinungsbild-Einstellungen",
+    "description": "Aktualisieren Sie die Erscheinungsbild-Einstellungen Ihres Kontos",
+    "theme": "Design",
+    "light": "Hell",
+    "dark": "Dunkel",
+    "system": "System",
+    "toggleTheme": "Design wechseln"
+  },
+  "twoFactor": {
+    "pageTitle": "Zwei-Faktor-Authentifizierung",
+    "title": "Zwei-Faktor-Authentifizierung",
+    "description": "Verwalten Sie Ihre Zwei-Faktor-Authentifizierungseinstellungen",
+    "enabled": "Aktiviert",
+    "disabled": "Deaktiviert",
+    "enabledDescription": "Mit aktivierter Zwei-Faktor-Authentifizierung werden Sie bei der Anmeldung nach einer sicheren, zufaelligen PIN gefragt, die Sie aus der TOTP-unterstuetzten Anwendung auf Ihrem Telefon abrufen koennen.",
+    "disabledDescription": "Wenn Sie die Zwei-Faktor-Authentifizierung aktivieren, werden Sie bei der Anmeldung nach einer sicheren PIN gefragt. Diese PIN kann aus einer TOTP-unterstuetzten Anwendung auf Ihrem Telefon abgerufen werden.",
+    "enable": "2FA aktivieren",
+    "disable": "2FA deaktivieren",
+    "continueSetup": "Einrichtung fortsetzen",
+    "recoveryCodes": "Wiederherstellungscodes",
+    "regenerate": "Codes neu generieren",
+    "showCodes": "Wiederherstellungscodes anzeigen"
+  },
+  "deleteAccount": {
+    "title": "Konto loeschen",
+    "description": "Loeschen Sie Ihr Konto und alle zugehoerigen Ressourcen",
+    "warning": "Warnung",
+    "warningText": "Bitte gehen Sie vorsichtig vor, dies kann nicht rueckgaengig gemacht werden.",
+    "confirmTitle": "Sind Sie sicher, dass Sie Ihr Konto loeschen moechten?",
+    "confirmDescription": "Sobald Ihr Konto geloescht ist, werden alle Ressourcen und Daten dauerhaft geloescht. Bitte geben Sie Ihr Passwort ein, um zu bestaetigen, dass Sie Ihr Konto dauerhaft loeschen moechten.",
+    "password": "Passwort",
+    "passwordPlaceholder": "Passwort",
+    "confirm": "Konto loeschen",
+    "cancel": "Abbrechen"
+  }
+}

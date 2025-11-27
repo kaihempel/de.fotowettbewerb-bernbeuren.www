@@ -7,11 +7,14 @@ import { send } from "@/routes/verification";
 import { OxAlert, OxButton, OxSpinner, OxCard } from "@noxickon/onyx";
 import { mdiCheckCircle } from "@mdi/js";
 import { Form, Head, Link } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 
 export default function VerifyEmail({ status }: { status?: string }) {
+  const { t } = useTranslation("auth");
+
   return (
     <GlobalLayout>
-      <Head title="Email verification" />
+      <Head title={t("verifyEmail.title")} />
 
       <div className="mx-auto flex min-h-[60vh] max-w-sm flex-col items-center justify-center">
         <OxCard className="w-full">
@@ -27,10 +30,11 @@ export default function VerifyEmail({ status }: { status?: string }) {
                   </div>
                 </Link>
                 <div className="space-y-2 text-center">
-                  <h1 className="text-xl font-medium">Verify email</h1>
+                  <h1 className="text-xl font-medium">
+                    {t("verifyEmail.title")}
+                  </h1>
                   <p className="text-center text-sm text-muted-foreground">
-                    Please verify your email address by clicking on the link we
-                    just emailed to you.
+                    {t("verifyEmail.description")}
                   </p>
                 </div>
               </div>
@@ -45,8 +49,7 @@ export default function VerifyEmail({ status }: { status?: string }) {
                   iconDivClass="bg-green-500/20"
                 />
                 <span className="text-green-800 dark:text-green-200">
-                  A new verification link has been sent to the email address you
-                  provided during registration.
+                  {t("verifyEmail.sent")}
                 </span>
               </OxAlert>
             )}
@@ -60,11 +63,11 @@ export default function VerifyEmail({ status }: { status?: string }) {
                     disabled={processing}
                   >
                     {processing && <OxSpinner />}
-                    Resend verification email
+                    {t("verifyEmail.resend")}
                   </OxButton>
 
                   <TextLink href={logout()} className="mx-auto block text-sm">
-                    Log out
+                    {t("verifyEmail.logout")}
                   </TextLink>
                 </>
               )}

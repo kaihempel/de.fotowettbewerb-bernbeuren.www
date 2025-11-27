@@ -1,5 +1,6 @@
 import { Head, router } from "@inertiajs/react";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import PhotoNavigation from "@/components/photo-navigation";
 import PhotoViewer from "@/components/photo-viewer";
 import VotingButtons from "@/components/voting-buttons";
@@ -33,6 +34,8 @@ function GalleryContent({
   previousPhoto,
   progress,
 }: GalleryProps) {
+  const { t } = useTranslation("gallery");
+
   // Track optimistic updates separately from server state
   const [optimisticVote, setOptimisticVote] = useState<"up" | "down" | null>(
     null,
@@ -99,10 +102,7 @@ function GalleryContent({
             } else {
               // All retries failed, rollback UI
               setOptimisticVote(previousVote);
-              setErrorMessage(
-                errors.vote_type ||
-                  "Failed to submit vote after multiple attempts. Please try again.",
-              );
+              setErrorMessage(errors.vote_type || t("errors.submitFailed"));
               setRetryCount(0);
             }
           },
@@ -125,7 +125,7 @@ function GalleryContent({
 
   return (
     <GlobalLayout className="p-0">
-      <Head title="Photo Voting Gallery" />
+      <Head title={t("pageTitle")} />
 
       <div className="flex min-h-screen flex-col bg-background">
         {/* Error Message */}
@@ -146,7 +146,7 @@ function GalleryContent({
         {retryCount > 0 && (
           <div className="fixed left-1/2 top-4 z-10 -translate-x-1/2">
             <div className="rounded-lg bg-yellow-100 px-4 py-2 text-sm text-yellow-900 dark:bg-yellow-900/20 dark:text-yellow-100">
-              Retrying... (Attempt {retryCount}/3)
+              {t("voting.retrying", { count: retryCount })}
             </div>
           </div>
         )}
@@ -160,10 +160,7 @@ function GalleryContent({
                 iconClass="text-orange-400"
                 iconDivClass="bg-orange-500/20"
               />
-              <span>
-                You have rated all {progress.total} photos. You can still
-                navigate and change your votes.
-              </span>
+              <span>{t("progress.completed", { total: progress.total })}</span>
             </OxAlert>
           </div>
         )}
@@ -173,7 +170,10 @@ function GalleryContent({
           {/* Progress Indicator */}
           <div className="rounded-lg bg-background/80 px-4 py-2 shadow-lg backdrop-blur-sm dark:bg-background/90">
             <p className="text-sm font-medium text-muted-foreground">
-              {progress.rated} of {progress.total} photos rated
+              {t("progress.rated", {
+                rated: progress.rated,
+                total: progress.total,
+              })}
             </p>
           </div>
 

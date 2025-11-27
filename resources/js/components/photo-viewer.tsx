@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { cn } from "@/lib/utils";
 import { Star } from "lucide-react";
 
@@ -12,13 +13,15 @@ export default function PhotoViewer({
   title,
   rate,
 }: PhotoViewerProps) {
+  const { t } = useTranslation("gallery");
+
   return (
     <div className="flex w-full max-w-6xl flex-col items-center gap-4">
       {/* Photo Container */}
       <div className="relative w-full overflow-hidden rounded-lg bg-muted shadow-xl">
         <img
           src={imageUrl}
-          alt={title || "Contest photo"}
+          alt={title || t("viewer.contestPhoto")}
           className="h-auto w-full max-h-[calc(100vh-20rem)] object-contain md:max-h-[calc(100vh-13rem)]"
           loading="eager"
         />
@@ -43,7 +46,7 @@ export default function PhotoViewer({
             )}
           />
           <span className="text-sm font-medium text-foreground">
-            Rating: {rate}
+            {t("viewer.rating", { rate })}
           </span>
         </div>
       </div>

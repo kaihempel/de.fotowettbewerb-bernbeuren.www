@@ -16,6 +16,7 @@ import { Form, Head } from "@inertiajs/react";
 import AppLogoIcon from "@/components/app-logo-icon";
 import { Link } from "@inertiajs/react";
 import { home } from "@/routes";
+import { useTranslation } from "react-i18next";
 
 interface LoginProps {
   status?: string;
@@ -28,9 +29,11 @@ export default function Login({
   canResetPassword,
   canRegister,
 }: LoginProps) {
+  const { t } = useTranslation("auth");
+
   return (
     <GlobalLayout>
-      <Head title="Log in" />
+      <Head title={t("login.submit")} />
 
       <div className="mx-auto flex min-h-[60vh] max-w-sm flex-col items-center justify-center">
         <OxCard className="w-full">
@@ -46,11 +49,9 @@ export default function Login({
                   </div>
                 </Link>
                 <div className="space-y-2 text-center">
-                  <h1 className="text-xl font-medium">
-                    Log in to your account
-                  </h1>
+                  <h1 className="text-xl font-medium">{t("login.title")}</h1>
                   <p className="text-center text-sm text-muted-foreground">
-                    Enter your email and password below to log in
+                    {t("login.description")}
                   </p>
                 </div>
               </div>
@@ -66,7 +67,7 @@ export default function Login({
                 <>
                   <div className="grid gap-6">
                     <div className="grid gap-2">
-                      <OxLabel htmlFor="email">Email address</OxLabel>
+                      <OxLabel htmlFor="email">{t("login.email")}</OxLabel>
                       <OxTextInput.Container
                         type="email"
                         error={!!errors.email}
@@ -83,14 +84,16 @@ export default function Login({
 
                     <div className="grid gap-2">
                       <div className="flex items-center">
-                        <OxLabel htmlFor="password">Password</OxLabel>
+                        <OxLabel htmlFor="password">
+                          {t("login.password")}
+                        </OxLabel>
                         {canResetPassword && (
                           <TextLink
                             href={request()}
                             className="ml-auto text-sm"
                             tabIndex={5}
                           >
-                            Forgot password?
+                            {t("login.forgotPassword")}
                           </TextLink>
                         )}
                       </div>
@@ -102,7 +105,7 @@ export default function Login({
                           id="password"
                           name="password"
                           autoComplete="current-password"
-                          placeholder="Password"
+                          placeholder={t("login.password")}
                         />
                         <OxTextInput.VisibilityButton />
                       </OxTextInput.Container>
@@ -111,7 +114,9 @@ export default function Login({
 
                     <div className="flex items-center space-x-3">
                       <OxCheckbox id="remember" name="remember" />
-                      <OxLabel htmlFor="remember">Remember me</OxLabel>
+                      <OxLabel htmlFor="remember">
+                        {t("login.rememberMe")}
+                      </OxLabel>
                     </div>
 
                     <OxButton
@@ -122,15 +127,15 @@ export default function Login({
                       data-test="login-button"
                     >
                       {processing && <OxSpinner />}
-                      Log in
+                      {t("login.submit")}
                     </OxButton>
                   </div>
 
                   {canRegister && (
                     <div className="text-center text-sm text-muted-foreground">
-                      Don't have an account?{" "}
+                      {t("login.noAccount")}{" "}
                       <TextLink href={register()} tabIndex={5}>
-                        Sign up
+                        {t("login.register")}
                       </TextLink>
                     </div>
                   )}

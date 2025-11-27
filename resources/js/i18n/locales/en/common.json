@@ -1,0 +1,130 @@
+{
+  "app": {
+    "name": "Fotowettbewerb Bernbeuren"
+  },
+  "navigation": {
+    "home": "Home",
+    "gallery": "Gallery",
+    "about": "About Us",
+    "imprint": "Imprint",
+    "project": "Project",
+    "submit": "Submit Photo",
+    "dashboard": "Dashboard",
+    "settings": "Settings",
+    "logout": "Log Out",
+    "login": "Log In",
+    "register": "Register",
+    "mySubmissions": "My Submissions",
+    "repository": "Repository",
+    "documentation": "Documentation"
+  },
+  "sidebar": {
+    "platform": "Platform"
+  },
+  "buttons": {
+    "submit": "Submit",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "confirm": "Confirm",
+    "close": "Close",
+    "back": "Back",
+    "next": "Next",
+    "edit": "Edit",
+    "view": "View",
+    "download": "Download",
+    "upload": "Upload",
+    "search": "Search",
+    "filter": "Filter",
+    "reset": "Reset",
+    "refresh": "Refresh",
+    "loadMore": "Load More"
+  },
+  "labels": {
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "search": "Search",
+    "date": "Date",
+    "status": "Status",
+    "actions": "Actions",
+    "description": "Description",
+    "title": "Title",
+    "photo": "Photo",
+    "photos": "Photos",
+    "photographer": "Photographer",
+    "uploadedAt": "Uploaded at",
+    "submittedAt": "Submitted at",
+    "votes": "Votes",
+    "vote": "Vote",
+    "language": "Language"
+  },
+  "messages": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Successfully saved",
+    "warning": "Warning",
+    "noResults": "No results found",
+    "confirmDelete": "Are you sure you want to delete this item?",
+    "unsavedChanges": "You have unsaved changes",
+    "required": "This field is required",
+    "invalidEmail": "Please enter a valid email address",
+    "sessionExpired": "Your session has expired. Please log in again.",
+    "networkError": "Network error. Please check your internet connection."
+  },
+  "footer": {
+    "copyright": "Fotowettbewerb Bernbeuren",
+    "rights": "All rights reserved",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact"
+  },
+  "accessibility": {
+    "skipToContent": "Skip to content",
+    "mainNavigation": "Main navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "toggleTheme": "Toggle theme",
+    "toggleLanguage": "Change language",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "goToPage": "Go to page {{page}}",
+    "currentPage": "Current page, page {{page}}",
+    "imageAlt": "Image: {{description}}",
+    "loading": "Loading content",
+    "expandMenu": "Expand submenu",
+    "collapseMenu": "Collapse submenu",
+    "removeImage": "Remove selected image",
+    "previewAlt": "Preview of selected photo"
+  },
+  "upload": {
+    "dropHere": "Drop your photo here",
+    "dragAndDrop": "Drag and drop your photo",
+    "orClickToBrowse": "or click to browse your files",
+    "fileFormats": "JPG, PNG, or HEIC",
+    "maxFileSize": "Maximum 15MB",
+    "uploading": "Uploading your photo..."
+  },
+  "theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "label": "Appearance"
+  },
+  "locale": {
+    "de": "Deutsch",
+    "en": "English",
+    "label": "Language"
+  },
+  "time": {
+    "justNow": "Just now",
+    "minutesAgo": "{{count}} minute ago",
+    "minutesAgo_plural": "{{count}} minutes ago",
+    "hoursAgo": "{{count}} hour ago",
+    "hoursAgo_plural": "{{count}} hours ago",
+    "daysAgo": "{{count}} day ago",
+    "daysAgo_plural": "{{count}} days ago",
+    "weeksAgo": "{{count}} week ago",
+    "weeksAgo_plural": "{{count}} weeks ago"
+  }
+}

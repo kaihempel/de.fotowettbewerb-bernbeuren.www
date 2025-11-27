@@ -12,6 +12,7 @@ import {
   OxTextInput,
   OxCard,
 } from "@noxickon/onyx";
+import { useTranslation } from "react-i18next";
 
 interface ResetPasswordProps {
   token: string;
@@ -19,9 +20,11 @@ interface ResetPasswordProps {
 }
 
 export default function ResetPassword({ token, email }: ResetPasswordProps) {
+  const { t } = useTranslation("auth");
+
   return (
     <GlobalLayout>
-      <Head title="Reset password" />
+      <Head title={t("resetPassword.title")} />
 
       <div className="mx-auto flex min-h-[60vh] max-w-sm flex-col items-center justify-center">
         <OxCard className="w-full">
@@ -37,9 +40,11 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                   </div>
                 </Link>
                 <div className="space-y-2 text-center">
-                  <h1 className="text-xl font-medium">Reset password</h1>
+                  <h1 className="text-xl font-medium">
+                    {t("resetPassword.title")}
+                  </h1>
                   <p className="text-center text-sm text-muted-foreground">
-                    Please enter your new password below
+                    {t("resetPassword.description")}
                   </p>
                 </div>
               </div>
@@ -54,7 +59,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
               {({ processing, errors }) => (
                 <div className="grid gap-6">
                   <div className="grid gap-2">
-                    <OxLabel htmlFor="email">Email</OxLabel>
+                    <OxLabel htmlFor="email">{t("resetPassword.email")}</OxLabel>
                     <OxTextInput.Container type="email" disabled>
                       <OxTextInput
                         id="email"
@@ -68,7 +73,9 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                   </div>
 
                   <div className="grid gap-2">
-                    <OxLabel htmlFor="password">Password</OxLabel>
+                    <OxLabel htmlFor="password">
+                      {t("resetPassword.password")}
+                    </OxLabel>
                     <OxTextInput.Container
                       type="password"
                       error={!!errors.password}
@@ -77,7 +84,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                         id="password"
                         name="password"
                         autoComplete="new-password"
-                        placeholder="Password"
+                        placeholder={t("resetPassword.password")}
                       />
                       <OxTextInput.VisibilityButton />
                     </OxTextInput.Container>
@@ -86,7 +93,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
 
                   <div className="grid gap-2">
                     <OxLabel htmlFor="password_confirmation">
-                      Confirm password
+                      {t("resetPassword.confirmPassword")}
                     </OxLabel>
                     <OxTextInput.Container
                       type="password"
@@ -96,7 +103,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                         id="password_confirmation"
                         name="password_confirmation"
                         autoComplete="new-password"
-                        placeholder="Confirm password"
+                        placeholder={t("resetPassword.confirmPassword")}
                       />
                       <OxTextInput.VisibilityButton />
                     </OxTextInput.Container>
@@ -114,7 +121,7 @@ export default function ResetPassword({ token, email }: ResetPasswordProps) {
                     data-test="reset-password-button"
                   >
                     {processing && <OxSpinner />}
-                    Reset password
+                    {t("resetPassword.submit")}
                   </OxButton>
                 </div>
               )}

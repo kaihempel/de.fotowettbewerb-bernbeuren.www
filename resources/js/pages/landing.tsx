@@ -1,5 +1,6 @@
 import type { FC } from "react";
 import { Head } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 import type { GalleryPhoto } from "@/types/index.d";
 import { LandingPhotoGrid } from "@/components/landing-photo-grid";
 import { OxHeading } from "@noxickon/onyx";
@@ -17,12 +18,14 @@ interface LandingProps {
  * - Dark mode support
  */
 const Landing: FC<LandingProps> = ({ photos }) => {
+  const { t } = useTranslation("content");
+
   return (
     <GlobalLayout>
-      <Head title="Photo Contest Gallery">
+      <Head title={t("landing.title")}>
         <meta
           name="description"
-          content="Browse and vote on contest photo entries"
+          content={t("landing.meta.description")}
         />
       </Head>
 
@@ -30,10 +33,10 @@ const Landing: FC<LandingProps> = ({ photos }) => {
         {/* Page Title */}
         <div className="mb-8 text-center">
           <OxHeading as="h1" level={1}>
-            Photo Contest Gallery
+            {t("landing.title")}
           </OxHeading>
           <p className="text-sm text-gray-1100 mb-4">
-            Browse and vote on amazing photo submissions
+            {t("landing.subtitle")}
           </p>
         </div>
 

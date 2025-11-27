@@ -1,0 +1,20 @@
+{
+  "required": "Dieses Feld ist erforderlich",
+  "email": "Bitte geben Sie eine gueltige E-Mail-Adresse ein",
+  "min": "Muss mindestens {{min}} Zeichen enthalten",
+  "max": "Darf nicht mehr als {{max}} Zeichen enthalten",
+  "image": "Bitte waehlen Sie eine Bilddatei aus",
+  "maxFileSize": "Die Datei muss kleiner als {{size}}MB sein",
+  "mimes": "Die Datei muss einen der folgenden Typen haben: {{types}}",
+  "upload": {
+    "error": "Hochladefehler",
+    "fileTooLarge": "Das Foto darf nicht groesser als 15MB sein. Bitte waehlen Sie eine kleinere Datei.",
+    "invalidType": "Nur JPG-, PNG- und HEIC-Bilder werden akzeptiert. Bitte waehlen Sie eine gueltige Bilddatei.",
+    "invalidFile": "Ungueltige Datei. Bitte waehlen Sie ein gueltiges Bild."
+  },
+  "photo": {
+    "required": "Bitte waehlen Sie ein Foto zum Hochladen aus",
+    "tooLarge": "Foto ist zu gross",
+    "invalidFormat": "Ungueltiges Dateiformat"
+  }
+}

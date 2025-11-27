@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import { useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 import { mdiMenu, mdiLogout, mdiCog, mdiAccount } from "@mdi/js";
 import {
   OxDrawer,
@@ -14,6 +15,7 @@ import { edit as editProfile } from "@/routes/profile";
 import { index as publicPhotosIndex } from "@/routes/public/photos";
 import { OxMainContent } from "@noxickon/onyx/layouts";
 import AppLogoIcon from "@/components/app-logo-icon";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import type { SharedData } from "@/types";
 
 interface PublicHeaderProps {
@@ -38,30 +40,31 @@ interface MenuItem {
  */
 export const PublicHeader: FC<PublicHeaderProps> = () => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const { t } = useTranslation();
   const { auth } = usePage<SharedData>().props;
   const isAuthenticated = !!auth?.user;
 
   // Base menu items available to everyone
   const publicMenuItems: MenuItem[] = [
     {
-      label: "Gallery",
+      label: t("navigation.gallery"),
       href: "/",
-      description: "View all contest photos",
+      description: t("navigation.gallery"),
     },
     {
-      label: "Upload",
+      label: t("navigation.submit"),
       href: publicPhotosIndex.url(),
-      description: "Submit your photo",
+      description: t("navigation.submit"),
     },
     {
-      label: "About Us",
+      label: t("navigation.about"),
       href: "/about-us",
-      description: "Learn more about us",
+      description: t("navigation.about"),
     },
     {
-      label: "Project",
+      label: t("navigation.project"),
       href: "/project",
-      description: "About the photo contest",
+      description: t("navigation.project"),
     },
   ];
 
@@ -69,9 +72,9 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
   const authMenuItems: MenuItem[] = isAuthenticated
     ? [
         {
-          label: "Dashboard",
+          label: t("navigation.dashboard"),
           href: dashboard().url,
-          description: "Review submissions",
+          description: t("navigation.dashboard"),
         },
       ]
     : [];
@@ -80,25 +83,25 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
   const userMenuItems: MenuItem[] = isAuthenticated
     ? [
         {
-          label: "Settings",
+          label: t("navigation.settings"),
           href: editProfile().url,
-          description: "Manage your account",
+          description: t("navigation.settings"),
         },
       ]
     : [
         {
-          label: "Login",
+          label: t("navigation.login"),
           href: login.url(),
-          description: "Access your account",
+          description: t("navigation.login"),
         },
       ];
 
   // Footer items
   const footerItems: MenuItem[] = [
     {
-      label: "Impressum",
+      label: t("navigation.imprint"),
       href: "/impressum",
-      description: "Legal information",
+      description: t("navigation.imprint"),
     },
   ];
 
@@ -115,12 +118,15 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
         <Link
           href="/"
           className="flex items-center transition-transform duration-[350ms] ease-in-out"
-          aria-label="Home"
+          aria-label={t("navigation.home")}
         >
           <AppLogoIcon className="size-15 stroke-white"></AppLogoIcon>
         </Link>
 
-        <div className="align-middle min-h-max">
+        <div className="flex items-center gap-2">
+          {/* Language Switcher - visible on all screen sizes */}
+          <LanguageSwitcher variant="dropdown" size="icon" showLabel={false} />
+
           {/* Mobile Navigation Menu */}
           <OxDrawer open={menuOpen} onOpenChange={setMenuOpen}>
             <OxDrawer.Trigger>
@@ -129,14 +135,14 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
             <OxDrawer.Content side="right">
               <OxDrawer.Header>
                 <OxHeading as="h2" level={2}>
-                  Navigation
+                  {t("accessibility.mainNavigation")}
                 </OxHeading>
               </OxDrawer.Header>
               <OxDrawer.Body>
                 <div
                   id="navigation-menu"
                   className="space-y-2"
-                  aria-label="Main navigation"
+                  aria-label={t("accessibility.mainNavigation")}
                 >
                   {/* Main Navigation Items */}
                   {menuItems.map((item) => (
@@ -176,7 +182,9 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
                       onClick={handleMenuItemClick}
                     >
                       <OxIcon
-                        path={item.label === "Settings" ? mdiCog : mdiAccount}
+                        path={
+                          item.href === editProfile().url ? mdiCog : mdiAccount
+                        }
                         className="mr-2 size-4"
                       />
                       {item.label}
@@ -192,7 +200,7 @@ export const PublicHeader: FC<PublicHeaderProps> = () => {
                       onClick={handleMenuItemClick}
                     >
                       <OxIcon path={mdiLogout} className="mr-2 size-4" />
-                      Logout
+                      {t("navigation.logout")}
                     </Link>
                   )}
 

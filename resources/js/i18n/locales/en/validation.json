@@ -1,0 +1,20 @@
+{
+  "required": "This field is required",
+  "email": "Please enter a valid email address",
+  "min": "Must be at least {{min}} characters",
+  "max": "Must not exceed {{max}} characters",
+  "image": "Please select an image file",
+  "maxFileSize": "File must be smaller than {{size}}MB",
+  "mimes": "File must be one of: {{types}}",
+  "upload": {
+    "error": "Upload Error",
+    "fileTooLarge": "Photo must not exceed 15MB. Please select a smaller file.",
+    "invalidType": "Only JPG, PNG, and HEIC images are accepted. Please select a valid image file.",
+    "invalidFile": "Invalid file. Please select a valid image."
+  },
+  "photo": {
+    "required": "Please select a photo to upload",
+    "tooLarge": "File is too large",
+    "invalidFormat": "Invalid file type"
+  }
+}

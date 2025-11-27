@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { OxButton, OxSpinner } from "@noxickon/onyx";
 import { cn } from "@/lib/utils";
 import { ThumbsUp } from "lucide-react";
@@ -13,6 +14,8 @@ export default function VotingButtons({
   onVote,
   isSubmitting,
 }: VotingButtonsProps) {
+  const { t } = useTranslation("gallery");
+
   return (
     <div className="flex items-center justify-center gap-4 md:gap-6">
       {/* Thumbs Up Button */}
@@ -27,7 +30,7 @@ export default function VotingButtons({
           currentVote !== "up" &&
             "border-2 hover:border-green-600 hover:bg-green-50 dark:hover:border-green-700 dark:hover:bg-green-950/30",
         )}
-        aria-label="Vote thumbs up"
+        aria-label={t("voting.thumbsUp")}
         aria-pressed={currentVote === "up"}
       >
         {isSubmitting && currentVote === "up" ? (
@@ -40,7 +43,7 @@ export default function VotingButtons({
             )}
           />
         )}
-        <span className="font-semibold">Thumbs Up</span>
+        <span className="font-semibold">{t("voting.thumbsUp")}</span>
       </OxButton>
     </div>
   );

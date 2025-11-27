@@ -1,5 +1,6 @@
 import { useState, type FC } from "react";
 import { Link } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 import type { GalleryPhoto } from "@/types";
 
 interface GalleryPhotoCardProps {
@@ -11,6 +12,7 @@ export const GalleryPhotoCard: FC<GalleryPhotoCardProps> = ({
   photo,
   votingUrl,
 }) => {
+  const { t } = useTranslation("gallery");
   const [isLoaded, setIsLoaded] = useState(false);
   const [hasError, setHasError] = useState(false);
 
@@ -28,7 +30,7 @@ export const GalleryPhotoCard: FC<GalleryPhotoCardProps> = ({
       href={votingUrl}
       className="group relative block aspect-square overflow-hidden rounded-lg bg-muted transition-transform duration-200 ease-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 hover:scale-105 hover:shadow-lg"
       role="link"
-      aria-label={`View and vote on photo ${photo.id}`}
+      aria-label={t("photoCard.viewAndVote", { id: photo.id })}
     >
       {/* Error Fallback */}
       {hasError ? (
@@ -49,7 +51,7 @@ export const GalleryPhotoCard: FC<GalleryPhotoCardProps> = ({
               />
             </svg>
             <p className="mt-2 text-xs text-muted-foreground">
-              Failed to load image
+              {t("photoCard.failedToLoad")}
             </p>
           </div>
         </div>
@@ -58,7 +60,7 @@ export const GalleryPhotoCard: FC<GalleryPhotoCardProps> = ({
           {/* Image */}
           <img
             src={photo.thumbnail_url}
-            alt={`Photo ${photo.id}`}
+            alt={t("photoCard.photoAlt", { id: photo.id })}
             loading="lazy"
             onLoad={handleLoad}
             onError={handleError}

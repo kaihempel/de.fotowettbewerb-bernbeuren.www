@@ -226,6 +226,8 @@ Always check existing components before creating new ones.
 - SQLite (development), Laravel filesystem for photos, database for votes (003-public-voting)
 - PHP 8.4 (backend), TypeScript (frontend) + Laravel 12, React 19, Inertia.js v2, Tailwind CSS v4, Radix UI components, Laravel Wayfinder (001-dynamic-header)
 - Laravel filesystem (local disk for photos), SQLite database (development) (001-dynamic-header)
+- PHP 8.4 (backend), TypeScript (frontend) + Laravel 12, React 19, Inertia.js v2, i18next, react-i18next, i18next-browser-languagedetector (001-i18n-support)
+- SQLite (development), users table for locale preference (001-i18n-support)
 
 ## Recent Changes
 - 001-photo-upload: Added PHP 8.4, TypeScript (React 19) + Laravel 12, Inertia.js v2, Laravel Fortify, Laravel Wayfinder, Radix UI components, Tailwind CSS v4

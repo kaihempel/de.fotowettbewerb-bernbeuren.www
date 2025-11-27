@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 import { Upload, X } from "lucide-react";
 import { type FC, useCallback, useState } from "react";
 import { useDropzone, type FileRejection } from "react-dropzone";
+import { useTranslation } from "react-i18next";
 import { mdiAlertCircle } from "@mdi/js";
 
 interface PhotoUploadProps {
@@ -31,6 +32,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
   error,
   warning,
 }) => {
+  const { t } = useTranslation(["validation", "common"]);
   const [rejectionError, setRejectionError] = useState<string | null>(null);
 
   const onDrop = useCallback(
@@ -43,15 +45,11 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
         const errorCode = rejection.errors[0]?.code;
 
         if (errorCode === "file-too-large") {
-          setRejectionError(
-            "Photo must not exceed 15MB. Please select a smaller file.",
-          );
+          setRejectionError(t("validation:upload.fileTooLarge"));
         } else if (errorCode === "file-invalid-type") {
-          setRejectionError(
-            "Only JPG, PNG, and HEIC images are accepted. Please select a valid image file.",
-          );
+          setRejectionError(t("validation:upload.invalidType"));
         } else {
-          setRejectionError("Invalid file. Please select a valid image.");
+          setRejectionError(t("validation:upload.invalidFile"));
         }
         return;
       }
@@ -62,7 +60,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
         onFileSelect(file);
       }
     },
-    [onFileSelect],
+    [onFileSelect, t],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -86,7 +84,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
             iconDivClass="bg-red-500/20"
           />
           <span>
-            <strong>Upload Error</strong>
+            <strong>{t("validation:upload.error")}</strong>
             <br />
             {displayError}
           </span>
@@ -102,7 +100,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
             iconDivClass="bg-yellow-500/20"
           />
           <span>
-            <strong>Warning</strong>
+            <strong>{t("common:messages.warning", { defaultValue: "Warning" })}</strong>
             <br />
             {warning}
           </span>
@@ -126,7 +124,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
                     variant="ghost"
                     onClick={onClearFile}
                     className="shrink-0"
-                    aria-label="Remove selected image"
+                    aria-label={t("common:accessibility.removeImage", { defaultValue: "Remove selected image" })}
                   >
                     <X className="size-4" />
                   </OxButton>
@@ -135,7 +133,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
               <div className="relative aspect-video overflow-hidden rounded-lg border bg-muted">
                 <img
                   src={preview}
-                  alt="Preview of selected photo"
+                  alt={t("common:accessibility.previewAlt", { defaultValue: "Preview of selected photo" })}
                   className="size-full object-contain"
                 />
               </div>
@@ -153,7 +151,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
             isUploading && "pointer-events-none opacity-60",
           )}
         >
-          <input {...getInputProps()} aria-label="Photo file input" />
+          <input {...getInputProps()} aria-label={t("common:labels.photo")} />
           <div className="flex flex-col items-center justify-center gap-4 text-center">
             <div
               className={cn(
@@ -168,14 +166,14 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
             <div className="space-y-2">
               <p className="text-lg font-medium">
                 {isDragActive
-                  ? "Drop your photo here"
-                  : "Drag and drop your photo"}
+                  ? t("common:upload.dropHere", { defaultValue: "Drop your photo here" })
+                  : t("common:upload.dragAndDrop", { defaultValue: "Drag and drop your photo" })}
               </p>
               <p className="text-sm text-muted-foreground">
-                or click to browse your files
+                {t("common:upload.orClickToBrowse", { defaultValue: "or click to browse your files" })}
               </p>
               <p className="text-xs text-muted-foreground">
-                JPG, PNG, or HEIC • Maximum 15MB
+                {t("common:upload.fileFormats", { defaultValue: "JPG, PNG, or HEIC" })} • {t("common:upload.maxFileSize", { defaultValue: "Maximum 15MB" })}
               </p>
             </div>
           </div>
@@ -186,7 +184,7 @@ export const PhotoUpload: FC<PhotoUploadProps> = ({
       {isUploading && (
         <div className="flex items-center justify-center gap-3 rounded-lg border bg-accent/50 p-4">
           <OxSpinner />
-          <p className="text-sm font-medium">Uploading your photo...</p>
+          <p className="text-sm font-medium">{t("common:upload.uploading", { defaultValue: "Uploading your photo..." })}</p>
         </div>
       )}
     </div>

@@ -20,6 +20,7 @@ import { Form } from "@inertiajs/react";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 import { AlertCircle, Check, Copy, ScanLine } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Spinner } from "./ui/spinner";
 
 function GridScanIcon() {
@@ -54,12 +55,16 @@ function TwoFactorSetupStep({
   buttonText,
   onNextStep,
   errors,
+  orEnterManuallyText,
+  somethingWentWrongText,
 }: {
   qrCodeSvg: string | null;
   manualSetupKey: string | null;
   buttonText: string;
   onNextStep: () => void;
   errors: string[];
+  orEnterManuallyText: string;
+  somethingWentWrongText: string;
 }) {
   const [copiedText, copy] = useClipboard();
   const IconComponent = copiedText === manualSetupKey ? Check : Copy;
@@ -69,7 +74,7 @@ function TwoFactorSetupStep({
       {errors?.length ? (
         <Alert variant="destructive">
           <AlertCircle />
-          <AlertTitle>Something went wrong.</AlertTitle>
+          <AlertTitle>{somethingWentWrongText}</AlertTitle>
           <AlertDescription>
             <ul className="list-inside list-disc text-sm">
               {Array.from(new Set(errors)).map((error, index) => (
@@ -105,7 +110,7 @@ function TwoFactorSetupStep({
           <div className="relative flex w-full items-center justify-center">
             <div className="absolute inset-0 top-1/2 h-px w-full bg-border" />
             <span className="relative bg-card px-2 py-1">
-              or, enter the code manually
+              {orEnterManuallyText}
             </span>
           </div>
 
@@ -142,9 +147,13 @@ function TwoFactorSetupStep({
 function TwoFactorVerificationStep({
   onClose,
   onBack,
+  backText,
+  confirmText,
 }: {
   onClose: () => void;
   onBack: () => void;
+  backText: string;
+  confirmText: string;
 }) {
   const [code, setCode] = useState<string>("");
   const pinInputContainerRef = useRef<HTMLDivElement>(null);
@@ -199,14 +208,14 @@ function TwoFactorVerificationStep({
                 onClick={onBack}
                 disabled={processing}
               >
-                Back
+                {backText}
               </Button>
               <Button
                 type="submit"
                 className="flex-1"
                 disabled={processing || code.length < OTP_MAX_LENGTH}
               >
-                Confirm
+                {confirmText}
               </Button>
             </div>
           </div>
@@ -239,6 +248,7 @@ export default function TwoFactorSetupModal({
   fetchSetupData,
   errors,
 }: TwoFactorSetupModalProps) {
+  const { t } = useTranslation("auth");
   const [showVerificationStep, setShowVerificationStep] =
     useState<boolean>(false);
 
@@ -249,28 +259,26 @@ export default function TwoFactorSetupModal({
   }>(() => {
     if (twoFactorEnabled) {
       return {
-        title: "Two-Factor Authentication Enabled",
-        description:
-          "Two-factor authentication is now enabled. Scan the QR code or enter the setup key in your authenticator app.",
-        buttonText: "Close",
+        title: t("twoFactorSetup.enabledTitle"),
+        description: t("twoFactorSetup.enabledDescription"),
+        buttonText: t("twoFactorSetup.close"),
       };
     }
 
     if (showVerificationStep) {
       return {
-        title: "Verify Authentication Code",
-        description: "Enter the 6-digit code from your authenticator app",
-        buttonText: "Continue",
+        title: t("twoFactorSetup.verifyTitle"),
+        description: t("twoFactorSetup.verifyDescription"),
+        buttonText: t("twoFactorSetup.continue"),
       };
     }
 
     return {
-      title: "Enable Two-Factor Authentication",
-      description:
-        "To finish enabling two-factor authentication, scan the QR code or enter the setup key in your authenticator app",
-      buttonText: "Continue",
+      title: t("twoFactorSetup.enableTitle"),
+      description: t("twoFactorSetup.enableDescription"),
+      buttonText: t("twoFactorSetup.continue"),
     };
-  }, [twoFactorEnabled, showVerificationStep]);
+  }, [twoFactorEnabled, showVerificationStep, t]);
 
   const handleModalNextStep = useCallback(() => {
     if (requiresConfirmation) {
@@ -317,6 +325,8 @@ export default function TwoFactorSetupModal({
             <TwoFactorVerificationStep
               onClose={onClose}
               onBack={() => setShowVerificationStep(false)}
+              backText={t("twoFactorSetup.back")}
+              confirmText={t("twoFactorSetup.confirm")}
             />
           ) : (
             <TwoFactorSetupStep
@@ -325,6 +335,8 @@ export default function TwoFactorSetupModal({
               buttonText={modalConfig.buttonText}
               onNextStep={handleModalNextStep}
               errors={errors}
+              orEnterManuallyText={t("twoFactorSetup.orEnterManually")}
+              somethingWentWrongText={t("twoFactorSetup.somethingWentWrong")}
             />
           )}
         </div>

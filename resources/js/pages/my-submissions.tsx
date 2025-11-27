@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -38,34 +39,42 @@ const formatFileSize = (bytes: number): string => {
   return `${(bytes / (1024 * 1024)).toFixed(2)} MB`;
 };
 
-const EmptyState: FC = () => (
-  <Card className="border-dashed">
-    <CardContent className="flex flex-col items-center justify-center py-16">
-      <div className="flex size-20 items-center justify-center rounded-full bg-muted">
-        <ImageIcon className="size-10 text-muted-foreground" />
-      </div>
-      <div className="mt-6 space-y-2 text-center">
-        <h3 className="text-lg font-semibold">No submissions yet</h3>
-        <p className="text-sm text-muted-foreground">
-          You haven't uploaded any photos for the contest.
-        </p>
-      </div>
-      <Button
-        className="mt-6"
-        onClick={() => router.visit("/photos")}
-        size="lg"
-      >
-        <Upload className="mr-2 size-4" />
-        Upload Your First Photo
-      </Button>
-    </CardContent>
-  </Card>
-);
+const EmptyState: FC = () => {
+  const { t } = useTranslation("dashboard");
+
+  return (
+    <Card className="border-dashed">
+      <CardContent className="flex flex-col items-center justify-center py-16">
+        <div className="flex size-20 items-center justify-center rounded-full bg-muted">
+          <ImageIcon className="size-10 text-muted-foreground" />
+        </div>
+        <div className="mt-6 space-y-2 text-center">
+          <h3 className="text-lg font-semibold">
+            {t("mySubmissions.empty")}
+          </h3>
+          <p className="text-sm text-muted-foreground">
+            {t("mySubmissions.emptyDescription")}
+          </p>
+        </div>
+        <Button
+          className="mt-6"
+          onClick={() => router.visit("/photos")}
+          size="lg"
+        >
+          <Upload className="mr-2 size-4" />
+          {t("mySubmissions.uploadFirst")}
+        </Button>
+      </CardContent>
+    </Card>
+  );
+};
 
 export default function MySubmissionsPage({
   submissions,
   remainingSlots,
 }: MySubmissionsPageProps) {
+  const { t } = useTranslation("dashboard");
+
   const handleDownload = (fileUrl: string, filename: string) => {
     // Create a temporary link to trigger download
     const link = document.createElement("a");
@@ -76,9 +85,22 @@ export default function MySubmissionsPage({
     document.body.removeChild(link);
   };
 
+  const getStatusMessage = (status: PhotoSubmission["status"]): string => {
+    switch (status) {
+      case "new":
+        return t("mySubmissions.statusPending");
+      case "approved":
+        return t("mySubmissions.statusApproved");
+      case "declined":
+        return t("mySubmissions.statusDeclined");
+      default:
+        return "";
+    }
+  };
+
   return (
     <GlobalLayout>
-      <Head title="My Submissions" />
+      <Head title={t("mySubmissions.pageTitle")} />
 
       <div className="mx-auto max-w-6xl space-y-6 p-4">
         {/* Header */}
@@ -86,9 +108,9 @@ export default function MySubmissionsPage({
           <CardHeader>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
               <div>
-                <CardTitle>My Photo Submissions</CardTitle>
+                <CardTitle>{t("mySubmissions.heading")}</CardTitle>
                 <CardDescription>
-                  View and manage your contest photo submissions
+                  {t("mySubmissions.description")}
                 </CardDescription>
               </div>
               <div className="flex items-center gap-3">
@@ -101,7 +123,7 @@ export default function MySubmissionsPage({
                   )}
                 >
                   <p className="text-sm font-medium text-muted-foreground">
-                    Remaining Slots
+                    {t("mySubmissions.remainingSlots")}
                   </p>
                   <p
                     className={cn(
@@ -117,7 +139,7 @@ export default function MySubmissionsPage({
                 {remainingSlots > 0 && (
                   <Button onClick={() => router.visit("/photos")}>
                     <Upload className="mr-2 size-4" />
-                    Upload Photo
+                    {t("mySubmissions.uploadPhoto")}
                   </Button>
                 )}
               </div>
@@ -160,20 +182,20 @@ export default function MySubmissionsPage({
                   {/* Metadata */}
                   <div className="space-y-2 text-xs text-muted-foreground">
                     <div className="flex items-center justify-between">
-                      <span>File Size:</span>
+                      <span>{t("mySubmissions.fileSize")}:</span>
                       <span className="font-medium text-foreground">
                         {formatFileSize(submission.file_size)}
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span>Uploaded:</span>
+                      <span>{t("mySubmissions.uploaded")}:</span>
                       <span className="font-medium text-foreground">
                         {new Date(submission.submitted_at).toLocaleDateString()}
                       </span>
                     </div>
                     {submission.reviewed_at && (
                       <div className="flex items-center justify-between">
-                        <span>Reviewed:</span>
+                        <span>{t("mySubmissions.reviewed")}:</span>
                         <span className="font-medium text-foreground">
                           {new Date(
                             submission.reviewed_at,
@@ -196,27 +218,13 @@ export default function MySubmissionsPage({
                     }
                   >
                     <Download className="mr-2 size-4" />
-                    Download Photo
+                    {t("mySubmissions.downloadPhoto")}
                   </Button>
 
                   {/* Status Description */}
-                  {submission.status === "new" && (
-                    <p className="text-xs text-muted-foreground">
-                      Your photo is awaiting review by contest administrators.
-                    </p>
-                  )}
-                  {submission.status === "approved" && (
-                    <p className="text-xs text-muted-foreground">
-                      Your photo has been approved and is entered in the
-                      contest!
-                    </p>
-                  )}
-                  {submission.status === "declined" && (
-                    <p className="text-xs text-muted-foreground">
-                      This submission was not accepted. You can upload a new
-                      photo in this slot.
-                    </p>
-                  )}
+                  <p className="text-xs text-muted-foreground">
+                    {getStatusMessage(submission.status)}
+                  </p>
                 </CardContent>
               </Card>
             ))}
@@ -228,8 +236,14 @@ export default function MySubmissionsPage({
           <Card>
             <CardContent className="flex items-center justify-between py-4">
               <p className="text-sm text-muted-foreground">
-                Showing {submissions.data.length} of {submissions.total}{" "}
-                {submissions.total === 1 ? "submission" : "submissions"}
+                {t("pagination.showingCount", {
+                  count: submissions.data.length,
+                  total: submissions.total,
+                  label:
+                    submissions.total === 1
+                      ? t("pagination.submission")
+                      : t("pagination.submissions"),
+                })}
               </p>
               <div className="flex gap-2">
                 {submissions.current_page > 1 && (
@@ -242,7 +256,7 @@ export default function MySubmissionsPage({
                       )
                     }
                   >
-                    Previous
+                    {t("pagination.previous")}
                   </Button>
                 )}
                 {submissions.current_page < submissions.last_page && (
@@ -255,7 +269,7 @@ export default function MySubmissionsPage({
                       )
                     }
                   >
-                    Next
+                    {t("pagination.next")}
                   </Button>
                 )}
               </div>

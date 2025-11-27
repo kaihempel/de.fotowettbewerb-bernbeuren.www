@@ -11,11 +11,14 @@ import {
   OxCard,
 } from "@noxickon/onyx";
 import { Form, Head, Link } from "@inertiajs/react";
+import { useTranslation } from "react-i18next";
 
 export default function ConfirmPassword() {
+  const { t } = useTranslation("auth");
+
   return (
     <GlobalLayout>
-      <Head title="Confirm password" />
+      <Head title={t("confirmPassword.title")} />
 
       <div className="mx-auto flex min-h-[60vh] max-w-sm flex-col items-center justify-center">
         <OxCard className="w-full">
@@ -31,10 +34,11 @@ export default function ConfirmPassword() {
                   </div>
                 </Link>
                 <div className="space-y-2 text-center">
-                  <h1 className="text-xl font-medium">Confirm your password</h1>
+                  <h1 className="text-xl font-medium">
+                    {t("confirmPassword.title")}
+                  </h1>
                   <p className="text-center text-sm text-muted-foreground">
-                    This is a secure area of the application. Please confirm
-                    your password before continuing.
+                    {t("confirmPassword.description")}
                   </p>
                 </div>
               </div>
@@ -45,7 +49,9 @@ export default function ConfirmPassword() {
               {({ processing, errors }) => (
                 <div className="space-y-6">
                   <div className="grid gap-2">
-                    <OxLabel htmlFor="password">Password</OxLabel>
+                    <OxLabel htmlFor="password">
+                      {t("confirmPassword.password")}
+                    </OxLabel>
                     <OxTextInput.Container
                       type="password"
                       error={!!errors.password}
@@ -53,7 +59,7 @@ export default function ConfirmPassword() {
                       <OxTextInput
                         id="password"
                         name="password"
-                        placeholder="Password"
+                        placeholder={t("confirmPassword.password")}
                         autoComplete="current-password"
                       />
                       <OxTextInput.VisibilityButton />
@@ -71,7 +77,7 @@ export default function ConfirmPassword() {
                       data-test="confirm-password-button"
                     >
                       {processing && <OxSpinner />}
-                      Confirm password
+                      {t("confirmPassword.submit")}
                     </OxButton>
                   </div>
                 </div>

@@ -13,11 +13,14 @@ import {
   OxTextInput,
   OxCard,
 } from "@noxickon/onyx";
+import { useTranslation } from "react-i18next";
 
 export default function Register() {
+  const { t } = useTranslation("auth");
+
   return (
     <GlobalLayout>
-      <Head title="Register" />
+      <Head title={t("register.submit")} />
 
       <div className="mx-auto flex min-h-[60vh] max-w-sm flex-col items-center justify-center">
         <OxCard className="w-full">
@@ -33,9 +36,9 @@ export default function Register() {
                   </div>
                 </Link>
                 <div className="space-y-2 text-center">
-                  <h1 className="text-xl font-medium">Create an account</h1>
+                  <h1 className="text-xl font-medium">{t("register.title")}</h1>
                   <p className="text-center text-sm text-muted-foreground">
-                    Enter your details below to create your account
+                    {t("register.description")}
                   </p>
                 </div>
               </div>
@@ -52,20 +55,20 @@ export default function Register() {
                 <>
                   <div className="grid gap-6">
                     <div className="grid gap-2">
-                      <OxLabel htmlFor="name">Name</OxLabel>
+                      <OxLabel htmlFor="name">{t("register.name")}</OxLabel>
                       <OxTextInput.Container error={!!errors.name}>
                         <OxTextInput
                           id="name"
                           name="name"
                           autoComplete="name"
-                          placeholder="Full name"
+                          placeholder={t("register.namePlaceholder")}
                         />
                       </OxTextInput.Container>
                       <InputError message={errors.name} className="mt-2" />
                     </div>
 
                     <div className="grid gap-2">
-                      <OxLabel htmlFor="email">Email address</OxLabel>
+                      <OxLabel htmlFor="email">{t("register.email")}</OxLabel>
                       <OxTextInput.Container
                         type="email"
                         error={!!errors.email}
@@ -81,7 +84,9 @@ export default function Register() {
                     </div>
 
                     <div className="grid gap-2">
-                      <OxLabel htmlFor="password">Password</OxLabel>
+                      <OxLabel htmlFor="password">
+                        {t("register.password")}
+                      </OxLabel>
                       <OxTextInput.Container
                         type="password"
                         error={!!errors.password}
@@ -90,7 +95,7 @@ export default function Register() {
                           id="password"
                           name="password"
                           autoComplete="new-password"
-                          placeholder="Password"
+                          placeholder={t("register.password")}
                         />
                         <OxTextInput.VisibilityButton />
                       </OxTextInput.Container>
@@ -99,7 +104,7 @@ export default function Register() {
 
                     <div className="grid gap-2">
                       <OxLabel htmlFor="password_confirmation">
-                        Confirm password
+                        {t("register.confirmPassword")}
                       </OxLabel>
                       <OxTextInput.Container
                         type="password"
@@ -109,7 +114,7 @@ export default function Register() {
                           id="password_confirmation"
                           name="password_confirmation"
                           autoComplete="new-password"
-                          placeholder="Confirm password"
+                          placeholder={t("register.confirmPassword")}
                         />
                         <OxTextInput.VisibilityButton />
                       </OxTextInput.Container>
@@ -124,14 +129,14 @@ export default function Register() {
                       data-test="register-user-button"
                     >
                       {processing && <OxSpinner />}
-                      Create account
+                      {t("register.submit")}
                     </OxButton>
                   </div>
 
                   <div className="text-center text-sm text-muted-foreground">
-                    Already have an account?{" "}
+                    {t("register.hasAccount")}{" "}
                     <TextLink href={login()} tabIndex={6}>
-                      Log in
+                      {t("register.login")}
                     </TextLink>
                   </div>
                 </>
