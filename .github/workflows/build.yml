@@ -34,7 +34,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: build
+          name: app_build
           path: |
             !.*
             !CLAUDE.md
@@ -53,6 +53,19 @@ jobs:
             package.json
             package-lock.json
             README.md
+
+          if-no-files-found: error
+          overwrite: true
+
+      - name: Upload storage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: storage_build
+          path: |
+            !.*
+            !CLAUDE.md
+            !AGENTS.md
+            storage/**
 
           if-no-files-found: error
           overwrite: true
