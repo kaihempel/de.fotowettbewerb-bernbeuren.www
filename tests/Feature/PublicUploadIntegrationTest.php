@@ -35,6 +35,7 @@ class PublicUploadIntegrationTest extends TestCase
                 'captcha_token' => 'valid',
                 'photographer_name' => 'Public',
                 'photographer_email' => 'public@example.com',
+                'disclaimer_accepted' => true,
             ]);
             $response->assertRedirect();
         }

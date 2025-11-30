@@ -42,9 +42,10 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
-        $response->assertRedirect('/submit-photo');
+        $response->assertRedirect(env('APP_URL') . '/submit-photo');
         $response->assertSessionHas('success');
 
         $this->assertDatabaseHas('photo_submissions', [
@@ -74,6 +75,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
         $response->assertSessionHasErrors('photo');
@@ -105,9 +107,10 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
-        $response->assertRedirect('/submit-photo');
+        $response->assertRedirect(env('APP_URL') .'/submit-photo');
         $response->assertSessionHas('success');
     }
 
@@ -119,6 +122,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'photo' => $photo,
             'captcha_token' => 'valid-token',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
             // Missing photographer_name
         ]);
 
@@ -133,6 +137,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'photo' => $photo,
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
+            'disclaimer_accepted' => true,
             // Missing photographer_email
         ]);
 
@@ -147,6 +152,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'photo' => $photo,
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
             // Missing captcha_token
         ]);
 
@@ -185,11 +191,12 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
         // Note: This test may need adjustment depending on actual duplicate detection logic
         // The warning would only appear if the file hash matches exactly
-        $response->assertRedirect('/submit-photo');
+        $response->assertRedirect(env('APP_URL') .'/submit-photo');
     }
 
     public function test_photo_file_required(): void
@@ -199,6 +206,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
         $response->assertSessionHasErrors('photo');
@@ -213,6 +221,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
         $response->assertSessionHasErrors('photo');
@@ -227,6 +236,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
         $response->assertSessionHasErrors('photo');
@@ -241,6 +251,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'not-an-email',
+            'disclaimer_accepted' => true,
         ]);
 
         $response->assertSessionHasErrors('photographer_email');
@@ -263,6 +274,7 @@ class PublicPhotoSubmissionTest extends TestCase
             'captcha_token' => 'valid-token',
             'photographer_name' => 'John Doe',
             'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
         $submission = PhotoSubmission::first();
@@ -289,5 +301,36 @@ class PublicPhotoSubmissionTest extends TestCase
             ->has('remainingSlots')
             ->where('remainingSlots', 2)
         );
+    }
+
+    public function test_disclaimer_acceptance_required(): void
+    {
+        $photo = UploadedFile::fake()->image('test.jpg');
+
+        $response = $this->post('/submit-photo', [
+            'photo' => $photo,
+            'captcha_token' => 'valid-token',
+            'photographer_name' => 'John Doe',
+            'photographer_email' => 'john@example.com',
+            // Missing disclaimer_accepted
+        ]);
+
+        $response->assertSessionHasErrors('disclaimer_accepted');
+    }
+
+    public function test_disclaimer_accepted_at_timestamp_stored(): void
+    {
+        $photo = UploadedFile::fake()->image('test.jpg', 1920, 1080)->size(5000);
+
+        $this->post('/submit-photo', [
+            'photo' => $photo,
+            'captcha_token' => 'valid-token',
+            'photographer_name' => 'John Doe',
+            'photographer_email' => 'john@example.com',
+            'disclaimer_accepted' => true,
+        ]);
+
+        $submission = PhotoSubmission::first();
+        $this->assertNotNull($submission->disclaimer_accepted_at);
     }
 }

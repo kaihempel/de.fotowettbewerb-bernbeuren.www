@@ -37,6 +37,7 @@ class PublicUploadSecurityTest extends TestCase
                 'captcha_token' => 'valid',
                 'photographer_name' => 'Test',
                 'photographer_email' => 'test@example.com',
+                'disclaimer_accepted' => true,
             ]);
 
             $response->assertRedirect();
@@ -49,6 +50,7 @@ class PublicUploadSecurityTest extends TestCase
             'captcha_token' => 'valid',
             'photographer_name' => 'Test',
             'photographer_email' => 'test@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
         $response->assertSessionHasErrors('photo');
@@ -65,6 +67,7 @@ class PublicUploadSecurityTest extends TestCase
             'photographer_name' => 'Bot',
             'photographer_email' => 'bot@example.com',
             'website' => 'http://spam.com', // Honeypot filled
+            'disclaimer_accepted' => true,
         ]);
 
         $response->assertRedirect();
@@ -82,6 +85,7 @@ class PublicUploadSecurityTest extends TestCase
             'photographer_name' => 'Test',
             'photographer_email' => 'test@example.com',
             'website' => 'http://spam.com', // Should fail validation
+            'disclaimer_accepted' => true,
         ]);
 
         // Should be caught by middleware first, but validation also enforces it
@@ -163,6 +167,7 @@ class PublicUploadSecurityTest extends TestCase
             'captcha_token' => 'valid',
             'photographer_name' => 'Test',
             'photographer_email' => 'test@example.com',
+            'disclaimer_accepted' => true,
         ]);
 
         $response->assertStatus(403);
@@ -182,6 +187,7 @@ class PublicUploadSecurityTest extends TestCase
                 'captcha_token' => 'valid',
                 'photographer_name' => 'Test',
                 'photographer_email' => 'test@example.com',
+                'disclaimer_accepted' => true,
             ]);
         }
 
@@ -193,6 +199,7 @@ class PublicUploadSecurityTest extends TestCase
                 'captcha_token' => 'valid',
                 'photographer_name' => 'Test',
                 'photographer_email' => 'test@example.com',
+                'disclaimer_accepted' => true,
             ]);
         $response->assertSessionHasErrors('photo');
 
@@ -204,8 +211,9 @@ class PublicUploadSecurityTest extends TestCase
                 'captcha_token' => 'valid',
                 'photographer_name' => 'Test2',
                 'photographer_email' => 'test2@example.com',
+                'disclaimer_accepted' => true,
             ]);
-        $response->assertRedirect('/submit-photo');
+        $response->assertRedirect(env('APP_URL') . '/submit-photo');
         $response->assertSessionHas('success');
     }
 
