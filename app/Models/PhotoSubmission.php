@@ -37,6 +37,7 @@ class PhotoSubmission extends Model
         'mime_type',
         'photographer_name',
         'photographer_email',
+        'disclaimer_accepted_at',
         'status',
         'rate',
         'submitted_at',
@@ -61,6 +62,7 @@ class PhotoSubmission extends Model
         return [
             'submitted_at' => 'datetime',
             'reviewed_at' => 'datetime',
+            'disclaimer_accepted_at' => 'datetime',
             'rate' => 'integer',
         ];
     }

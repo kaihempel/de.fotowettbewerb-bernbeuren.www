@@ -58,6 +58,14 @@
   "validation": {
     "photoRequired": "Please select a photo to upload.",
     "nameRequired": "Please enter your name.",
-    "emailRequired": "Please enter your email address."
+    "emailRequired": "Please enter your email address.",
+    "disclaimerRequired": "You must accept the upload conditions to continue."
+  },
+  "disclaimer": {
+    "prefix": "I confirm that I have read and accept the ",
+    "linkText": "upload conditions",
+    "suffix": ".",
+    "modalTitle": "Upload Conditions",
+    "modalContent": "By submitting photos to the Fotowettbewerb Bernbeuren, you agree to the following conditions:\n\n1. You confirm that you are the copyright holder of the submitted photograph or have obtained all necessary rights and permissions to submit it.\n\n2. You grant the organizers of Fotowettbewerb Bernbeuren a non-exclusive, royalty-free license to display, reproduce, and publish your photograph in connection with the contest, including on the website, social media, and promotional materials.\n\n3. You understand that submitted photos will be reviewed by the contest organizers and may be approved or declined based on contest guidelines.\n\n4. You agree that your photographer name may be displayed publicly alongside your approved photographs.\n\n5. You acknowledge that the organizers reserve the right to reject any submission that does not meet the contest requirements or violates applicable laws.\n\n6. You confirm that the submitted photograph does not contain any content that is defamatory, obscene, or violates the rights of any third party.\n\nThese conditions are effective as of the time you submit your photograph and your acceptance is legally binding."
   }
 }

@@ -83,6 +83,7 @@ class PublicPhotoController extends Controller
                 'mime_type' => $fileData['mime_type'],
                 'photographer_name' => $request->input('photographer_name'),
                 'photographer_email' => $request->input('photographer_email'),
+                'disclaimer_accepted_at' => now(),
                 'status' => 'new',
                 'submitted_at' => now(),
             ]);

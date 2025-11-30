@@ -58,6 +58,14 @@
   "validation": {
     "photoRequired": "Bitte waehlen Sie ein Foto zum Hochladen aus.",
     "nameRequired": "Bitte geben Sie Ihren Namen ein.",
-    "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein."
+    "emailRequired": "Bitte geben Sie Ihre E-Mail-Adresse ein.",
+    "disclaimerRequired": "Sie muessen die Upload-Bedingungen akzeptieren, um fortzufahren."
+  },
+  "disclaimer": {
+    "prefix": "Ich bestatige, dass ich die ",
+    "linkText": "Upload-Bedingungen",
+    "suffix": " gelesen habe und akzeptiere.",
+    "modalTitle": "Upload-Bedingungen",
+    "modalContent": "Mit der Einreichung von Fotos zum Fotowettbewerb Bernbeuren stimmen Sie den folgenden Bedingungen zu:\n\n1. Sie bestaetigen, dass Sie der Urheberrechtsinhaber des eingereichten Fotos sind oder alle erforderlichen Rechte und Genehmigungen zur Einreichung erhalten haben.\n\n2. Sie gewaehren den Veranstaltern des Fotowettbewerbs Bernbeuren eine nicht-exklusive, lizenzgebuehrenfreie Lizenz zur Anzeige, Vervielfaeltigung und Veroeffentlichung Ihres Fotos im Zusammenhang mit dem Wettbewerb, einschliesslich auf der Website, in sozialen Medien und Werbematerialien.\n\n3. Sie verstehen, dass eingereichte Fotos von den Wettbewerbsveranstaltern geprueft und entsprechend den Wettbewerbsrichtlinien genehmigt oder abgelehnt werden koennen.\n\n4. Sie stimmen zu, dass Ihr Fotografenname oeffentlich neben Ihren genehmigten Fotografien angezeigt werden kann.\n\n5. Sie erkennen an, dass die Veranstalter sich das Recht vorbehalten, jede Einreichung abzulehnen, die nicht den Wettbewerbsanforderungen entspricht oder gegen geltendes Recht verstoesst.\n\n6. Sie bestaetigen, dass das eingereichte Foto keine Inhalte enthaelt, die verleumderisch, obszoen sind oder die Rechte Dritter verletzen.\n\nDiese Bedingungen gelten ab dem Zeitpunkt der Einreichung Ihres Fotos und Ihre Zustimmung ist rechtlich bindend."
   }
 }

@@ -2,13 +2,20 @@ import { useState, useCallback, useEffect } from "react";
 import { Head, router, usePage } from "@inertiajs/react";
 import { useTranslation } from "react-i18next";
 import { PhotoUpload } from "@/components/photo-upload";
-import { OxButton, OxCard, OxAlert, OxTextInput, OxLabel } from "@noxickon/onyx";
+import { OxButton, OxCard, OxAlert, OxTextInput, OxLabel, OxCheckbox } from "@noxickon/onyx";
 import { PublicLayout } from "@/layouts/public-layout";
 import { HCaptcha } from "@/components/hcaptcha";
 import { cn } from "@/lib/utils";
 import { mdiCheckCircle, mdiAlertCircle } from "@mdi/js";
 import NProgress from "nprogress";
 import type { PhotoSubmission, SharedData } from "@/types";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 interface PublicPhotoSubmitProps {
   remainingSlots: number;
@@ -37,6 +44,8 @@ export default function PublicPhotoSubmit({
   const [photographerEmail, setPhotographerEmail] = useState<string>("");
   const [captchaToken, setCaptchaToken] = useState<string | null>(null);
   const [honeypot, setHoneypot] = useState<string>(""); // Honeypot field
+  const [disclaimerAccepted, setDisclaimerAccepted] = useState<boolean>(false);
+  const [showDisclaimerModal, setShowDisclaimerModal] = useState<boolean>(false);
 
   const hasReachedLimit = remainingSlots === 0;
 
@@ -93,6 +102,11 @@ export default function PublicPhotoSubmit({
         return;
       }
 
+      if (!disclaimerAccepted) {
+        setUploadError(t("submissions:validation.disclaimerRequired"));
+        return;
+      }
+
       setIsUploading(true);
       setUploadError(null);
       NProgress.start();
@@ -102,6 +116,7 @@ export default function PublicPhotoSubmit({
       formData.append("captcha_token", captchaToken);
       formData.append("photographer_name", photographerName.trim());
       formData.append("photographer_email", photographerEmail.trim());
+      formData.append("disclaimer_accepted", disclaimerAccepted ? "1" : "0");
       formData.append("website", honeypot); // Honeypot field
 
       router.post("/submit-photo", formData, {
@@ -112,6 +127,7 @@ export default function PublicPhotoSubmit({
           setPhotographerName("");
           setPhotographerEmail("");
           setCaptchaToken(null);
+          setDisclaimerAccepted(false);
           NProgress.done();
           setIsUploading(false);
         },
@@ -121,6 +137,7 @@ export default function PublicPhotoSubmit({
             errors.photographer_name ||
             errors.photographer_email ||
             errors.captcha_token ||
+            errors.disclaimer_accepted ||
             errors.general ||
             t("submissions:alerts.error.message");
           setUploadError(errorMessage);
@@ -133,7 +150,7 @@ export default function PublicPhotoSubmit({
         },
       });
     },
-    [selectedFile, captchaToken, photographerName, photographerEmail, honeypot, t],
+    [selectedFile, captchaToken, photographerName, photographerEmail, disclaimerAccepted, honeypot, t],
   );
 
   useEffect(() => {
@@ -322,6 +339,31 @@ export default function PublicPhotoSubmit({
                   />
                 </div>
 
+                {/* Disclaimer Checkbox */}
+                <div className="rounded-lg border bg-muted/30 p-4">
+                  <div className="flex items-start space-x-3">
+                    <OxCheckbox
+                      id="disclaimer"
+                      checked={disclaimerAccepted}
+                      onCheckedChange={(checked) => setDisclaimerAccepted(checked === true)}
+                      disabled={isUploading}
+                    />
+                    <OxLabel htmlFor="disclaimer" className="cursor-pointer text-sm leading-relaxed">
+                      <span>
+                        {t("submissions:disclaimer.prefix")}
+                        <button
+                          type="button"
+                          onClick={() => setShowDisclaimerModal(true)}
+                          className="text-primary underline hover:text-primary/80"
+                        >
+                          {t("submissions:disclaimer.linkText")}
+                        </button>
+                        {t("submissions:disclaimer.suffix")}
+                      </span>
+                    </OxLabel>
+                  </div>
+                </div>
+
                 {/* Submit Button */}
                 <div className="flex items-center justify-between rounded-lg border bg-muted/50 p-4">
                   <div className="space-y-1">
@@ -334,7 +376,7 @@ export default function PublicPhotoSubmit({
                   </div>
                   <OxButton
                     type="submit"
-                    disabled={!selectedFile || !captchaToken || isUploading}
+                    disabled={!selectedFile || !captchaToken || !disclaimerAccepted || isUploading}
                   >
                     {isUploading ? t("submissions:form.submitting") : t("submissions:form.submit")}
                   </OxButton>
@@ -384,6 +426,18 @@ export default function PublicPhotoSubmit({
           </OxCard>
         )}
       </div>
+
+      {/* Disclaimer Modal */}
+      <Dialog open={showDisclaimerModal} onOpenChange={setShowDisclaimerModal}>
+        <DialogContent className="max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>{t("submissions:disclaimer.modalTitle")}</DialogTitle>
+            <DialogDescription className="whitespace-pre-line text-left">
+              {t("submissions:disclaimer.modalContent")}
+            </DialogDescription>
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
     </PublicLayout>
   );
 }

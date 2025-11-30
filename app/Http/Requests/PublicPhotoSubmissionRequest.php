@@ -46,6 +46,10 @@ class PublicPhotoSubmissionRequest extends FormRequest
                 'email:filter',
                 'max:255',
             ],
+            'disclaimer_accepted' => [
+                'required',
+                'accepted',
+            ],
             'website' => [
                 'nullable',
                 'max:0', // Honeypot field - must be empty
@@ -71,6 +75,8 @@ class PublicPhotoSubmissionRequest extends FormRequest
             'photographer_email.required' => 'Please enter the photographer\'s email.',
             'photographer_email.email' => 'Please enter a valid email address.',
             'photographer_email.max' => 'Email must not exceed 255 characters.',
+            'disclaimer_accepted.required' => 'You must accept the upload conditions to continue.',
+            'disclaimer_accepted.accepted' => 'You must accept the upload conditions to continue.',
         ];
     }
 
