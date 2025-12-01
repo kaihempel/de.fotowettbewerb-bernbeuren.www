@@ -1,8 +1,12 @@
 <?php
 
+use App\Http\Controllers\CookieConsentController;
 use App\Http\Controllers\LocaleController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
+
+// Cookie consent (available to all users)
+Route::post('cookie-consent/accept', [CookieConsentController::class, 'accept'])->name('cookie-consent.accept');
 
 // Locale switching (available to all users)
 Route::post('locale', [LocaleController::class, 'update'])->name('locale.update');

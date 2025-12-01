@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../../../wayfinder'
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::dashboard
 * @see app/Http/Controllers/PhotoSubmissionController.php:18
@@ -44,43 +44,6 @@ dashboard.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
 })
 
 /**
-* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
-* @see app/Http/Controllers/PhotoSubmissionController.php:18
-* @route '/dashboard'
-*/
-const dashboardForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: dashboard.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
-* @see app/Http/Controllers/PhotoSubmissionController.php:18
-* @route '/dashboard'
-*/
-dashboardForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: dashboard.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::dashboard
-* @see app/Http/Controllers/PhotoSubmissionController.php:18
-* @route '/dashboard'
-*/
-dashboardForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: dashboard.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-dashboard.form = dashboardForm
-
-/**
 * @see \App\Http\Controllers\PhotoSubmissionController::submissions
 * @see app/Http/Controllers/PhotoSubmissionController.php:88
 * @route '/photos/submissions'
@@ -123,43 +86,6 @@ submissions.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: submissions.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:88
-* @route '/photos/submissions'
-*/
-const submissionsForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: submissions.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:88
-* @route '/photos/submissions'
-*/
-submissionsForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: submissions.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::submissions
-* @see app/Http/Controllers/PhotoSubmissionController.php:88
-* @route '/photos/submissions'
-*/
-submissionsForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: submissions.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-submissions.form = submissionsForm
 
 /**
 * @see \App\Http\Controllers\PhotoSubmissionController::download
@@ -230,43 +156,6 @@ download.head = (args: { submission: string | number | { id: string | number } }
 })
 
 /**
-* @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:108
-* @route '/photos/{submission}/download'
-*/
-const downloadForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:108
-* @route '/photos/{submission}/download'
-*/
-downloadForm.get = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::download
-* @see app/Http/Controllers/PhotoSubmissionController.php:108
-* @route '/photos/{submission}/download'
-*/
-downloadForm.head = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: download.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-download.form = downloadForm
-
-/**
 * @see \App\Http\Controllers\PhotoSubmissionController::approve
 * @see app/Http/Controllers/PhotoSubmissionController.php:62
 * @route '/photos/{submission}/approve'
@@ -325,38 +214,6 @@ approve.patch = (args: { submission: string | number | { id: string | number } }
 })
 
 /**
-* @see \App\Http\Controllers\PhotoSubmissionController::approve
-* @see app/Http/Controllers/PhotoSubmissionController.php:62
-* @route '/photos/{submission}/approve'
-*/
-const approveForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: approve.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::approve
-* @see app/Http/Controllers/PhotoSubmissionController.php:62
-* @route '/photos/{submission}/approve'
-*/
-approveForm.patch = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: approve.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-approve.form = approveForm
-
-/**
 * @see \App\Http\Controllers\PhotoSubmissionController::decline
 * @see app/Http/Controllers/PhotoSubmissionController.php:75
 * @route '/photos/{submission}/decline'
@@ -413,38 +270,6 @@ decline.patch = (args: { submission: string | number | { id: string | number } }
     url: decline.url(args, options),
     method: 'patch',
 })
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::decline
-* @see app/Http/Controllers/PhotoSubmissionController.php:75
-* @route '/photos/{submission}/decline'
-*/
-const declineForm = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: decline.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\PhotoSubmissionController::decline
-* @see app/Http/Controllers/PhotoSubmissionController.php:75
-* @route '/photos/{submission}/decline'
-*/
-declineForm.patch = (args: { submission: string | number | { id: string | number } } | [submission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: decline.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'PATCH',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'post',
-})
-
-decline.form = declineForm
 
 const PhotoSubmissionController = { dashboard, submissions, download, approve, decline }
 

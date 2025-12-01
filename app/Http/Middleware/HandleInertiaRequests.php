@@ -58,6 +58,7 @@ class HandleInertiaRequests extends Middleware
             'hcaptcha_sitekey' => config('services.hcaptcha.site_key'),
             'locale' => $locale,
             'locales' => config('app.available_locales', ['de', 'en']),
+            'cookies_accepted' => session('cookies_accepted', false),
         ];
     }
 

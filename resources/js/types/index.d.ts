@@ -30,6 +30,7 @@ export interface SharedData {
   hcaptcha_sitekey: string;
   locale: string;
   locales: string[];
+  cookies_accepted: boolean;
   [key: string]: unknown;
 }
 

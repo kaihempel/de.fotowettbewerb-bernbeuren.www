@@ -1,4 +1,4 @@
-import { queryParams, type RouteQueryOptions, type RouteDefinition, type RouteFormDefinition, applyUrlDefaults } from './../../wayfinder'
+import { queryParams, type RouteQueryOptions, type RouteDefinition, applyUrlDefaults } from './../../wayfinder'
 /**
 * @see \App\Http\Controllers\PublicGalleryController::index
 * @see app/Http/Controllers/PublicGalleryController.php:21
@@ -42,43 +42,6 @@ index.head = (options?: RouteQueryOptions): RouteDefinition<'head'> => ({
     url: index.url(options),
     method: 'head',
 })
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::index
-* @see app/Http/Controllers/PublicGalleryController.php:21
-* @route '/gallery/list'
-*/
-const indexForm = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::index
-* @see app/Http/Controllers/PublicGalleryController.php:21
-* @route '/gallery/list'
-*/
-indexForm.get = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url(options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::index
-* @see app/Http/Controllers/PublicGalleryController.php:21
-* @route '/gallery/list'
-*/
-indexForm.head = (options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: index.url({
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-index.form = indexForm
 
 /**
 * @see \App\Http\Controllers\PublicGalleryController::show
@@ -149,43 +112,6 @@ show.head = (args: { photoSubmission: string | number | { id: string | number } 
 })
 
 /**
-* @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:75
-* @route '/gallery/{photoSubmission}'
-*/
-const showForm = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:75
-* @route '/gallery/{photoSubmission}'
-*/
-showForm.get = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, options),
-    method: 'get',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::show
-* @see app/Http/Controllers/PublicGalleryController.php:75
-* @route '/gallery/{photoSubmission}'
-*/
-showForm.head = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'get'> => ({
-    action: show.url(args, {
-        [options?.mergeQuery ? 'mergeQuery' : 'query']: {
-            _method: 'HEAD',
-            ...(options?.query ?? options?.mergeQuery ?? {}),
-        }
-    }),
-    method: 'get',
-})
-
-show.form = showForm
-
-/**
 * @see \App\Http\Controllers\PublicGalleryController::vote
 * @see app/Http/Controllers/PublicGalleryController.php:112
 * @route '/gallery/{photoSubmission}/vote'
@@ -242,28 +168,6 @@ vote.post = (args: { photoSubmission: string | number | { id: string | number } 
     url: vote.url(args, options),
     method: 'post',
 })
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::vote
-* @see app/Http/Controllers/PublicGalleryController.php:112
-* @route '/gallery/{photoSubmission}/vote'
-*/
-const voteForm = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: vote.url(args, options),
-    method: 'post',
-})
-
-/**
-* @see \App\Http\Controllers\PublicGalleryController::vote
-* @see app/Http/Controllers/PublicGalleryController.php:112
-* @route '/gallery/{photoSubmission}/vote'
-*/
-voteForm.post = (args: { photoSubmission: string | number | { id: string | number } } | [photoSubmission: string | number | { id: string | number } ] | string | number | { id: string | number }, options?: RouteQueryOptions): RouteFormDefinition<'post'> => ({
-    action: vote.url(args, options),
-    method: 'post',
-})
-
-vote.form = voteForm
 
 const gallery = {
     index: Object.assign(index, index),

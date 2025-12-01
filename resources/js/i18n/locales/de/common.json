@@ -126,5 +126,11 @@
     "daysAgo_plural": "vor {{count}} Tagen",
     "weeksAgo": "vor {{count}} Woche",
     "weeksAgo_plural": "vor {{count}} Wochen"
+  },
+  "cookies": {
+    "title": "Cookie-Hinweis",
+    "description": "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern, den Website-Traffic zu analysieren und bessere Benutzererfahrungen bereitzustellen. Durch Klicken auf \"Akzeptieren\" stimmen Sie unserer Verwendung von Cookies zu.",
+    "accept": "Cookies akzeptieren",
+    "learnMore": "Erfahren Sie mehr darueber, wie wir Cookies in unserer Datenschutzerklaerung verwenden."
   }
 }
