@@ -34,7 +34,7 @@ jobs:
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app_build
+          name: app
           path: |
             !.*
             !CLAUDE.md
@@ -60,7 +60,7 @@ jobs:
       - name: Upload storage artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: storage_build
+          name: storage
           path: |
             !.*
             !CLAUDE.md
